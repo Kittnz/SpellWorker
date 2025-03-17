@@ -1,0 +1,651 @@
+<Window x:Class="SpellWorker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Spell Worker" Height="788" Width="1230">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="59*"/>
+            <ColumnDefinition Width="18*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="1095*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Menu Bar -->
+        <Menu Grid.Row="0" Grid.ColumnSpan="5" Margin="0,0,0,694" Grid.RowSpan="2">
+            <MenuItem Header="File">
+                <MenuItem Header="New Spell" Click="NewSpell_Click"/>
+                <MenuItem Header="Load Spell" Click="LoadSpell_Click"/>
+                <MenuItem Header="Save Spell" Click="SaveSpell_Click"/>
+                <MenuItem Header="Generate SQL" Click="GenerateSQL_Click"/>
+                <Separator/>
+                <MenuItem Header="Exit" Click="Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" Click="About_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" Margin="10,24,10,-4" Grid.ColumnSpan="5" Grid.RowSpan="2">
+            <TabItem Header="Basic Properties">
+                <ScrollViewer>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Row 0 -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="Spell ID:" ToolTip="Unique identifier for the spell"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtSpellId" Margin="5"/>
+
+                        <Label Grid.Row="0" Grid.Column="2" Content="Spell Name:" ToolTip="Name of the spell shown in-game"/>
+                        <TextBox Grid.Row="0" Grid.Column="3" Name="txtSpellName" Margin="5"/>
+
+                        <!-- Row 1 -->
+                        <Label Grid.Row="1" Grid.Column="0" Content="School:" ToolTip="Magic school of the spell"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" Name="cmbSchool" Margin="5"/>
+
+                        <Label Grid.Row="1" Grid.Column="2" Content="Category:" ToolTip="Spell category for cooldown calculation"/>
+                        <ComboBox Grid.Row="1" Grid.Column="3" Name="cmbCategory" Margin="5"/>
+
+                        <!-- Row 2 -->
+                        <Label Grid.Row="2" Grid.Column="0" Content="Dispel Type:" ToolTip="Type of dispel that can remove this spell"/>
+                        <ComboBox Grid.Row="2" Grid.Column="1" Name="cmbDispel" Margin="5"/>
+
+                        <Label Grid.Row="2" Grid.Column="2" Content="Mechanic:" ToolTip="Mechanic of the spell, affects immunities"/>
+                        <ComboBox Grid.Row="2" Grid.Column="3" Name="cmbMechanic" Margin="5"/>
+
+                        <!-- Row 3 -->
+                        <Label Grid.Row="3" Grid.Column="0" Content="Targets:" ToolTip="Target flags for the spell"/>
+                        <ComboBox Grid.Row="3" Grid.Column="1" Name="cmbTargets" Margin="5"/>
+
+                        <Label Grid.Row="3" Grid.Column="2" Content="Target Creature Type:" ToolTip="Types of creatures this spell can target"/>
+                        <ComboBox Grid.Row="3" Grid.Column="3" Name="cmbTargetCreatureType" Margin="5"/>
+
+                        <!-- Row 4 -->
+                        <Label Grid.Row="4" Grid.Column="0" Content="Casting Time Index:" ToolTip="Index into SpellCastTimes.dbc"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" Name="txtCastingTimeIndex" Margin="5"/>
+
+                        <Label Grid.Row="4" Grid.Column="2" Content="Recovery Time:" ToolTip="Cooldown in milliseconds"/>
+                        <TextBox Grid.Row="4" Grid.Column="3" Name="txtRecoveryTime" Margin="5"/>
+
+                        <!-- Row 5 -->
+                        <Label Grid.Row="5" Grid.Column="0" Content="Category Recovery Time:" ToolTip="Category cooldown in milliseconds"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" Name="txtCategoryRecoveryTime" Margin="5"/>
+
+                        <Label Grid.Row="5" Grid.Column="2" Content="Interrupt Flags:" ToolTip="Conditions that interrupt spell casting"/>
+                        <ComboBox Grid.Row="5" Grid.Column="3" Name="cmbInterruptFlags" Margin="5"/>
+
+                        <!-- Row 6 -->
+                        <Label Grid.Row="6" Grid.Column="0" Content="Aura Interrupt Flags:" ToolTip="Conditions that remove auras"/>
+                        <ComboBox Grid.Row="6" Grid.Column="1" Name="cmbAuraInterruptFlags" Margin="5"/>
+
+                        <Label Grid.Row="6" Grid.Column="2" Content="Channel Interrupt Flags:" ToolTip="Conditions that interrupt channeling"/>
+                        <ComboBox Grid.Row="6" Grid.Column="3" Name="cmbChannelInterruptFlags" Margin="5"/>
+
+                        <!-- Row 7 -->
+                        <Label Grid.Row="7" Grid.Column="0" Content="Proc Flags:" ToolTip="Conditions that can trigger the spell"/>
+                        <ComboBox Grid.Row="7" Grid.Column="1" Name="cmbProcFlags" Margin="5"/>
+
+                        <Label Grid.Row="7" Grid.Column="2" Content="Proc Chance:" ToolTip="Chance to proc in percent"/>
+                        <TextBox Grid.Row="7" Grid.Column="3" Name="txtProcChance" Margin="5"/>
+
+                        <!-- Row 8 -->
+                        <Label Grid.Row="8" Grid.Column="0" Content="Proc Charges:" ToolTip="Number of times the proc can occur"/>
+                        <TextBox Grid.Row="8" Grid.Column="1" Name="txtProcCharges" Margin="5"/>
+
+                        <Label Grid.Row="8" Grid.Column="2" Content="Max Level:" ToolTip="Maximum level the spell is effective at"/>
+                        <TextBox Grid.Row="8" Grid.Column="3" Name="txtMaxLevel" Margin="5"/>
+
+                        <!-- Row 9 -->
+                        <Label Grid.Row="9" Grid.Column="0" Content="Base Level:" ToolTip="Minimum level to learn the spell"/>
+                        <TextBox Grid.Row="9" Grid.Column="1" Name="txtBaseLevel" Margin="5"/>
+
+                        <Label Grid.Row="9" Grid.Column="2" Content="Spell Level:" ToolTip="Level of the spell for calculations"/>
+                        <TextBox Grid.Row="9" Grid.Column="3" Name="txtSpellLevel" Margin="5"/>
+
+                        <!-- Row 10 -->
+                        <Label Grid.Row="10" Grid.Column="0" Content="Duration Index:" ToolTip="Index into SpellDuration.dbc"/>
+                        <TextBox Grid.Row="10" Grid.Column="1" Name="txtDurationIndex" Margin="5"/>
+
+                        <Label Grid.Row="10" Grid.Column="2" Content="Power Type:" ToolTip="Type of resource used (mana, rage, etc.)"/>
+                        <ComboBox Grid.Row="10" Grid.Column="3" Name="cmbPowerType" Margin="5"/>
+
+                        <!-- Row 11 -->
+                        <Label Grid.Row="11" Grid.Column="0" Content="Mana Cost:" ToolTip="Base resource cost"/>
+                        <TextBox Grid.Row="11" Grid.Column="1" Name="txtManaCost" Margin="5"/>
+
+                        <Label Grid.Row="11" Grid.Column="2" Content="Mana Cost Per Level:" ToolTip="Additional cost per level"/>
+                        <TextBox Grid.Row="11" Grid.Column="3" Name="txtManaCostPerLevel" Margin="5"/>
+
+                        <!-- Row 12 -->
+                        <Label Grid.Row="12" Grid.Column="0" Content="Mana Per Second:" ToolTip="Channeled cost per second"/>
+                        <TextBox Grid.Row="12" Grid.Column="1" Name="txtManaPerSecond" Margin="5"/>
+
+                        <Label Grid.Row="12" Grid.Column="2" Content="Range Index:" ToolTip="Index into SpellRange.dbc"/>
+                        <TextBox Grid.Row="12" Grid.Column="3" Name="txtRangeIndex" Margin="5"/>
+
+                        <!-- Row 13 -->
+                        <Label Grid.Row="13" Grid.Column="0" Content="Speed:" ToolTip="Speed of spell projectile"/>
+                        <TextBox Grid.Row="13" Grid.Column="1" Name="txtSpeed" Margin="5"/>
+
+                        <Label Grid.Row="13" Grid.Column="2" Content="Stack Amount:" ToolTip="Maximum stacks of the spell"/>
+                        <TextBox Grid.Row="13" Grid.Column="3" Name="txtStackAmount" Margin="5"/>
+
+                        <!-- Attributes Section -->
+                        <GroupBox Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="4" Header="Attributes" Margin="0,10,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <CheckBox Name="chkAttribute1" Content="SPELL_ATTR_DONT_DISPLAY_SPELL_RESULT" Margin="3"/>
+                                    <CheckBox Name="chkAttribute2" Content="SPELL_ATTR_RANGED" Margin="3"/>
+                                    <CheckBox Name="chkAttribute3" Content="SPELL_ATTR_ON_NEXT_SWING_1" Margin="3"/>
+                                    <CheckBox Name="chkAttribute4" Content="SPELL_ATTR_IS_REPLENISHMENT" Margin="3"/>
+                                    <CheckBox Name="chkAttribute5" Content="SPELL_ATTR_IS_ABILITY" Margin="3"/>
+                                    <CheckBox Name="chkAttribute6" Content="SPELL_ATTR_TRADESPELL" Margin="3"/>
+                                    <CheckBox Name="chkAttribute7" Content="SPELL_ATTR_PASSIVE" Margin="3"/>
+                                    <CheckBox Name="chkAttribute8" Content="SPELL_ATTR_HIDDEN_CLIENTSIDE" Margin="3"/>
+                                    <CheckBox Name="chkAttribute9" Content="SPELL_ATTR_HIDE_IN_COMBAT_LOG" Margin="3"/>
+                                    <CheckBox Name="chkAttribute10" Content="SPELL_ATTR_TARGET_MAINHAND_ITEM" Margin="3"/>
+                                    <CheckBox Name="chkAttribute11" Content="SPELL_ATTR_ON_NEXT_SWING_2" Margin="3"/>
+                                    <CheckBox Name="chkAttribute12" Content="SPELL_ATTR_WEARER_CASTS_PROC_TRIGGER" Margin="3"/>
+                                    <CheckBox Name="chkAttribute13" Content="SPELL_ATTR_DAYTIME_ONLY" Margin="3"/>
+                                    <CheckBox Name="chkAttribute14" Content="SPELL_ATTR_NIGHT_ONLY" Margin="3"/>
+                                    <CheckBox Name="chkAttribute15" Content="SPELL_ATTR_INDOORS_ONLY" Margin="3"/>
+                                    <CheckBox Name="chkAttribute16" Content="SPELL_ATTR_OUTDOORS_ONLY" Margin="3"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <CheckBox Name="chkAttribute17" Content="SPELL_ATTR_NOT_SHAPESHIFT" Margin="3"/>
+                                    <CheckBox Name="chkAttribute18" Content="SPELL_ATTR_ONLY_STEALTHED" Margin="3"/>
+                                    <CheckBox Name="chkAttribute19" Content="SPELL_ATTR_DONT_AFFECT_SHEATH_STATE" Margin="3"/>
+                                    <CheckBox Name="chkAttribute20" Content="SPELL_ATTR_LEVEL_DAMAGE_CALCULATION" Margin="3"/>
+                                    <CheckBox Name="chkAttribute21" Content="SPELL_ATTR_STOP_ATTACK_TARGET" Margin="3"/>
+                                    <CheckBox Name="chkAttribute22" Content="SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK" Margin="3"/>
+                                    <CheckBox Name="chkAttribute23" Content="SPELL_ATTR_SET_TRACKING_TARGET" Margin="3"/>
+                                    <CheckBox Name="chkAttribute24" Content="SPELL_ATTR_CASTABLE_WHILE_DEAD" Margin="3"/>
+                                    <CheckBox Name="chkAttribute25" Content="SPELL_ATTR_CASTABLE_WHILE_MOUNTED" Margin="3"/>
+                                    <CheckBox Name="chkAttribute26" Content="SPELL_ATTR_DISABLED_WHILE_ACTIVE" Margin="3"/>
+                                    <CheckBox Name="chkAttribute27" Content="SPELL_ATTR_NEGATIVE" Margin="3"/>
+                                    <CheckBox Name="chkAttribute28" Content="SPELL_ATTR_CASTABLE_WHILE_SITTING" Margin="3"/>
+                                    <CheckBox Name="chkAttribute29" Content="SPELL_ATTR_CANT_USED_IN_COMBAT" Margin="3"/>
+                                    <CheckBox Name="chkAttribute30" Content="SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY" Margin="3"/>
+                                    <CheckBox Name="chkAttribute31" Content="SPELL_ATTR_DIMINISHING_RETURNS" Margin="3"/>
+                                    <CheckBox Name="chkAttribute32" Content="SPELL_ATTR_CANT_CANCEL" Margin="3"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Effects">
+                <TabControl Name="tabEffects">
+                    <TabItem Header="Effect 1">
+                        <ScrollViewer>
+                            <Grid Margin="10">
+                                <!-- Effect 1 UI elements will go here -->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Row 0 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="Effect:" ToolTip="The effect this spell produces"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbEffect0" Margin="5"/>
+
+                                <Label Grid.Row="0" Grid.Column="2" Content="Aura:" ToolTip="Type of aura applied by this effect"/>
+                                <ComboBox Grid.Row="0" Grid.Column="3" Name="cmbAura0" Margin="5"/>
+
+                                <!-- Row 1 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="Die Sides:" ToolTip="Number of sides on the dice for random damage/healing"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Name="txtEffectDieSides0" Margin="5"/>
+
+                                <Label Grid.Row="1" Grid.Column="2" Content="Base Dice:" ToolTip="Number of dice to roll"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" Name="txtEffectBaseDice0" Margin="5"/>
+
+                                <!-- Row 2 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="Dice Per Level:" ToolTip="Additional dice per level"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Name="txtEffectDicePerLevel0" Margin="5"/>
+
+                                <Label Grid.Row="2" Grid.Column="2" Content="Real Points Per Level:" ToolTip="Additional points per level"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" Name="txtEffectRealPointsPerLevel0" Margin="5"/>
+
+                                <!-- Row 3 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="Base Points:" ToolTip="Base value for the effect"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Name="txtEffectBasePoints0" Margin="5"/>
+
+                                <Label Grid.Row="3" Grid.Column="2" Content="Mechanic:" ToolTip="Mechanic of this specific effect"/>
+                                <ComboBox Grid.Row="3" Grid.Column="3" Name="cmbEffectMechanic0" Margin="5"/>
+
+                                <!-- Row 4 -->
+                                <Label Grid.Row="4" Grid.Column="0" Content="Target A:" ToolTip="Primary target of the effect"/>
+                                <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbEffectImplicitTargetA0" Margin="5"/>
+
+                                <Label Grid.Row="4" Grid.Column="2" Content="Target B:" ToolTip="Secondary target of the effect"/>
+                                <ComboBox Grid.Row="4" Grid.Column="3" Name="cmbEffectImplicitTargetB0" Margin="5"/>
+
+                                <!-- Row 5 -->
+                                <Label Grid.Row="5" Grid.Column="0" Content="Radius Index:" ToolTip="Index into SpellRadius.dbc for AoE radius"/>
+                                <TextBox Grid.Row="5" Grid.Column="1" Name="txtEffectRadiusIndex0" Margin="5"/>
+
+                                <Label Grid.Row="5" Grid.Column="2" Content="Amplitude:" ToolTip="Time between periodic ticks in milliseconds"/>
+                                <TextBox Grid.Row="5" Grid.Column="3" Name="txtEffectAmplitude0" Margin="5"/>
+
+                                <!-- Row 6 -->
+                                <Label Grid.Row="6" Grid.Column="0" Content="Multiple Value:" ToolTip="Multiplier for the effect"/>
+                                <TextBox Grid.Row="6" Grid.Column="1" Name="txtEffectMultipleValue0" Margin="5"/>
+
+                                <Label Grid.Row="6" Grid.Column="2" Content="Chain Target:" ToolTip="Number of targets for chain effects"/>
+                                <TextBox Grid.Row="6" Grid.Column="3" Name="txtEffectChainTarget0" Margin="5"/>
+
+                                <!-- Row 7 -->
+                                <Label Grid.Row="7" Grid.Column="0" Content="Item Type:" ToolTip="Item type created by the effect"/>
+                                <TextBox Grid.Row="7" Grid.Column="1" Name="txtEffectItemType0" Margin="5"/>
+
+                                <Label Grid.Row="7" Grid.Column="2" Content="Misc Value:" ToolTip="Miscellaneous value for the effect"/>
+                                <TextBox Grid.Row="7" Grid.Column="3" Name="txtEffectMiscValue0" Margin="5"/>
+
+                                <!-- Row 8 -->
+                                <Label Grid.Row="8" Grid.Column="0" Content="Trigger Spell:" ToolTip="Spell to trigger from this effect"/>
+                                <TextBox Grid.Row="8" Grid.Column="1" Name="txtEffectTriggerSpell0" Margin="5"/>
+
+                                <Label Grid.Row="8" Grid.Column="2" Content="Points Per Combo:" ToolTip="Additional points per combo point"/>
+                                <TextBox Grid.Row="8" Grid.Column="3" Name="txtEffectPointsPerComboPoint0" Margin="5"/>
+
+                                <!-- Row 9 -->
+                                <Label Grid.Row="9" Grid.Column="0" Content="Damage Multiplier:" ToolTip="Multiplier for damage/healing"/>
+                                <TextBox Grid.Row="9" Grid.Column="1" Name="txtDmgMultiplier0" Margin="5"/>
+
+                                <Label Grid.Row="9" Grid.Column="2" Content="Bonus Coefficient:" ToolTip="Coefficient for spell power scaling"/>
+                                <TextBox Grid.Row="9" Grid.Column="3" Name="txtEffectBonusCoefficient0" Margin="5"/>
+                            </Grid>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Effect 2">
+                        <!-- Similar structure to Effect 1, but with index 1 -->
+                        <ScrollViewer>
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Row 0 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="Effect:" ToolTip="The effect this spell produces"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbEffect1" Margin="5"/>
+
+                                <Label Grid.Row="0" Grid.Column="2" Content="Aura:" ToolTip="Type of aura applied by this effect"/>
+                                <ComboBox Grid.Row="0" Grid.Column="3" Name="cmbAura1" Margin="5"/>
+
+                                <!-- Row 1 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="Die Sides:" ToolTip="Number of sides on the dice for random damage/healing"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Name="txtEffectDieSides1" Margin="5"/>
+
+                                <Label Grid.Row="1" Grid.Column="2" Content="Base Dice:" ToolTip="Number of dice to roll"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" Name="txtEffectBaseDice1" Margin="5"/>
+
+                                <!-- Remaining rows follow the same pattern as Effect 1 -->
+                                <!-- Row 2 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="Dice Per Level:" ToolTip="Additional dice per level"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Name="txtEffectDicePerLevel1" Margin="5"/>
+
+                                <Label Grid.Row="2" Grid.Column="2" Content="Real Points Per Level:" ToolTip="Additional points per level"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" Name="txtEffectRealPointsPerLevel1" Margin="5"/>
+
+                                <!-- Row 3 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="Base Points:" ToolTip="Base value for the effect"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Name="txtEffectBasePoints1" Margin="5"/>
+
+                                <Label Grid.Row="3" Grid.Column="2" Content="Mechanic:" ToolTip="Mechanic of this specific effect"/>
+                                <ComboBox Grid.Row="3" Grid.Column="3" Name="cmbEffectMechanic1" Margin="5"/>
+
+                                <!-- Row 4 -->
+                                <Label Grid.Row="4" Grid.Column="0" Content="Target A:" ToolTip="Primary target of the effect"/>
+                                <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbEffectImplicitTargetA1" Margin="5"/>
+
+                                <Label Grid.Row="4" Grid.Column="2" Content="Target B:" ToolTip="Secondary target of the effect"/>
+                                <ComboBox Grid.Row="4" Grid.Column="3" Name="cmbEffectImplicitTargetB1" Margin="5"/>
+
+                                <!-- Row 5 -->
+                                <Label Grid.Row="5" Grid.Column="0" Content="Radius Index:" ToolTip="Index into SpellRadius.dbc for AoE radius"/>
+                                <TextBox Grid.Row="5" Grid.Column="1" Name="txtEffectRadiusIndex1" Margin="5"/>
+
+                                <Label Grid.Row="5" Grid.Column="2" Content="Amplitude:" ToolTip="Time between periodic ticks in milliseconds"/>
+                                <TextBox Grid.Row="5" Grid.Column="3" Name="txtEffectAmplitude1" Margin="5"/>
+
+                                <!-- Row 6 -->
+                                <Label Grid.Row="6" Grid.Column="0" Content="Multiple Value:" ToolTip="Multiplier for the effect"/>
+                                <TextBox Grid.Row="6" Grid.Column="1" Name="txtEffectMultipleValue1" Margin="5"/>
+
+                                <Label Grid.Row="6" Grid.Column="2" Content="Chain Target:" ToolTip="Number of targets for chain effects"/>
+                                <TextBox Grid.Row="6" Grid.Column="3" Name="txtEffectChainTarget1" Margin="5"/>
+
+                                <!-- Row 7 -->
+                                <Label Grid.Row="7" Grid.Column="0" Content="Item Type:" ToolTip="Item type created by the effect"/>
+                                <TextBox Grid.Row="7" Grid.Column="1" Name="txtEffectItemType1" Margin="5"/>
+
+                                <Label Grid.Row="7" Grid.Column="2" Content="Misc Value:" ToolTip="Miscellaneous value for the effect"/>
+                                <TextBox Grid.Row="7" Grid.Column="3" Name="txtEffectMiscValue1" Margin="5"/>
+
+                                <!-- Row 8 -->
+                                <Label Grid.Row="8" Grid.Column="0" Content="Trigger Spell:" ToolTip="Spell to trigger from this effect"/>
+                                <TextBox Grid.Row="8" Grid.Column="1" Name="txtEffectTriggerSpell1" Margin="5"/>
+
+                                <Label Grid.Row="8" Grid.Column="2" Content="Points Per Combo:" ToolTip="Additional points per combo point"/>
+                                <TextBox Grid.Row="8" Grid.Column="3" Name="txtEffectPointsPerComboPoint1" Margin="5"/>
+
+                                <!-- Row 9 -->
+                                <Label Grid.Row="9" Grid.Column="0" Content="Damage Multiplier:" ToolTip="Multiplier for damage/healing"/>
+                                <TextBox Grid.Row="9" Grid.Column="1" Name="txtDmgMultiplier1" Margin="5"/>
+
+                                <Label Grid.Row="9" Grid.Column="2" Content="Bonus Coefficient:" ToolTip="Coefficient for spell power scaling"/>
+                                <TextBox Grid.Row="9" Grid.Column="3" Name="txtEffectBonusCoefficient1" Margin="5"/>
+                            </Grid>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Effect 3">
+                        <!-- Similar structure to Effect 1, but with index 2 -->
+                        <ScrollViewer>
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Row 0 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="Effect:" ToolTip="The effect this spell produces"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbEffect2" Margin="5"/>
+
+                                <Label Grid.Row="0" Grid.Column="2" Content="Aura:" ToolTip="Type of aura applied by this effect"/>
+                                <ComboBox Grid.Row="0" Grid.Column="3" Name="cmbAura2" Margin="5"/>
+
+                                <!-- Row 1 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="Die Sides:" ToolTip="Number of sides on the dice for random damage/healing"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Name="txtEffectDieSides2" Margin="5"/>
+
+                                <Label Grid.Row="1" Grid.Column="2" Content="Base Dice:" ToolTip="Number of dice to roll"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" Name="txtEffectBaseDice2" Margin="5"/>
+
+                                <!-- Row 2 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="Dice Per Level:" ToolTip="Additional dice per level"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Name="txtEffectDicePerLevel2" Margin="5"/>
+
+                                <Label Grid.Row="2" Grid.Column="2" Content="Real Points Per Level:" ToolTip="Additional points per level"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" Name="txtEffectRealPointsPerLevel2" Margin="5"/>
+
+                                <!-- Row 3 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="Base Points:" ToolTip="Base value for the effect"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Name="txtEffectBasePoints2" Margin="5"/>
+
+                                <Label Grid.Row="3" Grid.Column="2" Content="Mechanic:" ToolTip="Mechanic of this specific effect"/>
+                                <ComboBox Grid.Row="3" Grid.Column="3" Name="cmbEffectMechanic2" Margin="5"/>
+
+                                <!-- Row 4 -->
+                                <Label Grid.Row="4" Grid.Column="0" Content="Target A:" ToolTip="Primary target of the effect"/>
+                                <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbEffectImplicitTargetA2" Margin="5"/>
+
+                                <Label Grid.Row="4" Grid.Column="2" Content="Target B:" ToolTip="Secondary target of the effect"/>
+                                <ComboBox Grid.Row="4" Grid.Column="3" Name="cmbEffectImplicitTargetB2" Margin="5"/>
+
+                                <!-- Row 5 -->
+                                <Label Grid.Row="5" Grid.Column="0" Content="Radius Index:" ToolTip="Index into SpellRadius.dbc for AoE radius"/>
+                                <TextBox Grid.Row="5" Grid.Column="1" Name="txtEffectRadiusIndex2" Margin="5"/>
+
+                                <Label Grid.Row="5" Grid.Column="2" Content="Amplitude:" ToolTip="Time between periodic ticks in milliseconds"/>
+                                <TextBox Grid.Row="5" Grid.Column="3" Name="txtEffectAmplitude2" Margin="5"/>
+
+                                <!-- Row 6 -->
+                                <Label Grid.Row="6" Grid.Column="0" Content="Multiple Value:" ToolTip="Multiplier for the effect"/>
+                                <TextBox Grid.Row="6" Grid.Column="1" Name="txtEffectMultipleValue2" Margin="5"/>
+
+                                <Label Grid.Row="6" Grid.Column="2" Content="Chain Target:" ToolTip="Number of targets for chain effects"/>
+                                <TextBox Grid.Row="6" Grid.Column="3" Name="txtEffectChainTarget2" Margin="5"/>
+
+                                <!-- Row 7 -->
+                                <Label Grid.Row="7" Grid.Column="0" Content="Item Type:" ToolTip="Item type created by the effect"/>
+                                <TextBox Grid.Row="7" Grid.Column="1" Name="txtEffectItemType2" Margin="5"/>
+
+                                <Label Grid.Row="7" Grid.Column="2" Content="Misc Value:" ToolTip="Miscellaneous value for the effect"/>
+                                <TextBox Grid.Row="7" Grid.Column="3" Name="txtEffectMiscValue2" Margin="5"/>
+
+                                <!-- Row 8 -->
+                                <Label Grid.Row="8" Grid.Column="0" Content="Trigger Spell:" ToolTip="Spell to trigger from this effect"/>
+                                <TextBox Grid.Row="8" Grid.Column="1" Name="txtEffectTriggerSpell2" Margin="5"/>
+
+                                <Label Grid.Row="8" Grid.Column="2" Content="Points Per Combo:" ToolTip="Additional points per combo point"/>
+                                <TextBox Grid.Row="8" Grid.Column="3" Name="txtEffectPointsPerComboPoint2" Margin="5"/>
+
+                                <!-- Row 9 -->
+                                <Label Grid.Row="9" Grid.Column="0" Content="Damage Multiplier:" ToolTip="Multiplier for damage/healing"/>
+                                <TextBox Grid.Row="9" Grid.Column="1" Name="txtDmgMultiplier2" Margin="5"/>
+
+                                <Label Grid.Row="9" Grid.Column="2" Content="Bonus Coefficient:" ToolTip="Coefficient for spell power scaling"/>
+                                <TextBox Grid.Row="9" Grid.Column="3" Name="txtEffectBonusCoefficient2" Margin="5"/>
+                            </Grid>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+
+            <TabItem Header="Additional Properties">
+                <ScrollViewer>
+                    <Grid Margin="10">
+                        <!-- Various other properties will go here -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Row 0 -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="Spell Visual:" ToolTip="Visual effect ID"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtSpellVisual" Margin="5"/>
+
+                        <Label Grid.Row="0" Grid.Column="2" Content="Spell Icon ID:" ToolTip="Icon shown in the spellbook"/>
+                        <TextBox Grid.Row="0" Grid.Column="3" Name="txtSpellIconID" Margin="5"/>
+
+                        <!-- Row 1 -->
+                        <Label Grid.Row="1" Grid.Column="0" Content="Active Icon ID:" ToolTip="Icon shown when spell is active"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="txtActiveIconID" Margin="5"/>
+
+                        <Label Grid.Row="1" Grid.Column="2" Content="Spell Priority:" ToolTip="Priority when multiple spells are cast simultaneously"/>
+                        <TextBox Grid.Row="1" Grid.Column="3" Name="txtSpellPriority" Margin="5"/>
+
+                        <!-- Row 2 -->
+                        <Label Grid.Row="2" Grid.Column="0" Content="Tooltip:"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Name="txtToolTip" Margin="5" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+
+                        <!-- Row 3 -->
+                        <Label Grid.Row="3" Grid.Column="0" Content="Description:" ToolTip="Description shown in the tooltip"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Name="txtDescription" Margin="5" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+
+                        <!-- Row 4 -->
+                        <Label Grid.Row="4" Grid.Column="0" Content="Aura Description:" ToolTip="Description shown when the aura is active"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Name="txtAuraDescription" Margin="5" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+
+                        <!-- Row 5 -->
+                        <Label Grid.Row="5" Grid.Column="0" Content="Spell Family Name:" ToolTip="Class that owns this spell"/>
+                        <ComboBox Grid.Row="5" Grid.Column="1" Name="cmbSpellFamilyName" Margin="5"/>
+
+                        <Label Grid.Row="5" Grid.Column="2" Content="Spell Family Flags:" ToolTip="Used for spell interactions"/>
+                        <TextBox Grid.Row="5" Grid.Column="3" Name="txtSpellFamilyFlags" Margin="5"/>
+
+                        <!-- Row 6 -->
+                        <Label Grid.Row="6" Grid.Column="0" Content="Max Affected Targets:" ToolTip="Maximum number of targets"/>
+                        <TextBox Grid.Row="6" Grid.Column="1" Name="txtMaxAffectedTargets" Margin="5"/>
+
+                        <Label Grid.Row="6" Grid.Column="2" Content="Custom Flags:" ToolTip="Custom server-side flags"/>
+                        <TextBox Grid.Row="6" Grid.Column="3" Name="txtCustom" Margin="5"/>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Reagents">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Grid.Row="0" Header="Totems">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Content="Totem 1:" ToolTip="First required totem"/>
+                            <TextBox Grid.Column="1" Name="txtTotem1" Margin="5"/>
+
+                            <Label Grid.Column="2" Content="Totem 2:" ToolTip="Second required totem"/>
+                            <TextBox Grid.Column="3" Name="txtTotem2" Margin="5"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <DataGrid Grid.Row="1" Name="dgReagents" AutoGenerateColumns="False" Margin="0,10,0,0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Index" Binding="{Binding Index}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Reagent Item ID" Binding="{Binding ItemId}"/>
+                            <DataGridTextColumn Header="Count" Binding="{Binding Count}"/>
+                            <DataGridTextColumn Header="Item Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Equipment">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Row 0 -->
+                    <Label Grid.Row="0" Grid.Column="0" Content="Equipped Item Class:" ToolTip="Required item class"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbEquippedItemClass" Margin="5"/>
+
+                    <Label Grid.Row="0" Grid.Column="2" Content="Equipped Item SubClass Mask:" ToolTip="Required item subclass mask"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" Name="txtEquippedItemSubClassMask" Margin="5"/>
+
+                    <!-- Row 1 -->
+                    <Label Grid.Row="1" Grid.Column="0" Content="Equipped Item Inventory Type Mask:" ToolTip="Required inventory slot mask"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Name="txtEquippedItemInventoryTypeMask" Margin="5"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="SQL Preview">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox Grid.Row="0" Name="txtSqlPreview" IsReadOnly="True" 
+                             FontFamily="Consolas" TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Auto"/>
+
+                    <Button Grid.Row="1" Content="Copy to Clipboard" 
+                            HorizontalAlignment="Right" Margin="10"
+                            Padding="10,5" Click="CopySql_Click"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="1" Grid.ColumnSpan="5" Margin="0,694,0,0">
+            <StatusBarItem>
+                <TextBlock Name="txtStatus" Text="Ready"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

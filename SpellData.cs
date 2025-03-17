@@ -918,6 +918,7 @@ enum SpellCategories
         public uint[] EffectTriggerSpell { get; set; } = new uint[3];
         public float[] EffectPointsPerComboPoint { get; set; } = new float[3];
         public uint SpellVisual { get; set; }
+        public uint SpellVisual2 { get; set; }
         public uint SpellIconID { get; set; }
         public uint activeIconID { get; set; }
         public uint spellPriority { get; set; }

@@ -520,7 +520,7 @@
 
                         <!-- Row 0 -->
                         <Label Grid.Row="0" Grid.Column="0" Content="Spell Visual:" ToolTip="Visual effect ID"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtSpellVisual" Margin="5"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtSpellVisual" Margin="5,8,331,7"/>
 
                         <Label Grid.Row="0" Grid.Column="2" Content="Spell Icon ID:" ToolTip="Icon shown in the spellbook"/>
                         <TextBox Grid.Row="0" Grid.Column="3" Name="txtSpellIconID" Margin="5"/>
@@ -557,6 +557,9 @@
 
                         <Label Grid.Row="6" Grid.Column="2" Content="Custom Flags:" ToolTip="Custom server-side flags"/>
                         <TextBox Grid.Row="6" Grid.Column="3" Name="txtCustom" Margin="5"/>
+                        
+                        <Label Grid.Row="0" Grid.Column="1" Content="Spell Visual2:" ToolTip="Visual effect ID" Margin="178,1,200,28" Grid.RowSpan="2"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtSpellVisual2" Margin="272,8,5,8"/>
                     </Grid>
                 </ScrollViewer>
             </TabItem>

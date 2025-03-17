@@ -463,6 +463,7 @@ namespace SpellWorker
 
             // Load additional properties
             txtSpellVisual.Text = currentSpell.SpellVisual.ToString();
+            txtSpellVisual2.Text = currentSpell.SpellVisual2.ToString();
             txtSpellIconID.Text = currentSpell.SpellIconID.ToString();
             txtActiveIconID.Text = currentSpell.activeIconID.ToString();
             txtSpellPriority.Text = currentSpell.spellPriority.ToString();
@@ -604,6 +605,7 @@ namespace SpellWorker
 
             // Save additional properties
             currentSpell.SpellVisual = ParseUInt(txtSpellVisual.Text);
+            currentSpell.SpellVisual2 = ParseUInt(txtSpellVisual2.Text);
             currentSpell.SpellIconID = ParseUInt(txtSpellIconID.Text);
             currentSpell.activeIconID = ParseUInt(txtActiveIconID.Text);
             currentSpell.spellPriority = ParseUInt(txtSpellPriority.Text);
@@ -751,7 +753,7 @@ namespace SpellWorker
                           $"{currentSpell.EffectTriggerSpell[1]}, {currentSpell.EffectTriggerSpell[2]}, " +
                           $"{FormatFloat(currentSpell.EffectPointsPerComboPoint[0])}, {FormatFloat(currentSpell.EffectPointsPerComboPoint[1])}, " +
                           $"{FormatFloat(currentSpell.EffectPointsPerComboPoint[2])}, {currentSpell.SpellVisual}, " +
-                          $"0, {currentSpell.SpellIconID}, {currentSpell.activeIconID}, {currentSpell.spellPriority}, " +
+                          $" {currentSpell.SpellVisual2}, {currentSpell.SpellIconID}, {currentSpell.activeIconID}, {currentSpell.spellPriority}, " +
                           $"'{EscapeSql(currentSpell.SpellName)}', {currentSpell.nameFlags}, '{EscapeSql(currentSpell.nameSubtext)}', " +
                           $"{currentSpell.nameSubtextFlags}, '{EscapeSql(currentSpell.description)}', " +
                           $"{currentSpell.descriptionFlags}, '{EscapeSql(currentSpell.auraDescription)}', " +

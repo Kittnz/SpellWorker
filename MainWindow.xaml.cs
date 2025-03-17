@@ -666,42 +666,42 @@ namespace SpellWorker
             sql.AppendLine("REPLACE INTO `spell_template` (");
 
             // Column names
-            sql.AppendLine("  `entry`, `School`, `Category`, `castUI`, `Dispel`, `Mechanic`, `Attributes`, " +
-                           "`AttributesEx`, `AttributesEx2`, `AttributesEx3`, `AttributesEx4`, `Stances`, " +
-                           "`StancesNot`, `Targets`, `TargetCreatureType`, `RequiresSpellFocus`, `CasterAuraState`, " +
-                           "`TargetAuraState`, `CastingTimeIndex`, `RecoveryTime`, `CategoryRecoveryTime`, " +
-                           "`InterruptFlags`, `AuraInterruptFlags`, `ChannelInterruptFlags`, `procFlags`, " +
-                           "`procChance`, `procCharges`, `maxLevel`, `baseLevel`, `spellLevel`, `DurationIndex`, " +
-                           "`powerType`, `manaCost`, `manaCostPerlevel`, `manaPerSecond`, `manaPerSecondPerLevel`, " +
-                           "`rangeIndex`, `speed`, `modelNextSpell`, `StackAmount`, `Totem1`, `Totem2`, `Reagent1`, " +
-                           "`Reagent2`, `Reagent3`, `Reagent4`, `Reagent5`, `Reagent6`, `Reagent7`, `Reagent8`, " +
-                           "`ReagentCount1`, `ReagentCount2`, `ReagentCount3`, `ReagentCount4`, `ReagentCount5`, " +
-                           "`ReagentCount6`, `ReagentCount7`, `ReagentCount8`, `EquippedItemClass`, " +
-                           "`EquippedItemSubClassMask`, `EquippedItemInventoryTypeMask`, `Effect1`, `Effect2`, " +
-                           "`Effect3`, `EffectDieSides1`, `EffectDieSides2`, `EffectDieSides3`, `EffectBaseDice1`, " +
-                           "`EffectBaseDice2`, `EffectBaseDice3`, `EffectDicePerLevel1`, `EffectDicePerLevel2`, " +
-                           "`EffectDicePerLevel3`, `EffectRealPointsPerLevel1`, `EffectRealPointsPerLevel2`, " +
-                           "`EffectRealPointsPerLevel3`, `EffectBasePoints1`, `EffectBasePoints2`, `EffectBasePoints3`, " +
-                           "`EffectBonusCoefficient1`, `EffectBonusCoefficient2`, `EffectBonusCoefficient3`, " +
-                           "`EffectMechanic1`, `EffectMechanic2`, `EffectMechanic3`, `EffectImplicitTargetA1`, " +
-                           "`EffectImplicitTargetA2`, `EffectImplicitTargetA3`, `EffectImplicitTargetB1`, " +
-                           "`EffectImplicitTargetB2`, `EffectImplicitTargetB3`, `EffectRadiusIndex1`, " +
-                           "`EffectRadiusIndex2`, `EffectRadiusIndex3`, `EffectApplyAuraName1`, " +
-                           "`EffectApplyAuraName2`, `EffectApplyAuraName3`, `EffectAmplitude1`, " +
-                           "`EffectAmplitude2`, `EffectAmplitude3`, `EffectMultipleValue1`, " +
-                           "`EffectMultipleValue2`, `EffectMultipleValue3`, `EffectChainTarget1`, " +
-                           "`EffectChainTarget2`, `EffectChainTarget3`, `EffectItemType1`, " +
-                           "`EffectItemType2`, `EffectItemType3`, `EffectMiscValue1`, " +
-                           "`EffectMiscValue2`, `EffectMiscValue3`, `EffectTriggerSpell1`, " +
-                           "`EffectTriggerSpell2`, `EffectTriggerSpell3`, `EffectPointsPerComboPoint1`, " +
-                           "`EffectPointsPerComboPoint2`, `EffectPointsPerComboPoint3`, `SpellVisual`, " +
-                           "`SpellIconID`, `activeIconID`, `spellPriority`, `name`, `nameFlags`, " +
+            sql.AppendLine("  `entry`, `school`, `category`, `castUI`, `dispel`, `mechanic`, `attributes`, " +
+                           "`attributesEx`, `attributesEx2`, `attributesEx3`, `attributesEx4`, `stances`, " +
+                           "`stancesNot`, `targets`, `targetCreatureType`, `requiresSpellFocus`, `casterAuraState`, " +
+                           "`targetAuraState`, `castingTimeIndex`, `recoveryTime`, `categoryRecoveryTime`, " +
+                           "`interruptFlags`, `auraInterruptFlags`, `channelInterruptFlags`, `procFlags`, " +
+                           "`procChance`, `procCharges`, `maxLevel`, `baseLevel`, `spellLevel`, `durationIndex`, " +
+                           "`powerType`, `manaCost`, `manCostPerLevel`, `manaPerSecond`, `manaPerSecondPerLevel`, " +
+                           "`rangeIndex`, `speed`, `modelNextSpell`, `stackAmount`, `totem1`, `totem2`, `reagent1`, " +
+                           "`reagent2`, `reagent3`, `reagent4`, `reagent5`, `reagent6`, `reagent7`, `reagent8`, " +
+                           "`reagentCount1`, `reagentCount2`, `reagentCount3`, `reagentCount4`, `reagentCount5`, " +
+                           "`reagentCount6`, `reagentCount7`, `reagentCount8`, `equippedItemClass`, " +
+                           "`equippedItemSubClassMask`, `equippedItemInventoryTypeMask`, `effect1`, `effect2`, " +
+                           "`effect3`, `effectDieSides1`, `effectDieSides2`, `effectDieSides3`, `effectBaseDice1`, " +
+                           "`effectBaseDice2`, `effectBaseDice3`, `effectDicePerLevel1`, `effectDicePerLevel2`, " +
+                           "`effectDicePerLevel3`, `effectRealPointsPerLevel1`, `effectRealPointsPerLevel2`, " +
+                           "`effectRealPointsPerLevel3`, `effectBasePoints1`, `effectBasePoints2`, `effectBasePoints3`, " +
+                           "`effectBonusCoefficient1`, `effectBonusCoefficient2`, `effectBonusCoefficient3`, " +
+                           "`effectMechanic1`, `effectMechanic2`, `effectMechanic3`, `effectImplicitTargetA1`, " +
+                           "`effectImplicitTargetA2`, `effectImplicitTargetA3`, `effectImplicitTargetB1`, " +
+                           "`effectImplicitTargetB2`, `effectImplicitTargetB3`, `effectRadiusIndex1`, " +
+                           "`effectRadiusIndex2`, `effectRadiusIndex3`, `effectApplyAuraName1`, " +
+                           "`effectApplyAuraName2`, `effectApplyAuraName3`, `effectAmplitude1`, " +
+                           "`effectAmplitude2`, `effectAmplitude3`, `effectMultipleValue1`, " +
+                           "`effectMultipleValue2`, `effectMultipleValue3`, `effectChainTarget1`, " +
+                           "`effectChainTarget2`, `effectChainTarget3`, `effectItemType1`, " +
+                           "`effectItemType2`, `effectItemType3`, `effectMiscValue1`, " +
+                           "`effectMiscValue2`, `effectMiscValue3`, `effectTriggerSpell1`, " +
+                           "`effectTriggerSpell2`, `effectTriggerSpell3`, `effectPointsPerComboPoint1`, " +
+                           "`effectPointsPerComboPoint2`, `effectPointsPerComboPoint3`, `spellVisual1`, " +
+                           "`spellVisual2`, `spellIconId`, `activeIconId`, `spellPriority`, `name`, `nameFlags`, " +
                            "`nameSubtext`, `nameSubtextFlags`, `description`, `descriptionFlags`, `auraDescription`, " +
-                           "`auraDescriptionFlags`, `ManaCostPercentage`, `StartRecoveryCategory`, `StartRecoveryTime`, " +
-                           "`MinTargetLevel`, `MaxTargetLevel`, `SpellFamilyName`, `SpellFamilyFlags`, " +
-                           "`MaxAffectedTargets`, `DmgClass`, `PreventionType`, `stanceBarOrder`, " +
-                           "`DmgMultiplier1`, `DmgMultiplier2`, `DmgMultiplier3`, `MinFactionId`, " +
-                           "`MinReputation`, `RequiredAuraVision`, `Custom`) VALUES (");
+                           "`auraDescriptionFlags`, `manaCostPercentage`, `startRecoveryCategory`, `startRecoveryTime`, " +
+                           "`minTargetLevel`, `maxTargetLevel`, `spellFamilyName`, `spellFamilyFlags`, " +
+                           "`maxAffectedTargets`, `dmgClass`, `preventionType`, `stanceBarOrder`, " +
+                           "`dmgMultiplier1`, `dmgMultiplier2`, `dmgMultiplier3`, `minFactionId`, " +
+                           "`minReputation`, `requiredAuraVision`, `customFlags`) VALUES (");
 
             // Values
             sql.AppendLine($"  {currentSpell.Id}, {currentSpell.School}, {currentSpell.Category}, 0, {currentSpell.Dispel}, " +
@@ -751,7 +751,7 @@ namespace SpellWorker
                           $"{currentSpell.EffectTriggerSpell[1]}, {currentSpell.EffectTriggerSpell[2]}, " +
                           $"{FormatFloat(currentSpell.EffectPointsPerComboPoint[0])}, {FormatFloat(currentSpell.EffectPointsPerComboPoint[1])}, " +
                           $"{FormatFloat(currentSpell.EffectPointsPerComboPoint[2])}, {currentSpell.SpellVisual}, " +
-                          $"{currentSpell.SpellIconID}, {currentSpell.activeIconID}, {currentSpell.spellPriority}, " +
+                          $"0, {currentSpell.SpellIconID}, {currentSpell.activeIconID}, {currentSpell.spellPriority}, " +
                           $"'{EscapeSql(currentSpell.SpellName)}', {currentSpell.nameFlags}, '{EscapeSql(currentSpell.nameSubtext)}', " +
                           $"{currentSpell.nameSubtextFlags}, '{EscapeSql(currentSpell.description)}', " +
                           $"{currentSpell.descriptionFlags}, '{EscapeSql(currentSpell.auraDescription)}', " +

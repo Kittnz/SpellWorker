@@ -9,6 +9,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace SpellWorker
 {
@@ -25,6 +26,8 @@ namespace SpellWorker
     {
         private SpellData currentSpell;
         private ObservableCollection<ReagentItem> reagentItems;
+        private DatabaseConnector dbConnector;
+        private bool isDatabaseMode = false;
 
         public MainWindow()
         {
@@ -42,11 +45,143 @@ namespace SpellWorker
             InitializeEnums();
 
             // Defer loading the spell data until after initialization is complete
-            this.Loaded += (s, e) =>
+            this.Loaded += async (s, e) =>
             {
-                NewSpell();
+                // Try to connect to the database
+                await InitializeDatabaseConnectionAsync();
+
+                // Create a new spell if not in database mode
+                if (!isDatabaseMode)
+                {
+                    NewSpell();
+                }
+
                 txtStatus.Text = "Ready";
             };
+        }
+
+        private async Task InitializeDatabaseConnectionAsync()
+        {
+            // Try to use saved connection settings
+            string server = AppSettings.Default.DbServer;
+            string database = AppSettings.Default.DbName;
+            string username = AppSettings.Default.DbUsername;
+            string password = AppSettings.Default.DbPassword;
+            int port = AppSettings.Default.DbPort;
+
+            if (!string.IsNullOrEmpty(server) && !string.IsNullOrEmpty(database) && !string.IsNullOrEmpty(username))
+            {
+                // Try the saved connection
+                dbConnector = new DatabaseConnector(server, database, username, password, port);
+
+                if (dbConnector.TestConnection())
+                {
+                    // Connection successful
+                    isDatabaseMode = true;
+                    UpdateUIForDatabaseMode();
+                    return;
+                }
+            }
+
+            // If not successful, prompt for connection
+            if (!isDatabaseMode)
+            {
+                await ShowDatabaseConfigAsync();
+            }
+        }
+
+        private async Task ShowDatabaseConfigAsync()
+        {
+            DatabaseConfigWindow configWindow = new DatabaseConfigWindow();
+            configWindow.Owner = this;
+
+            if (configWindow.ShowDialog() == true)
+            {
+                // User provided valid connection
+                dbConnector = new DatabaseConnector(
+                    configWindow.Server,
+                    configWindow.Database,
+                    configWindow.Username,
+                    configWindow.Password,
+                    configWindow.Port);
+
+                isDatabaseMode = true;
+                UpdateUIForDatabaseMode();
+
+                // Show the spell browser
+                await ShowSpellBrowserAsync();
+            }
+        }
+
+        private void UpdateUIForDatabaseMode()
+        {
+            // Find menu items by their specific names in XAML instead of using Menu.Items
+            MenuItem miNewSpell = FindName("NewSpell") as MenuItem;
+            MenuItem miLoadSpell = FindName("LoadSpell") as MenuItem;
+            MenuItem miSaveSpell = FindName("SaveSpell") as MenuItem;
+            MenuItem miGenerateSql = FindName("GenerateSQL") as MenuItem;
+            MenuItem menuFile = FindName("menuFile") as MenuItem;
+
+            // If you can't find them by name, look for them by content
+            if (menuFile == null)
+            {
+                // Try to find the menu items in the window's logical tree
+                var mainMenu = this.FindName("MainMenu") as Menu;
+                if (mainMenu != null)
+                {
+                    // Look for the File menu
+                    foreach (var item in mainMenu.Items)
+                    {
+                        if (item is MenuItem menuItem && menuItem.Header.ToString() == "File")
+                        {
+                            menuFile = menuItem;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Now update the menu items if found
+            if (miNewSpell != null)
+                miNewSpell.Header = "New Spell";
+            if (miLoadSpell != null)
+                miLoadSpell.Header = "Browse Spells";
+            if (miSaveSpell != null)
+                miSaveSpell.Header = "Save to Database";
+            if (miGenerateSql != null)
+                miGenerateSql.Header = "Export SQL";
+
+            // Add database configuration menu item
+            MenuItem miDbConfig = new MenuItem { Header = "Database Configuration" };
+            miDbConfig.Click += async (s, e) => await ShowDatabaseConfigAsync();
+
+            if (menuFile != null && menuFile.Items.Count >= 5)
+            {
+                menuFile.Items.Insert(4, miDbConfig);
+                menuFile.Items.Insert(5, new Separator());
+            }
+
+            // Update window title
+            Title = $"Spell Worker - Database Mode ({dbConnector?.GetType().Name})";
+        }
+
+        private async Task ShowSpellBrowserAsync()
+        {
+            if (isDatabaseMode && dbConnector != null)
+            {
+                SpellBrowserWindow browser = new SpellBrowserWindow(dbConnector);
+                browser.Owner = this;
+
+                // This might appear to be synchronous, but it's actually waiting for user interaction
+                // so we can leave it as is
+                if (browser.ShowDialog() == true && browser.SelectedSpell != null)
+                {
+                    // User selected a spell
+                    currentSpell = browser.SelectedSpell;
+                    LoadSpellDataToUI();
+                    txtStatus.Text = $"Loaded spell ID {currentSpell.Id} from database";
+                }
+            }
         }
 
         private void InitializeEnums()
@@ -271,12 +406,21 @@ namespace SpellWorker
             // Similar logic could be implemented for other controls based on the effect
         }
 
-        private void NewSpell_Click(object sender, RoutedEventArgs e)
+        private async void NewSpell_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Create a new spell? Unsaved changes will be lost.", "Confirm",
-                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (isDatabaseMode)
             {
-                NewSpell();
+                // In database mode, we show the spell browser with option to create new
+                await ShowSpellBrowserAsync();
+            }
+            else
+            {
+                // In file mode, we just create a new spell
+                if (MessageBox.Show("Create a new spell? Unsaved changes will be lost.", "Confirm",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    NewSpell();
+                }
             }
         }
 
@@ -287,55 +431,92 @@ namespace SpellWorker
             txtStatus.Text = "New spell created";
         }
 
-        private void LoadSpell_Click(object sender, RoutedEventArgs e)
+        private async void LoadSpell_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog
+            if (isDatabaseMode)
             {
-                Filter = "Spell Files (*.spell)|*.spell|All Files (*.*)|*.*",
-                Title = "Load Spell Data"
-            };
+                // In database mode, show the spell browser
+                await ShowSpellBrowserAsync();
+            }
+            else
+            {
+                // In file mode, show the file dialog
+                OpenFileDialog dialog = new OpenFileDialog
+                {
+                    Filter = "Spell Files (*.spell)|*.spell|All Files (*.*)|*.*",
+                    Title = "Load Spell Data"
+                };
 
-            if (dialog.ShowDialog() == true)
-            {
-                try
+                if (dialog.ShowDialog() == true)
                 {
-                    string json = File.ReadAllText(dialog.FileName);
-                    currentSpell = SpellData.FromJson(json);
-                    LoadSpellDataToUI();
-                    txtStatus.Text = $"Loaded spell ID {currentSpell.Id} from {System.IO.Path.GetFileName(dialog.FileName)}";
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error loading spell: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    txtStatus.Text = "Error loading spell";
+                    try
+                    {
+                        string json = File.ReadAllText(dialog.FileName);
+                        currentSpell = SpellData.FromJson(json);
+                        LoadSpellDataToUI();
+                        txtStatus.Text = $"Loaded spell ID {currentSpell.Id} from {System.IO.Path.GetFileName(dialog.FileName)}";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error loading spell: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        txtStatus.Text = "Error loading spell";
+                    }
                 }
             }
         }
 
-        private void SaveSpell_Click(object sender, RoutedEventArgs e)
+        private async void SaveSpell_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog
-            {
-                Filter = "Spell Files (*.spell)|*.spell|All Files (*.*)|*.*",
-                Title = "Save Spell Data",
-                DefaultExt = ".spell",
-                FileName = $"spell_{currentSpell.Id}.spell"
-            };
+            SaveUIDataToSpell();
 
-            if (dialog.ShowDialog() == true)
+            if (isDatabaseMode)
             {
+                // In database mode, save to database
                 try
                 {
-                    SaveUIDataToSpell();
-                    string json = currentSpell.ToJson();
-                    File.WriteAllText(dialog.FileName, json);
-                    MessageBox.Show("Spell saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    txtStatus.Text = $"Saved spell ID {currentSpell.Id} to {System.IO.Path.GetFileName(dialog.FileName)}";
+                    bool success = await dbConnector.SaveSpellAsync(currentSpell);
+                    if (success)
+                    {
+                        MessageBox.Show("Spell saved to database successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        txtStatus.Text = $"Saved spell ID {currentSpell.Id} to database";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to save spell to database.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        txtStatus.Text = "Error saving spell to database";
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error saving spell: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    txtStatus.Text = "Error saving spell";
+                    txtStatus.Text = "Error saving spell to database";
+                }
+            }
+            else
+            {
+                // In file mode, save to a file
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    Filter = "Spell Files (*.spell)|*.spell|All Files (*.*)|*.*",
+                    Title = "Save Spell Data",
+                    DefaultExt = ".spell",
+                    FileName = $"spell_{currentSpell.Id}.spell"
+                };
+
+                if (dialog.ShowDialog() == true)
+                {
+                    try
+                    {
+                        string json = currentSpell.ToJson();
+                        File.WriteAllText(dialog.FileName, json);
+                        MessageBox.Show("Spell saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        txtStatus.Text = $"Saved spell ID {currentSpell.Id} to {System.IO.Path.GetFileName(dialog.FileName)}";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error saving spell: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        txtStatus.Text = "Error saving spell";
+                    }
                 }
             }
         }
@@ -369,7 +550,7 @@ namespace SpellWorker
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Spell Worker \n\nA tool for creating and editing spells.\n\nVersion 1.0.0", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Spell Worker \n\nA tool for creating and editing spells for Turtle WoW.\n\nVersion 1.0.0", "About", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void LoadSpellDataToUI()

@@ -1,7 +1,7 @@
 <Window x:Class="SpellWorker.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Spell Worker" Height="788" Width="1230">
+        Title="Spell Worker" Height="926" Width="1230">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="59*"/>
@@ -13,15 +13,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
         <!-- Menu Bar -->
         <Menu Grid.Row="0" Grid.ColumnSpan="5" Margin="0,0,0,694" Grid.RowSpan="2">
             <MenuItem Header="File">
-                <MenuItem Header="New Spell" Click="NewSpell_Click"/>
+                <!-- <MenuItem Header="New Spell" Click="NewSpell_Click"/> -->
                 <MenuItem Header="Load Spell" Click="LoadSpell_Click"/>
-                <MenuItem Header="Save Spell" Click="SaveSpell_Click"/>
+                <!-- <MenuItem Header="Save Spell" Click="SaveSpell_Click"/> -->
                 <MenuItem Header="Generate SQL" Click="GenerateSQL_Click"/>
                 <Separator/>
                 <MenuItem Header="Exit" Click="Exit_Click"/>
@@ -32,7 +32,7 @@
         </Menu>
 
         <!-- Main Content -->
-        <TabControl Grid.Row="1" Margin="10,24,10,-4" Grid.ColumnSpan="5" Grid.RowSpan="2">
+        <TabControl Grid.Row="1" Margin="10,27,10,10" Grid.ColumnSpan="5">
             <TabItem Header="Basic Properties">
                 <ScrollViewer>
                     <Grid Margin="10">
@@ -557,7 +557,7 @@
 
                         <Label Grid.Row="6" Grid.Column="2" Content="Custom Flags:" ToolTip="Custom server-side flags"/>
                         <TextBox Grid.Row="6" Grid.Column="3" Name="txtCustom" Margin="5"/>
-                        
+
                         <Label Grid.Row="0" Grid.Column="1" Content="Spell Visual2:" ToolTip="Visual effect ID" Margin="178,1,200,28" Grid.RowSpan="2"/>
                         <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtSpellVisual2" Margin="272,8,5,8"/>
                     </Grid>
@@ -645,7 +645,7 @@
         </TabControl>
 
         <!-- Status Bar -->
-        <StatusBar Grid.Row="1" Grid.ColumnSpan="5" Margin="0,694,0,0">
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="5">
             <StatusBarItem>
                 <TextBlock Name="txtStatus" Text="Ready"/>
             </StatusBarItem>

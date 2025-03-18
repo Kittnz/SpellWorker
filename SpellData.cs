@@ -1002,7 +1002,7 @@ enum SpellCategories
                 var options = new JsonSerializerOptions
                 {
                     WriteIndented = true,
-                    IgnoreNullValues = true
+                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
                 };
 
                 return JsonSerializer.Serialize(this, options);
@@ -1020,7 +1020,7 @@ enum SpellCategories
             {
                 var options = new JsonSerializerOptions
                 {
-                    IgnoreNullValues = true
+                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
                 };
 
                 SpellData spellData = JsonSerializer.Deserialize<SpellData>(json, options);

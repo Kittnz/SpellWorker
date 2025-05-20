@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace SpellWorker
 {
-    // Enum definitions based on the VMangos source
+    // Enum definitions based on the vMangos source
     public enum SpellSchool
     {
         SPELL_SCHOOL_NORMAL = 0,

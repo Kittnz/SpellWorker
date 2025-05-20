@@ -42,7 +42,7 @@ namespace SpellWorker
             AppSettings.Default.Save();
         }
 
-        private void btnConnect_Click(object sender, RoutedEventArgs e)
+        private async void btnConnect_Click(object sender, RoutedEventArgs e)
         {
             // Get values from UI
             Server = txtServer.Text.Trim();
@@ -68,7 +68,17 @@ namespace SpellWorker
 
             // Test connection
             var dbConnector = new DatabaseConnector(Server, Database, Username, Password, Port);
-            if (dbConnector.TestConnection())
+
+            // Show a loading indicator or disable the button to prevent multiple clicks
+            btnConnect.IsEnabled = false;
+
+            // Use await with the async method
+            bool connectionSuccessful = await dbConnector.TestConnectionAsync();
+
+            // Re-enable the button
+            btnConnect.IsEnabled = true;
+
+            if (connectionSuccessful)
             {
                 // Connection successful
                 SaveSettings();

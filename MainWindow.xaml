@@ -131,8 +131,8 @@
                         <TextBox Grid.Row="9" Grid.Column="3" Name="txtSpellLevel" Margin="5"/>
 
                         <!-- Row 10 -->
-                        <Label Grid.Row="10" Grid.Column="0" Content="Duration Index:" ToolTip="Index into SpellDuration.dbc"/>
-                        <TextBox Grid.Row="10" Grid.Column="1" Name="txtDurationIndex" Margin="5"/>
+                        <Label Grid.Row="10" Grid.Column="0" Content="Duration:" ToolTip="Spell duration from dbc_spell_duration table"/>
+                        <ComboBox Grid.Row="10" Grid.Column="1" Name="cmbDurationIndex" Margin="5" DisplayMemberPath="." SelectionChanged="cmbDurationIndex_SelectionChanged"/>
 
                         <Label Grid.Row="10" Grid.Column="2" Content="Power Type:" ToolTip="Type of resource used (mana, rage, etc.)"/>
                         <ComboBox Grid.Row="10" Grid.Column="3" Name="cmbPowerType" Margin="5"/>

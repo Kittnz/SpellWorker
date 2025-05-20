@@ -9,20 +9,30 @@ namespace SpellWorker
 {
     public class DatabaseConnector
     {
+        private List<SpellDuration> spellDurations;
+
+        // Property to access durations
+        public List<SpellDuration> SpellDurations => spellDurations;
+
         private readonly string connectionString;
 
-        public DatabaseConnector(string server, string database, string username, string password, int port = 3306)
+        public DatabaseConnector(string server, string database, string username, string password, int port = 3310)
         {
             connectionString = $"Server={server};Database={database};Port={port};User ID={username};Password={password};";
+
+            spellDurations = new List<SpellDuration> {
+                new SpellDuration { Id = 0, Base = 0, PerLevel = 0, Max = 0 }
+            };
         }
 
-        public bool TestConnection()
+        public async Task<bool> TestConnectionAsync()
         {
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+                    await LoadSpellDurationsAsync();
                     return true;
                 }
             }
@@ -666,12 +676,77 @@ namespace SpellWorker
                 return false;
             }
         }
+
+        public async Task LoadSpellDurationsAsync()
+        {
+            // Start with a default "None" entry
+            spellDurations = new List<SpellDuration> {
+                    new SpellDuration { Id = 0, Base = 0, PerLevel = 0, Max = 0 }
+                };
+
+            try
+            {
+                // Check if table exists before trying to query it
+                bool tableExists = false;
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    // let's load the durations
+                    string query = "SELECT id, base, perLevel, max FROM dbc_spell_duration ORDER BY id";
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                spellDurations.Add(new SpellDuration
+                                {
+                                    Id = reader.GetInt32("id"),
+                                    Base = reader.GetInt32("base"),
+                                    PerLevel = reader.GetInt32("perLevel"),
+                                    Max = reader.GetInt32("max")
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading spell durations: {ex.Message}\n", "Database Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
-    // Helper class for spell list
+
+        // Helper class for spell list
     public class SpellListItem
     {
         public uint Id { get; set; }
         public string Name { get; set; }
         public uint IconId { get; set; }
+    }
+
+    public class SpellDuration
+    {
+        public int Id { get; set; }
+        public int Base { get; set; }
+        public int PerLevel { get; set; }
+        public int Max { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} - {FormatDurationTime(Base)}";
+        }
+
+        private string FormatDurationTime(int milliseconds)
+        {
+            if (milliseconds == 0) return "None";
+            if (milliseconds < 1000) return $"{milliseconds}ms";
+            if (milliseconds < 60000) return $"{milliseconds / 1000}s";
+            if (milliseconds < 3600000) return $"{milliseconds / 60000}m";
+            return $"{milliseconds / 3600000}h";
+        }
     }
 }

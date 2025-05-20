@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Globalization;
 using System.Threading.Tasks;
+using static SpellWorker.DatabaseConnector;
 
 namespace SpellWorker
 {
@@ -28,6 +29,7 @@ namespace SpellWorker
         private ObservableCollection<ReagentItem> reagentItems;
         private DatabaseConnector dbConnector;
         private bool isDatabaseMode = false;
+        private List<SpellDuration> spellDurations;
 
         public MainWindow()
         {
@@ -74,11 +76,36 @@ namespace SpellWorker
                 // Try the saved connection
                 dbConnector = new DatabaseConnector(server, database, username, password, port);
 
-                if (dbConnector.TestConnection())
+                if (await dbConnector.TestConnectionAsync())
                 {
                     // Connection successful
                     isDatabaseMode = true;
                     UpdateUIForDatabaseMode();
+
+                    // Now load the durations in the background
+                    try
+                    {
+                        await dbConnector.LoadSpellDurationsAsync();
+
+                        // Store the durations for later use
+                        spellDurations = dbConnector.SpellDurations;
+
+                        // Initialize the duration index combo box
+                        cmbDurationIndex.ItemsSource = spellDurations;
+                        cmbDurationIndex.DisplayMemberPath = null;
+                        cmbDurationIndex.SelectedValuePath = "Id";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error loading spell durations: {ex.Message}", "Warning",
+                            MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                        // Use default durations
+                        spellDurations = new List<SpellDuration> {
+                            new SpellDuration { Id = 0, Base = 0, PerLevel = 0, Max = 0 }
+                        };
+                    }
+
                     return;
                 }
             }
@@ -427,6 +454,20 @@ namespace SpellWorker
         private void NewSpell()
         {
             currentSpell = new SpellData();
+
+            // If we're not in database mode, create some default durations
+            if (!isDatabaseMode && spellDurations == null)
+            {
+                spellDurations = new List<SpellDuration>
+                {
+                    new SpellDuration { Id = 0, Base = 0, PerLevel = 0, Max = 0 }
+                };
+        
+                cmbDurationIndex.ItemsSource = spellDurations;
+                cmbDurationIndex.DisplayMemberPath = "ToString()";
+                cmbDurationIndex.SelectedValuePath = "Id";
+            }
+
             LoadSpellDataToUI();
             txtStatus.Text = "New spell created";
         }
@@ -581,7 +622,20 @@ namespace SpellWorker
             txtMaxLevel.Text = currentSpell.maxLevel.ToString();
             txtBaseLevel.Text = currentSpell.baseLevel.ToString();
             txtSpellLevel.Text = currentSpell.spellLevel.ToString();
-            txtDurationIndex.Text = currentSpell.DurationIndex.ToString();
+
+            // Update the duration index combo box
+            int durationIndex = (int)currentSpell.DurationIndex;
+            var duration = spellDurations.FirstOrDefault(d => d.Id == durationIndex);
+            if (duration != null)
+            {
+                cmbDurationIndex.SelectedValue = duration.Id;
+            }
+            else
+            {
+                // If the duration index is not found, select the first item (None)
+                cmbDurationIndex.SelectedIndex = 0;
+            }
+
             cmbPowerType.SelectedValue = (int)currentSpell.powerType;
             txtManaCost.Text = currentSpell.manaCost.ToString();
             txtManaCostPerLevel.Text = currentSpell.manaCostPerlevel.ToString();
@@ -658,6 +712,11 @@ namespace SpellWorker
 
             // Update the SQL preview
             GenerateSQL_Click(null, null);
+        }
+
+        private void cmbDurationIndex_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Nothing special needed here, but we could show additional info if needed
         }
 
         private void LoadAttributeCheckboxes(uint attributes, string checkboxPrefix)
@@ -753,7 +812,7 @@ namespace SpellWorker
             currentSpell.maxLevel = ParseUInt(txtMaxLevel.Text);
             currentSpell.baseLevel = ParseUInt(txtBaseLevel.Text);
             currentSpell.spellLevel = ParseUInt(txtSpellLevel.Text);
-            currentSpell.DurationIndex = ParseUInt(txtDurationIndex.Text);
+            currentSpell.DurationIndex = (uint)((SpellDuration)cmbDurationIndex.SelectedItem).Id;
             currentSpell.powerType = (uint)GetSelectedValue(cmbPowerType);
             currentSpell.manaCost = ParseUInt(txtManaCost.Text);
             currentSpell.manaCostPerlevel = ParseUInt(txtManaCostPerLevel.Text);

@@ -1,0 +1,112 @@
+#
+# NOTE! Don't add files that are generated in specific
+# subdirectories here. Add them in the ".gitignore" file
+# in that subdirectory instead.
+#
+# NOTE! Please use 'git-ls-files -i --exclude-standard'
+# command after changing this file, to see if there are
+# any tracked files which get ignored after the change.
+#
+# Normal rules 
+#
+.*
+*.o
+*.o.*
+*.a
+*.so
+*.so.dbg
+*.bin
+*.gz
+
+# Visual studio solution files
+*.tlog
+*.vcxproj
+*.vcxproj.filters
+*.sln
+*.db
+*.opendb
+*.exp
+*.res
+
+#CLion
+cmake-build-debug
+
+#
+# Top-level generic files
+#
+bin
+build
+tags
+TAGS
+!.gitignore
+!.gitattributes
+
+
+#
+# Editors / debuggers / other output files
+#
+*~
+*.bak
+*.orig
+*.patch
+callgrind.out.*
+
+#
+# Git stuff
+#
+# stgit directories
+patches-*
+
+#
+# VS binaries output
+#
+build*/
+bin/*
+win/*
+
+#
+# VS other files
+#
+*.[Oo]bj
+*.user
+*.aps
+*.pdb
+*.pch
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.[Cc]ache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.sdf
+*.opensdf
+*.unsuccessfulbuild
+ipch/
+obj/
+[Dd]ebug*/
+[Rr]elease*/
+Ankh.NoLoad
+
+#
+# CMake temporary files
+#
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+
+#
+# OS specific
+#
+# MacOS
+.DS_Store
+
+sql/migrations/*.py
+

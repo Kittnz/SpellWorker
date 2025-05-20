@@ -271,6 +271,7 @@ namespace SpellWorker
                                 spell.MinReputation = reader.GetUInt32("minReputation");
                                 spell.RequiredAuraVision = reader.GetUInt32("requiredAuraVision");
                                 spell.Custom = reader.GetUInt32("customFlags");
+                                spell.ScriptName = reader.GetString("script_name");
 
                                 return spell;
                             }
@@ -399,7 +400,7 @@ namespace SpellWorker
                                 "dmgClass = @DmgClass, preventionType = @PreventionType, stanceBarOrder = @stanceBarOrder, " +
                                 "dmgMultiplier1 = @DmgMultiplier1, dmgMultiplier2 = @DmgMultiplier2, dmgMultiplier3 = @DmgMultiplier3, " +
                                 "minFactionId = @MinFactionId, minReputation = @MinReputation, " +
-                                "requiredAuraVision = @RequiredAuraVision, customFlags = @Custom " +
+                                "requiredAuraVision = @RequiredAuraVision, customFlags = @Custom, script_name = @ScriptName " +
                                 "WHERE entry = @entry";
                     }
                     else
@@ -432,7 +433,7 @@ namespace SpellWorker
                                 "nameSubtext, nameSubtextFlags, description, descriptionFlags, auraDescription, auraDescriptionFlags, " +
                                 "manaCostPercentage, startRecoveryCategory, startRecoveryTime, minTargetLevel, maxTargetLevel, " +
                                 "spellFamilyName, spellFamilyFlags, maxAffectedTargets, dmgClass, preventionType, stanceBarOrder, " +
-                                "dmgMultiplier1, dmgMultiplier2, dmgMultiplier3, minFactionId, minReputation, requiredAuraVision, customFlags) " +
+                                "dmgMultiplier1, dmgMultiplier2, dmgMultiplier3, minFactionId, minReputation, requiredAuraVision, customFlags, script_name) " +
                                 "VALUES (" +
                                 "@entry, @School, @Category, 0, @Dispel, @Mechanic, @Attributes, @AttributesEx, @AttributesEx2, " +
                                 "@AttributesEx3, @AttributesEx4, @Stances, @StancesNot, @Targets, @TargetCreatureType, " +
@@ -463,7 +464,7 @@ namespace SpellWorker
                                 "@StartRecoveryCategory, @StartRecoveryTime, @MinTargetLevel, @MaxTargetLevel, @SpellFamilyName, " +
                                 "@SpellFamilyFlags, @MaxAffectedTargets, @DmgClass, @PreventionType, @stanceBarOrder, " +
                                 "@DmgMultiplier1, @DmgMultiplier2, @DmgMultiplier3, @MinFactionId, @MinReputation, " +
-                                "@RequiredAuraVision, @Custom)";
+                                "@RequiredAuraVision, @Custom, @ScriptName)";
                     }
 
                     // Create the command with parameters
@@ -651,6 +652,7 @@ namespace SpellWorker
                         command.Parameters.AddWithValue("@MinReputation", spell.MinReputation);
                         command.Parameters.AddWithValue("@RequiredAuraVision", spell.RequiredAuraVision);
                         command.Parameters.AddWithValue("@Custom", spell.Custom);
+                        command.Parameters.AddWithValue("@ScriptName", spell.Custom);
 
                         // Execute the query
                         int rowsAffected = await command.ExecuteNonQueryAsync();

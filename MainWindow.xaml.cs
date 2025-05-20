@@ -884,7 +884,7 @@ namespace SpellWorker
                            "`minTargetLevel`, `maxTargetLevel`, `spellFamilyName`, `spellFamilyFlags`, " +
                            "`maxAffectedTargets`, `dmgClass`, `preventionType`, `stanceBarOrder`, " +
                            "`dmgMultiplier1`, `dmgMultiplier2`, `dmgMultiplier3`, `minFactionId`, " +
-                           "`minReputation`, `requiredAuraVision`, `customFlags`) VALUES (");
+                           "`minReputation`, `requiredAuraVision`, `customFlags`, `script_name`) VALUES (");
 
             // Values
             sql.AppendLine($"  {currentSpell.Id}, {currentSpell.School}, {currentSpell.Category}, 0, {currentSpell.Dispel}, " +
@@ -945,7 +945,7 @@ namespace SpellWorker
                           $"{currentSpell.PreventionType}, {currentSpell.stanceBarOrder}, " +
                           $"{FormatFloat(currentSpell.DmgMultiplier[0])}, {FormatFloat(currentSpell.DmgMultiplier[1])}, " +
                           $"{FormatFloat(currentSpell.DmgMultiplier[2])}, {currentSpell.MinFactionId}, " +
-                          $"{currentSpell.MinReputation}, {currentSpell.RequiredAuraVision}, {currentSpell.Custom});");
+                          $"{currentSpell.MinReputation}, {currentSpell.RequiredAuraVision}, {currentSpell.Custom}, '{currentSpell.ScriptName}');");
 
             return sql.ToString();
         }

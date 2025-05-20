@@ -947,6 +947,8 @@ enum SpellCategories
         public uint MinReputation { get; set; }
         public uint RequiredAuraVision { get; set; }
         public uint Custom { get; set; }
+        public string ScriptName { get; set; } = string.Empty;
+
 
         // Constructor with default values
         public SpellData()

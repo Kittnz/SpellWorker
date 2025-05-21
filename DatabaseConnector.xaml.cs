@@ -10,9 +10,11 @@ namespace SpellWorker
     public class DatabaseConnector
     {
         private List<SpellDuration> spellDurations;
+        private List<SpellCastTimes> spellCastTimes;
 
         // Property to access durations
         public List<SpellDuration> SpellDurations => spellDurations;
+        public List<SpellCastTimes> SpellCastTimes => spellCastTimes;
 
         private readonly string connectionString;
 
@@ -22,6 +24,10 @@ namespace SpellWorker
 
             spellDurations = new List<SpellDuration> {
                 new SpellDuration { Id = 0, Base = 0, PerLevel = 0, Max = 0 }
+            };
+
+            spellCastTimes = new List<SpellCastTimes> {
+                new SpellCastTimes { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
             };
         }
 
@@ -33,6 +39,7 @@ namespace SpellWorker
                 {
                     await connection.OpenAsync();
                     await LoadSpellDurationsAsync();
+                    await LoadSpellCastTimesAsync();
                     return true;
                 }
             }
@@ -686,9 +693,6 @@ namespace SpellWorker
 
             try
             {
-                // Check if table exists before trying to query it
-                bool tableExists = false;
-
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     await connection.OpenAsync();
@@ -718,9 +722,47 @@ namespace SpellWorker
                 MessageBox.Show($"Error loading spell durations: {ex.Message}\n", "Database Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        public async Task LoadSpellCastTimesAsync()
+        {
+            spellCastTimes = new List<SpellCastTimes> {
+                    new SpellCastTimes { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
+                };
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    // let's load the durations
+                    string query = "SELECT id, base, perLevel, minimum FROM dbc_spell_cast_times ORDER BY id";
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                spellCastTimes.Add(new SpellCastTimes
+                                {
+                                    Id = reader.GetInt32("id"),
+                                    Base = reader.GetInt32("base"),
+                                    PerLevel = reader.GetInt32("perLevel"),
+                                    Min = reader.GetInt32("minimum")
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading spell cast times: {ex.Message}\n", "Database Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 
-        // Helper class for spell list
+    // Helper class for spell list
     public class SpellListItem
     {
         public uint Id { get; set; }
@@ -734,6 +776,28 @@ namespace SpellWorker
         public int Base { get; set; }
         public int PerLevel { get; set; }
         public int Max { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} - {FormatDurationTime(Base)}";
+        }
+
+        private string FormatDurationTime(int milliseconds)
+        {
+            if (milliseconds == 0) return "None";
+            if (milliseconds < 1000) return $"{milliseconds}ms";
+            if (milliseconds < 60000) return $"{milliseconds / 1000}s";
+            if (milliseconds < 3600000) return $"{milliseconds / 60000}m";
+            return $"{milliseconds / 3600000}h";
+        }
+    }
+
+    public class SpellCastTimes
+    {
+        public int Id { get; set; }
+        public int Base { get; set; }
+        public int PerLevel { get; set; }
+        public int Min { get; set; }
 
         public override string ToString()
         {

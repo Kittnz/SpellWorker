@@ -89,8 +89,8 @@
                         <ComboBox Grid.Row="3" Grid.Column="3" Name="cmbTargetCreatureType" Margin="5"/>
 
                         <!-- Row 4 -->
-                        <Label Grid.Row="4" Grid.Column="0" Content="Casting Time Index:" ToolTip="Index into SpellCastTimes.dbc"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" Name="txtCastingTimeIndex" Margin="5"/>
+                        <Label Grid.Row="4" Grid.Column="0" Content="Casting Time:" ToolTip="Spell Casting Time from dbc_spell_cast_times table"/>
+                        <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbCastTimesIndex" Margin="5" DisplayMemberPath="." SelectionChanged="cmbCastTimesIndex_SelectionChanged"/>
 
                         <Label Grid.Row="4" Grid.Column="2" Content="Recovery Time:" ToolTip="Cooldown in milliseconds"/>
                         <TextBox Grid.Row="4" Grid.Column="3" Name="txtRecoveryTime" Margin="5"/>

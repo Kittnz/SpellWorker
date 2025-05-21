@@ -10,7 +10,6 @@ using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Globalization;
 using System.Threading.Tasks;
-using static SpellWorker.DatabaseConnector;
 
 namespace SpellWorker
 {
@@ -30,6 +29,7 @@ namespace SpellWorker
         private DatabaseConnector dbConnector;
         private bool isDatabaseMode = false;
         private List<SpellDuration> spellDurations;
+        private List<SpellCastTimes> spellCastTimes;
 
         public MainWindow()
         {
@@ -97,12 +97,34 @@ namespace SpellWorker
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error loading spell durations: {ex.Message}", "Warning",
-                            MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show($"Error loading spell durations: {ex.Message}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                         // Use default durations
                         spellDurations = new List<SpellDuration> {
                             new SpellDuration { Id = 0, Base = 0, PerLevel = 0, Max = 0 }
+                        };
+                    }
+
+                    // Now load the spell cast times in the background
+                    try
+                    {
+                        await dbConnector.LoadSpellCastTimesAsync();
+
+                        // Store the durations for later use
+                        spellCastTimes = dbConnector.SpellCastTimes;
+
+                        // Initialize the duration index combo box
+                        cmbCastTimesIndex.ItemsSource = spellCastTimes;
+                        cmbCastTimesIndex.DisplayMemberPath = null;
+                        cmbCastTimesIndex.SelectedValuePath = "Id";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error loading spell cast times: {ex.Message}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                        // Use default durations
+                        spellCastTimes = new List<SpellCastTimes> {
+                            new SpellCastTimes { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
                         };
                     }
 
@@ -468,6 +490,18 @@ namespace SpellWorker
                 cmbDurationIndex.SelectedValuePath = "Id";
             }
 
+            if (!isDatabaseMode && spellCastTimes == null)
+            {
+                spellCastTimes = new List<SpellCastTimes>
+                {
+                    new SpellCastTimes { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
+                };
+
+                cmbCastTimesIndex.ItemsSource = spellCastTimes;
+                cmbCastTimesIndex.DisplayMemberPath = "ToString()";
+                cmbCastTimesIndex.SelectedValuePath = "Id";
+            }
+
             LoadSpellDataToUI();
             txtStatus.Text = "New spell created";
         }
@@ -610,7 +644,22 @@ namespace SpellWorker
             // Load other properties
             cmbTargets.SelectedValue = (int)currentSpell.Targets;
             cmbTargetCreatureType.SelectedValue = (int)currentSpell.TargetCreatureType;
-            txtCastingTimeIndex.Text = currentSpell.CastingTimeIndex.ToString();
+
+            //txtCastingTimeIndex.Text = currentSpell.CastingTimeIndex.ToString();
+
+            // Update the duration index combo box
+            int castTimesIndex = (int)currentSpell.CastingTimeIndex;
+            var castTimes = spellDurations.FirstOrDefault(d => d.Id == castTimesIndex);
+            if (castTimes != null)
+            {
+                cmbCastTimesIndex.SelectedValue = castTimes.Id;
+            }
+            else
+            {
+                // If the duration index is not found, select the first item (None)
+                cmbCastTimesIndex.SelectedIndex = 0;
+            }
+
             txtRecoveryTime.Text = currentSpell.RecoveryTime.ToString();
             txtCategoryRecoveryTime.Text = currentSpell.CategoryRecoveryTime.ToString();
             cmbInterruptFlags.SelectedValue = (int)currentSpell.InterruptFlags;
@@ -719,6 +768,11 @@ namespace SpellWorker
             // Nothing special needed here, but we could show additional info if needed
         }
 
+        private void cmbCastTimesIndex_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Nothing special needed here, but we could show additional info if needed
+        }
+
         private void LoadAttributeCheckboxes(uint attributes, string checkboxPrefix)
         {
             for (int i = 0; i < 32; i++)
@@ -800,7 +854,7 @@ namespace SpellWorker
             // Save other properties
             currentSpell.Targets = (uint)GetSelectedValue(cmbTargets);
             currentSpell.TargetCreatureType = (uint)GetSelectedValue(cmbTargetCreatureType);
-            currentSpell.CastingTimeIndex = ParseUInt(txtCastingTimeIndex.Text);
+            currentSpell.CastingTimeIndex = (uint)((SpellCastTimes)cmbCastTimesIndex.SelectedItem).Id;
             currentSpell.RecoveryTime = ParseUInt(txtRecoveryTime.Text);
             currentSpell.CategoryRecoveryTime = ParseUInt(txtCategoryRecoveryTime.Text);
             currentSpell.InterruptFlags = (uint)GetSelectedValue(cmbInterruptFlags);

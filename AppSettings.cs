@@ -12,7 +12,7 @@ namespace SpellWorker
             "SpellWorker",
             "settings.json");
 
-        public string DbServer { get; set; } = "localhost";
+        public string DbServer { get; set; } = "127.0.0.1";
         public string DbName { get; set; } = "tw_dev_world";
         public string DbUsername { get; set; } = "root";
         public string DbPassword { get; set; } = "root";

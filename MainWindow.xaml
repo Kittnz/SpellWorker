@@ -268,8 +268,8 @@
                                 <ComboBox Grid.Row="4" Grid.Column="3" Name="cmbEffectImplicitTargetB0" Margin="5"/>
 
                                 <!-- Row 5 -->
-                                <Label Grid.Row="5" Grid.Column="0" Content="Radius Index:" ToolTip="Index into SpellRadius.dbc for AoE radius"/>
-                                <TextBox Grid.Row="5" Grid.Column="1" Name="txtEffectRadiusIndex0" Margin="5"/>
+                                <Label Grid.Row="5" Grid.Column="0" Content="Radius:" ToolTip="Spell radius from dbc_spell_radius table"/>
+                                <ComboBox Grid.Row="5" Grid.Column="1" Name="cmbEffectRadiusIndex0" Margin="5" DisplayMemberPath="." SelectionChanged="cmbEffectRadiusIndex_SelectionChanged"/>
 
                                 <Label Grid.Row="5" Grid.Column="2" Content="Amplitude:" ToolTip="Time between periodic ticks in milliseconds"/>
                                 <TextBox Grid.Row="5" Grid.Column="3" Name="txtEffectAmplitude0" Margin="5"/>
@@ -364,8 +364,8 @@
                                 <ComboBox Grid.Row="4" Grid.Column="3" Name="cmbEffectImplicitTargetB1" Margin="5"/>
 
                                 <!-- Row 5 -->
-                                <Label Grid.Row="5" Grid.Column="0" Content="Radius Index:" ToolTip="Index into SpellRadius.dbc for AoE radius"/>
-                                <TextBox Grid.Row="5" Grid.Column="1" Name="txtEffectRadiusIndex1" Margin="5"/>
+                                <Label Grid.Row="5" Grid.Column="0" Content="Radius:" ToolTip="Spell radius from dbc_spell_radius table"/>
+                                <ComboBox Grid.Row="5" Grid.Column="1" Name="cmbEffectRadiusIndex1" Margin="5" DisplayMemberPath="." SelectionChanged="cmbEffectRadiusIndex_SelectionChanged"/>
 
                                 <Label Grid.Row="5" Grid.Column="2" Content="Amplitude:" ToolTip="Time between periodic ticks in milliseconds"/>
                                 <TextBox Grid.Row="5" Grid.Column="3" Name="txtEffectAmplitude1" Margin="5"/>
@@ -459,8 +459,8 @@
                                 <ComboBox Grid.Row="4" Grid.Column="3" Name="cmbEffectImplicitTargetB2" Margin="5"/>
 
                                 <!-- Row 5 -->
-                                <Label Grid.Row="5" Grid.Column="0" Content="Radius Index:" ToolTip="Index into SpellRadius.dbc for AoE radius"/>
-                                <TextBox Grid.Row="5" Grid.Column="1" Name="txtEffectRadiusIndex2" Margin="5"/>
+                                <Label Grid.Row="5" Grid.Column="0" Content="Radius:" ToolTip="Spell radius from dbc_spell_radius table"/>
+                                <ComboBox Grid.Row="5" Grid.Column="1" Name="cmbEffectRadiusIndex2" Margin="5" DisplayMemberPath="." SelectionChanged="cmbEffectRadiusIndex_SelectionChanged"/>
 
                                 <Label Grid.Row="5" Grid.Column="2" Content="Amplitude:" ToolTip="Time between periodic ticks in milliseconds"/>
                                 <TextBox Grid.Row="5" Grid.Column="3" Name="txtEffectAmplitude2" Margin="5"/>

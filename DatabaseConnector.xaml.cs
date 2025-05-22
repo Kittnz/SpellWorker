@@ -12,11 +12,13 @@ namespace SpellWorker
         private List<SpellDuration> spellDurations;
         private List<SpellCastTime> spellCastTimes;
         private List<SpellRange> spellRanges;
+        private List<SpellRadius> spellRadiuses;
 
         // Property to access durations
         public List<SpellDuration> SpellDurations => spellDurations;
         public List<SpellCastTime> SpellCastTimes => spellCastTimes;
         public List<SpellRange> SpellRanges => spellRanges;
+        public List<SpellRadius> SpellRadius => spellRadiuses;
 
         private readonly string connectionString;
 
@@ -34,6 +36,10 @@ namespace SpellWorker
 
             spellRanges = new List<SpellRange> {
                 new SpellRange { Id = 0, RangeMin = 0, RangeMax = 0, Flags = 0, Name_enUS = "", ShortName_enUS = "" }
+            };
+
+            spellRadiuses = new List<SpellRadius> {
+                new SpellRadius { Id = 0, Radius = 0, RadiusPerLevel = 0, RadiusMax = 0 }
             };
         }
 
@@ -834,6 +840,46 @@ namespace SpellWorker
             }
         }
 
+        public async Task LoadSpellRadiusAsync()
+        {
+            spellRadiuses = new List<SpellRadius> {
+                new SpellRadius { Id = 0, Radius = 0, RadiusPerLevel = 0, RadiusMax = 0 }
+            };
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string query = @"SELECT id, radius, radiusPerLevel, radiusMax
+                            FROM dbc_spell_radius 
+                            ORDER BY id";
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                spellRadiuses.Add(new SpellRadius
+                                {
+                                    Id = reader.GetInt32("id"),
+                                    Radius = reader.IsDBNull("radius") ? null : reader.GetFloat("radius"),
+                                    RadiusPerLevel = reader.IsDBNull("radiusPerLevel") ? null : reader.GetFloat("radiusPerLevel"),
+                                    RadiusMax = reader.IsDBNull("radiusMax") ? null : reader.GetFloat("radiusMax")
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading spell radius: {ex.Message}\n", "Database Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
     }
 
     // Helper class for spell list
@@ -966,6 +1012,57 @@ namespace SpellWorker
                 "esMX" => ShortName_esMX,
                 _ => ShortName_enUS // Default to English
             };
+        }
+    }
+
+    public class SpellRadius
+    {
+        public int Id { get; set; }
+        public float? Radius { get; set; }
+        public float? RadiusPerLevel { get; set; }
+        public float? RadiusMax { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} - {FormatRadius()}";
+        }
+
+        private string FormatRadius()
+        {
+            if (!Radius.HasValue || Radius == 0) return "No radius";
+
+            float baseRadius = Radius.Value;
+
+            // If there's a per-level component, show it
+            if (RadiusPerLevel.HasValue && RadiusPerLevel > 0)
+            {
+                string maxPart = RadiusMax.HasValue ? $" (max {RadiusMax} yards)" : "";
+                return $"{baseRadius} + {RadiusPerLevel}/level yards{maxPart}";
+            }
+
+            // Just base radius
+            return $"{baseRadius} yards";
+        }
+
+        // Helper method to calculate radius at a specific level
+        public float CalculateRadiusAtLevel(int level)
+        {
+            if (!Radius.HasValue) return 0;
+
+            float calculatedRadius = Radius.Value;
+
+            if (RadiusPerLevel.HasValue)
+            {
+                calculatedRadius += RadiusPerLevel.Value * level;
+            }
+
+            // Apply maximum if specified
+            if (RadiusMax.HasValue && calculatedRadius > RadiusMax.Value)
+            {
+                calculatedRadius = RadiusMax.Value;
+            }
+
+            return calculatedRadius;
         }
     }
 }

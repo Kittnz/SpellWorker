@@ -31,6 +31,8 @@ namespace SpellWorker
         private List<SpellDuration> spellDurations;
         private List<SpellCastTime> spellCastTimes;
         private List<SpellRange> spellRanges;
+        private List<SpellRadius> spellRadiuses;
+
 
         public MainWindow()
         {
@@ -149,6 +151,36 @@ namespace SpellWorker
                         // Use default spell cast times
                         spellRanges = new List<SpellRange> {
                             new SpellRange { Id = 0, RangeMin = 0, RangeMax = 0, Flags = 0, Name_enUS = "", ShortName_enUS = "" }
+                        };
+                    }
+
+                    try
+                    {
+                        await dbConnector.LoadSpellRadiusAsync();
+
+                        // Store the spell radiuses for later use
+                        spellRadiuses = dbConnector.SpellRadius;
+
+                        // Initialize the spell radius index combo boxes for all three effects
+                        cmbEffectRadiusIndex0.ItemsSource = spellRadiuses;
+                        cmbEffectRadiusIndex0.DisplayMemberPath = null;
+                        cmbEffectRadiusIndex0.SelectedValuePath = "Id";
+
+                        cmbEffectRadiusIndex1.ItemsSource = spellRadiuses;
+                        cmbEffectRadiusIndex1.DisplayMemberPath = null;
+                        cmbEffectRadiusIndex1.SelectedValuePath = "Id";
+
+                        cmbEffectRadiusIndex2.ItemsSource = spellRadiuses;
+                        cmbEffectRadiusIndex2.DisplayMemberPath = null;
+                        cmbEffectRadiusIndex2.SelectedValuePath = "Id";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error loading spell radius: {ex.Message}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                        // Use default spell radiuses
+                        spellRadiuses = new List<SpellRadius> {
+                            new SpellRadius { Id = 0, Radius = 0, RadiusPerLevel = 0, RadiusMax = 0 }
                         };
                     }
 
@@ -538,6 +570,26 @@ namespace SpellWorker
                 cmbRangeIndex.SelectedValuePath = "Id";
             }
 
+            if (!isDatabaseMode && spellRadiuses == null)
+            {
+                spellRadiuses = new List<SpellRadius>
+                {
+                    new SpellRadius { Id = 0, Radius = 0, RadiusPerLevel = 0, RadiusMax = 0 }
+                };
+
+                cmbEffectRadiusIndex0.ItemsSource = spellRadiuses;
+                cmbEffectRadiusIndex0.DisplayMemberPath = "ToString()";
+                cmbEffectRadiusIndex0.SelectedValuePath = "Id";
+
+                cmbEffectRadiusIndex1.ItemsSource = spellRadiuses;
+                cmbEffectRadiusIndex1.DisplayMemberPath = "ToString()";
+                cmbEffectRadiusIndex1.SelectedValuePath = "Id";
+
+                cmbEffectRadiusIndex2.ItemsSource = spellRadiuses;
+                cmbEffectRadiusIndex2.DisplayMemberPath = "ToString()";
+                cmbEffectRadiusIndex2.SelectedValuePath = "Id";
+            }
+
             LoadSpellDataToUI();
             txtStatus.Text = "New spell created";
         }
@@ -661,7 +713,7 @@ namespace SpellWorker
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Spell Worker \n\nA tool for creating and editing spells for Turtle WoW. by Kittnz\n\nVersion 1.0.0", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Spell Worker \n\nA tool for creating and editing spells for Turtle WoW.\nby Kittnz\n\nVersion 1.0.0", "About", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void LoadSpellDataToUI()
@@ -826,6 +878,10 @@ namespace SpellWorker
         {
             // Nothing special needed here, but we could show additional info if needed
         }
+        private void cmbEffectRadiusIndex_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Nothing special needed here, but we could show additional info if needed
+        }
 
         private void LoadAttributeCheckboxes(uint attributes, string checkboxPrefix)
         {
@@ -856,7 +912,7 @@ namespace SpellWorker
             ComboBox cmbMechanic = FindName($"cmbEffectMechanic{index}") as ComboBox;
             ComboBox cmbTargetA = FindName($"cmbEffectImplicitTargetA{index}") as ComboBox;
             ComboBox cmbTargetB = FindName($"cmbEffectImplicitTargetB{index}") as ComboBox;
-            TextBox txtRadiusIndex = FindName($"txtEffectRadiusIndex{index}") as TextBox;
+            ComboBox cmbRadiusIndex = FindName($"cmbEffectRadiusIndex{index}") as ComboBox;
             TextBox txtAmplitude = FindName($"txtEffectAmplitude{index}") as TextBox;
             TextBox txtMultipleValue = FindName($"txtEffectMultipleValue{index}") as TextBox;
             TextBox txtChainTarget = FindName($"txtEffectChainTarget{index}") as TextBox;
@@ -877,7 +933,20 @@ namespace SpellWorker
             cmbMechanic.SelectedValue = (int)mechanic;
             cmbTargetA.SelectedValue = (int)targetA;
             cmbTargetB.SelectedValue = (int)targetB;
-            txtRadiusIndex.Text = radiusIndex.ToString();
+
+            // Update the radius index combo box
+            int radiusIdx = (int)radiusIndex;
+            var radius = spellRadiuses?.FirstOrDefault(r => r.Id == radiusIdx);
+            if (radius != null && cmbRadiusIndex != null)
+            {
+                cmbRadiusIndex.SelectedValue = radius.Id;
+            }
+            else if (cmbRadiusIndex != null)
+            {
+                // If the radius index is not found, select the first item (None)
+                cmbRadiusIndex.SelectedIndex = 0;
+            }
+
             txtAmplitude.Text = amplitude.ToString();
             txtMultipleValue.Text = multipleValue.ToString(CultureInfo.InvariantCulture);
             txtChainTarget.Text = chainTarget.ToString();
@@ -977,7 +1046,7 @@ namespace SpellWorker
             ComboBox cmbMechanic = FindName($"cmbEffectMechanic{index}") as ComboBox;
             ComboBox cmbTargetA = FindName($"cmbEffectImplicitTargetA{index}") as ComboBox;
             ComboBox cmbTargetB = FindName($"cmbEffectImplicitTargetB{index}") as ComboBox;
-            TextBox txtRadiusIndex = FindName($"txtEffectRadiusIndex{index}") as TextBox;
+            ComboBox cmbRadiusIndex = FindName($"cmbEffectRadiusIndex{index}") as ComboBox;
             TextBox txtAmplitude = FindName($"txtEffectAmplitude{index}") as TextBox;
             TextBox txtMultipleValue = FindName($"txtEffectMultipleValue{index}") as TextBox;
             TextBox txtChainTarget = FindName($"txtEffectChainTarget{index}") as TextBox;
@@ -998,7 +1067,7 @@ namespace SpellWorker
             currentSpell.EffectMechanic[index] = (uint)GetSelectedValue(cmbMechanic);
             currentSpell.EffectImplicitTargetA[index] = (uint)GetSelectedValue(cmbTargetA);
             currentSpell.EffectImplicitTargetB[index] = (uint)GetSelectedValue(cmbTargetB);
-            currentSpell.EffectRadiusIndex[index] = ParseUInt(txtRadiusIndex.Text);
+            currentSpell.EffectRadiusIndex[index] = (uint)((SpellRadius)cmbRadiusIndex.SelectedItem).Id;
             currentSpell.EffectAmplitude[index] = ParseUInt(txtAmplitude.Text);
             currentSpell.EffectMultipleValue[index] = ParseFloat(txtMultipleValue.Text);
             currentSpell.EffectChainTarget[index] = ParseUInt(txtChainTarget.Text);

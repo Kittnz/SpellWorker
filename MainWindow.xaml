@@ -558,6 +558,10 @@
                         <Label Grid.Row="6" Grid.Column="2" Content="Custom Flags:" ToolTip="Custom server-side flags"/>
                         <TextBox Grid.Row="6" Grid.Column="3" Name="txtCustom" Margin="5"/>
 
+                        <!-- Row 7 -->
+                        <Label Grid.Row="6" Grid.Column="0" Content="Script Name:" ToolTip="C++ Script Name" Grid.ColumnSpan="2" Margin="0,30,469,-30"/>
+                        <TextBox Grid.Row="6" Grid.Column="1" Name="txtScriptName" Margin="5,35,5,-25"/>
+
                         <Label Grid.Row="0" Grid.Column="1" Content="Spell Visual2:" ToolTip="Visual effect ID" Margin="178,1,200,28" Grid.RowSpan="2"/>
                         <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtSpellVisual2" Margin="272,8,5,8"/>
                     </Grid>

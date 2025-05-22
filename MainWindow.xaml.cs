@@ -28,7 +28,7 @@ namespace SpellWorker
         private SpellData currentSpell;
         private ObservableCollection<ReagentItem> reagentItems;
         private DatabaseConnector dbConnector;
-        private bool isDatabaseMode = false;
+        private bool isDatabaseMode = true;
         private List<SpellDuration> spellDurations;
         private List<SpellCastTime> spellCastTimes;
         private List<SpellRange> spellRanges;
@@ -604,28 +604,7 @@ namespace SpellWorker
             }
             else
             {
-                // In file mode, show the file dialog
-                OpenFileDialog dialog = new OpenFileDialog
-                {
-                    Filter = "Spell Files (*.spell)|*.spell|All Files (*.*)|*.*",
-                    Title = "Load Spell Data"
-                };
-
-                if (dialog.ShowDialog() == true)
-                {
-                    try
-                    {
-                        string json = File.ReadAllText(dialog.FileName);
-                        currentSpell = SpellData.FromJson(json);
-                        LoadSpellDataToUI();
-                        txtStatus.Text = $"Loaded spell ID {currentSpell.Id} from {System.IO.Path.GetFileName(dialog.FileName)}";
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error loading spell: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        txtStatus.Text = "Error loading spell";
-                    }
-                }
+                MessageBox.Show($"Error no database connection found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -860,6 +839,7 @@ namespace SpellWorker
             txtSpellFamilyFlags.Text = currentSpell.SpellFamilyFlags.ToString();
             txtMaxAffectedTargets.Text = currentSpell.MaxAffectedTargets.ToString();
             txtCustom.Text = currentSpell.Custom.ToString();
+            txtScriptName.Text = currentSpell.ScriptName.ToString();
 
             // Update the SQL preview
             GenerateSQL_Click(null, null);
@@ -1034,6 +1014,7 @@ namespace SpellWorker
             currentSpell.SpellFamilyFlags = ParseULong(txtSpellFamilyFlags.Text);
             currentSpell.MaxAffectedTargets = ParseUInt(txtMaxAffectedTargets.Text);
             currentSpell.Custom = ParseUInt(txtCustom.Text);
+            currentSpell.ScriptName = txtScriptName.Text;
         }
         private void SaveEffectData(int index)
         {

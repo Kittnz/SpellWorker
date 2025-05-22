@@ -24,22 +24,22 @@ namespace SpellWorker
         private void LoadSettings()
         {
             // Load from app settings if available
-            txtServer.Text = AppSettings.Default.DbServer;
-            txtDatabase.Text = AppSettings.Default.DbName;
-            txtUsername.Text = AppSettings.Default.DbUsername;
-            txtPassword.Password = AppSettings.Default.DbPassword;
-            txtPort.Text = AppSettings.Default.DbPort.ToString();
+            txtServer.Text = SpellEditor.Settings.Default.DbServer;
+            txtDatabase.Text = SpellEditor.Settings.Default.DbName;
+            txtUsername.Text = SpellEditor.Settings.Default.DbUsername;
+            txtPassword.Password = SpellEditor.Settings.Default.DbPassword;
+            txtPort.Text = SpellEditor.Settings.Default.DbPort.ToString();
         }
 
         private void SaveSettings()
         {
             // Save to app settings
-            AppSettings.Default.DbServer = Server;
-            AppSettings.Default.DbName = Database;
-            AppSettings.Default.DbUsername = Username;
-            AppSettings.Default.DbPassword = Password;
-            AppSettings.Default.DbPort = Port;
-            AppSettings.Default.Save();
+            SpellEditor.Settings.Default.DbServer = Server;
+            SpellEditor.Settings.Default.DbName = Database;
+            SpellEditor.Settings.Default.DbUsername = Username;
+            SpellEditor.Settings.Default.DbPassword = Password;
+            SpellEditor.Settings.Default.DbPort = Port;
+            SpellEditor.Settings.Default.Save();
         }
 
         private async void btnConnect_Click(object sender, RoutedEventArgs e)

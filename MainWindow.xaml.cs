@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Globalization;
 using System.Threading.Tasks;
+using SpellEditor;
 
 namespace SpellWorker
 {
@@ -68,11 +69,11 @@ namespace SpellWorker
         private async Task InitializeDatabaseConnectionAsync()
         {
             // Try to use saved connection settings
-            string server = AppSettings.Default.DbServer;
-            string database = AppSettings.Default.DbName;
-            string username = AppSettings.Default.DbUsername;
-            string password = AppSettings.Default.DbPassword;
-            int port = AppSettings.Default.DbPort;
+            string server = SpellEditor.Settings.Default.DbServer;
+            string database = SpellEditor.Settings.Default.DbName;
+            string username = SpellEditor.Settings.Default.DbUsername;
+            string password = SpellEditor.Settings.Default.DbPassword;
+            int port = SpellEditor.Settings.Default.DbPort;
 
             if (!string.IsNullOrEmpty(server) && !string.IsNullOrEmpty(database) && !string.IsNullOrEmpty(username))
             {

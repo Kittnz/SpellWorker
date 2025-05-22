@@ -29,7 +29,8 @@ namespace SpellWorker
         private DatabaseConnector dbConnector;
         private bool isDatabaseMode = false;
         private List<SpellDuration> spellDurations;
-        private List<SpellCastTimes> spellCastTimes;
+        private List<SpellCastTime> spellCastTimes;
+        private List<SpellRange> spellRanges;
 
         public MainWindow()
         {
@@ -85,7 +86,7 @@ namespace SpellWorker
                     // Now load the durations in the background
                     try
                     {
-                        await dbConnector.LoadSpellDurationsAsync();
+                        await dbConnector.LoadSpellDurationAsync();
 
                         // Store the durations for later use
                         spellDurations = dbConnector.SpellDurations;
@@ -108,12 +109,12 @@ namespace SpellWorker
                     // Now load the spell cast times in the background
                     try
                     {
-                        await dbConnector.LoadSpellCastTimesAsync();
+                        await dbConnector.LoadSpellCastTimeAsync();
 
-                        // Store the durations for later use
+                        // Store the spell cast times for later use
                         spellCastTimes = dbConnector.SpellCastTimes;
 
-                        // Initialize the duration index combo box
+                        // Initialize the spell cast times index combo box
                         cmbCastTimesIndex.ItemsSource = spellCastTimes;
                         cmbCastTimesIndex.DisplayMemberPath = null;
                         cmbCastTimesIndex.SelectedValuePath = "Id";
@@ -122,9 +123,32 @@ namespace SpellWorker
                     {
                         MessageBox.Show($"Error loading spell cast times: {ex.Message}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 
-                        // Use default durations
-                        spellCastTimes = new List<SpellCastTimes> {
-                            new SpellCastTimes { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
+                        // Use default spell cast times
+                        spellCastTimes = new List<SpellCastTime> {
+                            new SpellCastTime { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
+                        };
+                    }
+
+                    // Now load the spell range in the background
+                    try
+                    {
+                        await dbConnector.LoadSpellRangeAsync();
+
+                        // Store the spell cast times for later use
+                        spellRanges = dbConnector.SpellRanges;
+
+                        // Initialize the spell cast times index combo box
+                        cmbRangeIndex.ItemsSource = spellRanges;
+                        cmbRangeIndex.DisplayMemberPath = null;
+                        cmbRangeIndex.SelectedValuePath = "Id";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error loading spell range: {ex.Message}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                        // Use default spell cast times
+                        spellRanges = new List<SpellRange> {
+                            new SpellRange { Id = 0, RangeMin = 0, RangeMax = 0, Flags = 0, Name_enUS = "", ShortName_enUS = "" }
                         };
                     }
 
@@ -492,14 +516,26 @@ namespace SpellWorker
 
             if (!isDatabaseMode && spellCastTimes == null)
             {
-                spellCastTimes = new List<SpellCastTimes>
+                spellCastTimes = new List<SpellCastTime>
                 {
-                    new SpellCastTimes { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
+                    new SpellCastTime { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
                 };
 
                 cmbCastTimesIndex.ItemsSource = spellCastTimes;
                 cmbCastTimesIndex.DisplayMemberPath = "ToString()";
                 cmbCastTimesIndex.SelectedValuePath = "Id";
+            }
+
+            if (!isDatabaseMode && spellRanges == null)
+            {
+                spellRanges = new List<SpellRange>
+                {
+                    new SpellRange { Id = 0, RangeMin = 0, RangeMax = 0, Flags = 0, Name_enUS = "", ShortName_enUS = "" }
+                };
+
+                cmbRangeIndex.ItemsSource = spellRanges;
+                cmbRangeIndex.DisplayMemberPath = "ToString()";
+                cmbRangeIndex.SelectedValuePath = "Id";
             }
 
             LoadSpellDataToUI();
@@ -625,7 +661,7 @@ namespace SpellWorker
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Spell Worker \n\nA tool for creating and editing spells for Turtle WoW.\n\nVersion 1.0.0", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Spell Worker \n\nA tool for creating and editing spells for Turtle WoW. by Kittnz\n\nVersion 1.0.0", "About", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void LoadSpellDataToUI()
@@ -647,7 +683,7 @@ namespace SpellWorker
 
             //txtCastingTimeIndex.Text = currentSpell.CastingTimeIndex.ToString();
 
-            // Update the duration index combo box
+            // Update the cast time index combo box
             int castTimesIndex = (int)currentSpell.CastingTimeIndex;
             var castTimes = spellDurations.FirstOrDefault(d => d.Id == castTimesIndex);
             if (castTimes != null)
@@ -689,7 +725,20 @@ namespace SpellWorker
             txtManaCost.Text = currentSpell.manaCost.ToString();
             txtManaCostPerLevel.Text = currentSpell.manaCostPerlevel.ToString();
             txtManaPerSecond.Text = currentSpell.manaPerSecond.ToString();
-            txtRangeIndex.Text = currentSpell.rangeIndex.ToString();
+
+            // Update the range index combo box
+            int rangeIndex = (int)currentSpell.rangeIndex;
+            var ranges = spellDurations.FirstOrDefault(d => d.Id == rangeIndex);
+            if (ranges != null)
+            {
+                cmbRangeIndex.SelectedValue = ranges.Id;
+            }
+            else
+            {
+                // If the duration index is not found, select the first item (None)
+                cmbRangeIndex.SelectedIndex = 0;
+            }
+
             txtSpeed.Text = currentSpell.speed.ToString();
             txtStackAmount.Text = currentSpell.StackAmount.ToString();
 
@@ -769,6 +818,11 @@ namespace SpellWorker
         }
 
         private void cmbCastTimesIndex_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Nothing special needed here, but we could show additional info if needed
+        }
+
+        private void cmbRangeIndex_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Nothing special needed here, but we could show additional info if needed
         }
@@ -854,7 +908,7 @@ namespace SpellWorker
             // Save other properties
             currentSpell.Targets = (uint)GetSelectedValue(cmbTargets);
             currentSpell.TargetCreatureType = (uint)GetSelectedValue(cmbTargetCreatureType);
-            currentSpell.CastingTimeIndex = (uint)((SpellCastTimes)cmbCastTimesIndex.SelectedItem).Id;
+            currentSpell.CastingTimeIndex = (uint)((SpellCastTime)cmbCastTimesIndex.SelectedItem).Id;
             currentSpell.RecoveryTime = ParseUInt(txtRecoveryTime.Text);
             currentSpell.CategoryRecoveryTime = ParseUInt(txtCategoryRecoveryTime.Text);
             currentSpell.InterruptFlags = (uint)GetSelectedValue(cmbInterruptFlags);
@@ -872,7 +926,7 @@ namespace SpellWorker
             currentSpell.manaCostPerlevel = ParseUInt(txtManaCostPerLevel.Text);
             currentSpell.manaPerSecond = ParseUInt(txtManaPerSecond.Text);
             currentSpell.manaPerSecondPerLevel = 0; // Not included in the UI
-            currentSpell.rangeIndex = ParseUInt(txtRangeIndex.Text);
+            currentSpell.rangeIndex = (uint)((SpellRange)cmbRangeIndex.SelectedItem).Id;
             currentSpell.speed = ParseFloat(txtSpeed.Text);
             currentSpell.StackAmount = ParseUInt(txtStackAmount.Text);
 

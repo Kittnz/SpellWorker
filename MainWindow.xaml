@@ -148,8 +148,8 @@
                         <Label Grid.Row="12" Grid.Column="0" Content="Mana Per Second:" ToolTip="Channeled cost per second"/>
                         <TextBox Grid.Row="12" Grid.Column="1" Name="txtManaPerSecond" Margin="5"/>
 
-                        <Label Grid.Row="12" Grid.Column="2" Content="Range Index:" ToolTip="Index into SpellRange.dbc"/>
-                        <TextBox Grid.Row="12" Grid.Column="3" Name="txtRangeIndex" Margin="5"/>
+                        <Label Grid.Row="12" Grid.Column="2" Content="Range:" ToolTip="Spell range from dbc_spell_range table"/>
+                        <ComboBox Grid.Row="12" Grid.Column="3" Name="cmbRangeIndex" Margin="5" DisplayMemberPath="." SelectionChanged="cmbRangeIndex_SelectionChanged"/>
 
                         <!-- Row 13 -->
                         <Label Grid.Row="13" Grid.Column="0" Content="Speed:" ToolTip="Speed of spell projectile"/>

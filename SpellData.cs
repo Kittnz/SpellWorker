@@ -652,6 +652,7 @@ namespace SpellWorker
 
     public enum CreatureType
     {
+        CREATURE_TYPE_NONE = 0,
         CREATURE_TYPE_BEAST = 1,
         CREATURE_TYPE_DRAGONKIN = 2,
         CREATURE_TYPE_DEMON = 3,

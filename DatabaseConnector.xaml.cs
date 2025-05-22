@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
@@ -10,11 +10,13 @@ namespace SpellWorker
     public class DatabaseConnector
     {
         private List<SpellDuration> spellDurations;
-        private List<SpellCastTimes> spellCastTimes;
+        private List<SpellCastTime> spellCastTimes;
+        private List<SpellRange> spellRanges;
 
         // Property to access durations
         public List<SpellDuration> SpellDurations => spellDurations;
-        public List<SpellCastTimes> SpellCastTimes => spellCastTimes;
+        public List<SpellCastTime> SpellCastTimes => spellCastTimes;
+        public List<SpellRange> SpellRanges => spellRanges;
 
         private readonly string connectionString;
 
@@ -26,8 +28,12 @@ namespace SpellWorker
                 new SpellDuration { Id = 0, Base = 0, PerLevel = 0, Max = 0 }
             };
 
-            spellCastTimes = new List<SpellCastTimes> {
-                new SpellCastTimes { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
+            spellCastTimes = new List<SpellCastTime> {
+                new SpellCastTime { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
+            };
+
+            spellRanges = new List<SpellRange> {
+                new SpellRange { Id = 0, RangeMin = 0, RangeMax = 0, Flags = 0, Name_enUS = "", ShortName_enUS = "" }
             };
         }
 
@@ -38,8 +44,9 @@ namespace SpellWorker
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     await connection.OpenAsync();
-                    await LoadSpellDurationsAsync();
-                    await LoadSpellCastTimesAsync();
+                    await LoadSpellDurationAsync();
+                    await LoadSpellCastTimeAsync();
+                    await LoadSpellRangeAsync();
                     return true;
                 }
             }
@@ -684,7 +691,7 @@ namespace SpellWorker
             }
         }
 
-        public async Task LoadSpellDurationsAsync()
+        public async Task LoadSpellDurationAsync()
         {
             // Start with a default "None" entry
             spellDurations = new List<SpellDuration> {
@@ -723,10 +730,10 @@ namespace SpellWorker
             }
         }
 
-        public async Task LoadSpellCastTimesAsync()
+        public async Task LoadSpellCastTimeAsync()
         {
-            spellCastTimes = new List<SpellCastTimes> {
-                    new SpellCastTimes { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
+            spellCastTimes = new List<SpellCastTime> {
+                    new SpellCastTime { Id = 0, Base = 0, PerLevel = 0, Min = 0 }
                 };
 
             try
@@ -743,7 +750,7 @@ namespace SpellWorker
                         {
                             while (await reader.ReadAsync())
                             {
-                                spellCastTimes.Add(new SpellCastTimes
+                                spellCastTimes.Add(new SpellCastTime
                                 {
                                     Id = reader.GetInt32("id"),
                                     Base = reader.GetInt32("base"),
@@ -760,6 +767,73 @@ namespace SpellWorker
                 MessageBox.Show($"Error loading spell cast times: {ex.Message}\n", "Database Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        public async Task LoadSpellRangeAsync()
+        {
+            spellRanges = new List<SpellRange> {
+                new SpellRange { Id = 0, RangeMin = 0, RangeMax = 0, Flags = 0, Name_enUS = "", ShortName_enUS = "" }
+            };
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string query = @"SELECT id, rangeMin, rangeMax, flags, 
+                                   name_enUS, name_koKR, name_frFR, name_deDE, 
+                                   name_zhCN, name_zhTW, name_esES, name_esMX, nameMask,
+                                   shortName_enUS, shortName_koKR, shortName_frFR, shortName_deDE,
+                                   shortName_zhCN, shortName_zhTW, shortName_esES, shortName_esMX, shortNameMask
+                            FROM dbc_spell_range 
+                            ORDER BY id";
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                spellRanges.Add(new SpellRange
+                                {
+                                    Id = reader.GetInt32("id"),
+                                    RangeMin = reader.IsDBNull("rangeMin") ? 0 : reader.GetFloat("rangeMin"),
+                                    RangeMax = reader.IsDBNull("rangeMax") ? 50000 : reader.GetFloat("rangeMax"),
+                                    Flags = reader.IsDBNull("flags") ? 0 : reader.GetInt32("flags"),
+
+                                    // Localized names
+                                    Name_enUS = reader.IsDBNull("name_enUS") ? "" : reader.GetString("name_enUS"),
+                                    Name_koKR = reader.IsDBNull("name_koKR") ? "" : reader.GetString("name_koKR"),
+                                    Name_frFR = reader.IsDBNull("name_frFR") ? "" : reader.GetString("name_frFR"),
+                                    Name_deDE = reader.IsDBNull("name_deDE") ? "" : reader.GetString("name_deDE"),
+                                    Name_zhCN = reader.IsDBNull("name_zhCN") ? "" : reader.GetString("name_zhCN"),
+                                    Name_zhTW = reader.IsDBNull("name_zhTW") ? "" : reader.GetString("name_zhTW"),
+                                    Name_esES = reader.IsDBNull("name_esES") ? "" : reader.GetString("name_esES"),
+                                    Name_esMX = reader.IsDBNull("name_esMX") ? "" : reader.GetString("name_esMX"),
+                                    NameMask = reader.IsDBNull("nameMask") ? 0 : reader.GetInt32("nameMask"),
+
+                                    // Localized short names
+                                    ShortName_enUS = reader.IsDBNull("shortName_enUS") ? "" : reader.GetString("shortName_enUS"),
+                                    ShortName_koKR = reader.IsDBNull("shortName_koKR") ? "" : reader.GetString("shortName_koKR"),
+                                    ShortName_frFR = reader.IsDBNull("shortName_frFR") ? "" : reader.GetString("shortName_frFR"),
+                                    ShortName_deDE = reader.IsDBNull("shortName_deDE") ? "" : reader.GetString("shortName_deDE"),
+                                    ShortName_zhCN = reader.IsDBNull("shortName_zhCN") ? "" : reader.GetString("shortName_zhCN"),
+                                    ShortName_zhTW = reader.IsDBNull("shortName_zhTW") ? "" : reader.GetString("shortName_zhTW"),
+                                    ShortName_esES = reader.IsDBNull("shortName_esES") ? "" : reader.GetString("shortName_esES"),
+                                    ShortName_esMX = reader.IsDBNull("shortName_esMX") ? "" : reader.GetString("shortName_esMX"),
+                                    ShortNameMask = reader.IsDBNull("shortNameMask") ? 0 : reader.GetInt32("shortNameMask")
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading spell ranges: {ex.Message}\n", "Database Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
     }
 
     // Helper class for spell list
@@ -792,7 +866,7 @@ namespace SpellWorker
         }
     }
 
-    public class SpellCastTimes
+    public class SpellCastTime
     {
         public int Id { get; set; }
         public int Base { get; set; }
@@ -811,6 +885,87 @@ namespace SpellWorker
             if (milliseconds < 60000) return $"{milliseconds / 1000}s";
             if (milliseconds < 3600000) return $"{milliseconds / 60000}m";
             return $"{milliseconds / 3600000}h";
+        }
+    }
+
+    public class SpellRange
+    {
+        public int Id { get; set; }
+        public float? RangeMin { get; set; }
+        public float? RangeMax { get; set; }
+        public int? Flags { get; set; }
+
+        // Localized names
+        public string Name_enUS { get; set; }
+        public string Name_koKR { get; set; }
+        public string Name_frFR { get; set; }
+        public string Name_deDE { get; set; }
+        public string Name_zhCN { get; set; }
+        public string Name_zhTW { get; set; }
+        public string Name_esES { get; set; }
+        public string Name_esMX { get; set; }
+        public int? NameMask { get; set; }
+
+        // Localized short names
+        public string ShortName_enUS { get; set; }
+        public string ShortName_koKR { get; set; }
+        public string ShortName_frFR { get; set; }
+        public string ShortName_deDE { get; set; }
+        public string ShortName_zhCN { get; set; }
+        public string ShortName_zhTW { get; set; }
+        public string ShortName_esES { get; set; }
+        public string ShortName_esMX { get; set; }
+        public int? ShortNameMask { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} - {FormatRange()}";
+        }
+
+        private string FormatRange()
+        {
+            if (!RangeMin.HasValue && !RangeMax.HasValue) return "Unknown";
+            if (RangeMin == 0 && RangeMax == 0) return "Self";
+            if (RangeMin == RangeMax) return $"{RangeMax} yards";
+
+            string minStr = RangeMin?.ToString() ?? "0";
+            string maxStr = RangeMax?.ToString() ?? "∞";
+
+            return $"{minStr}-{maxStr} yards - {Name_enUS}";
+        }
+
+        // Helper method to get localized name based on locale
+        public string GetLocalizedName(string locale = "enUS")
+        {
+            return locale switch
+            {
+                "enUS" => Name_enUS,
+                "koKR" => Name_koKR,
+                "frFR" => Name_frFR,
+                "deDE" => Name_deDE,
+                "zhCN" => Name_zhCN,
+                "zhTW" => Name_zhTW,
+                "esES" => Name_esES,
+                "esMX" => Name_esMX,
+                _ => Name_enUS // Default to English
+            };
+        }
+
+        // Helper method to get localized short name based on locale
+        public string GetLocalizedShortName(string locale = "enUS")
+        {
+            return locale switch
+            {
+                "enUS" => ShortName_enUS,
+                "koKR" => ShortName_koKR,
+                "frFR" => ShortName_frFR,
+                "deDE" => ShortName_deDE,
+                "zhCN" => ShortName_zhCN,
+                "zhTW" => ShortName_zhTW,
+                "esES" => ShortName_esES,
+                "esMX" => ShortName_esMX,
+                _ => ShortName_enUS // Default to English
+            };
         }
     }
 }

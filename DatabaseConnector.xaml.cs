@@ -788,9 +788,9 @@ namespace SpellWorker
 
                     string query = @"SELECT id, rangeMin, rangeMax, flags, 
                                    name_enUS, name_koKR, name_frFR, name_deDE, 
-                                   name_zhCN, name_zhTW, name_esES, name_esMX, nameMask,
+                                   name_zhCN, name_zhTW, name_esES, name_ptPT, nameMask,
                                    shortName_enUS, shortName_koKR, shortName_frFR, shortName_deDE,
-                                   shortName_zhCN, shortName_zhTW, shortName_esES, shortName_esMX, shortNameMask
+                                   shortName_zhCN, shortName_zhTW, shortName_esES, shortName_ptPT, shortNameMask
                             FROM dbc_spell_range 
                             ORDER BY id";
 
@@ -815,7 +815,7 @@ namespace SpellWorker
                                     Name_zhCN = reader.IsDBNull("name_zhCN") ? "" : reader.GetString("name_zhCN"),
                                     Name_zhTW = reader.IsDBNull("name_zhTW") ? "" : reader.GetString("name_zhTW"),
                                     Name_esES = reader.IsDBNull("name_esES") ? "" : reader.GetString("name_esES"),
-                                    Name_esMX = reader.IsDBNull("name_esMX") ? "" : reader.GetString("name_esMX"),
+                                    Name_ptPT = reader.IsDBNull("name_ptPT") ? "" : reader.GetString("name_ptPT"),
                                     NameMask = reader.IsDBNull("nameMask") ? 0 : reader.GetInt32("nameMask"),
 
                                     // Localized short names
@@ -826,7 +826,7 @@ namespace SpellWorker
                                     ShortName_zhCN = reader.IsDBNull("shortName_zhCN") ? "" : reader.GetString("shortName_zhCN"),
                                     ShortName_zhTW = reader.IsDBNull("shortName_zhTW") ? "" : reader.GetString("shortName_zhTW"),
                                     ShortName_esES = reader.IsDBNull("shortName_esES") ? "" : reader.GetString("shortName_esES"),
-                                    ShortName_esMX = reader.IsDBNull("shortName_esMX") ? "" : reader.GetString("shortName_esMX"),
+                                    ShortName_ptPT = reader.IsDBNull("shortName_ptPT") ? "" : reader.GetString("shortName_ptPT"),
                                     ShortNameMask = reader.IsDBNull("shortNameMask") ? 0 : reader.GetInt32("shortNameMask")
                                 });
                             }
@@ -949,7 +949,7 @@ namespace SpellWorker
         public string Name_zhCN { get; set; }
         public string Name_zhTW { get; set; }
         public string Name_esES { get; set; }
-        public string Name_esMX { get; set; }
+        public string Name_ptPT { get; set; }
         public int? NameMask { get; set; }
 
         // Localized short names
@@ -960,7 +960,7 @@ namespace SpellWorker
         public string ShortName_zhCN { get; set; }
         public string ShortName_zhTW { get; set; }
         public string ShortName_esES { get; set; }
-        public string ShortName_esMX { get; set; }
+        public string ShortName_ptPT { get; set; }
         public int? ShortNameMask { get; set; }
 
         public override string ToString()
@@ -992,7 +992,7 @@ namespace SpellWorker
                 "zhCN" => Name_zhCN,
                 "zhTW" => Name_zhTW,
                 "esES" => Name_esES,
-                "esMX" => Name_esMX,
+                "ptPT" => Name_ptPT,
                 _ => Name_enUS // Default to English
             };
         }
@@ -1009,7 +1009,7 @@ namespace SpellWorker
                 "zhCN" => ShortName_zhCN,
                 "zhTW" => ShortName_zhTW,
                 "esES" => ShortName_esES,
-                "esMX" => ShortName_esMX,
+                "ptPT" => ShortName_ptPT,
                 _ => ShortName_enUS // Default to English
             };
         }

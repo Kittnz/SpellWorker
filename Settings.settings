@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SpellEditor" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="DbName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">tw_dev_world</Value>
-    </Setting>
     <Setting Name="DbUsername" Type="System.String" Scope="User">
       <Value Profile="(Default)">root</Value>
     </Setting>
@@ -16,6 +13,9 @@
     </Setting>
     <Setting Name="DbPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3310</Value>
+    </Setting>
+    <Setting Name="DbName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">tw_patch_world</Value>
     </Setting>
   </Settings>
 </SettingsFile>

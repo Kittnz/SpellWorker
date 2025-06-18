@@ -18,11 +18,11 @@
 
         <!-- Menu Bar -->
         <Menu Grid.Row="0" Grid.ColumnSpan="5" Margin="0,0,0,694" Grid.RowSpan="2">
-            <MenuItem Header="File">
+            <MenuItem Header="File" Click="MenuItem_Click">
                 <!-- <MenuItem Header="New Spell" Click="NewSpell_Click"/> -->
                 <MenuItem Header="Load Spell" Click="LoadSpell_Click"/>
                 <!-- <MenuItem Header="Save Spell" Click="SaveSpell_Click"/> -->
-                <MenuItem Header="Generate SQL" Click="GenerateSQL_Click"/>
+                <!-- <MenuItem Header="Generate SQL" Click="GenerateSQL_Click"/> -->
                 <Separator/>
                 <MenuItem Header="Exit" Click="Exit_Click"/>
             </MenuItem>

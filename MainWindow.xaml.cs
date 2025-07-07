@@ -426,6 +426,45 @@ namespace SpellWorker
             cmbEquippedItemClass.SelectedValuePath = "Value";
             cmbEquippedItemClass.SelectedIndex = 0;
 
+            // Initialize DmgClass dropdown
+            cmbDmgClass.ItemsSource = new List<dynamic>
+            {
+                new { Value = 0, Name = "SPELL_DAMAGE_CLASS_NONE" },
+                new { Value = 1, Name = "SPELL_DAMAGE_CLASS_MAGIC" },
+                new { Value = 2, Name = "SPELL_DAMAGE_CLASS_MELEE" },
+                new { Value = 3, Name = "SPELL_DAMAGE_CLASS_RANGED" }
+            };
+            cmbDmgClass.DisplayMemberPath = "Name";
+            cmbDmgClass.SelectedValuePath = "Value";
+            cmbDmgClass.SelectedIndex = 0;
+
+            // Initialize PreventionType dropdown
+            cmbPreventionType.ItemsSource = new List<dynamic>
+            {
+                new { Value = 0, Name = "SPELL_PREVENTION_TYPE_NONE" },
+                new { Value = 1, Name = "SPELL_PREVENTION_TYPE_SILENCE" },
+                new { Value = 2, Name = "SPELL_PREVENTION_TYPE_PACIFY" }
+            };
+            cmbPreventionType.DisplayMemberPath = "Name";
+            cmbPreventionType.SelectedValuePath = "Value";
+            cmbPreventionType.SelectedIndex = 0;
+
+            // Initialize MinReputation dropdown
+            cmbMinReputation.ItemsSource = new List<dynamic>
+            {
+                new { Value = 0, Name = "Hated" },
+                new { Value = 1, Name = "Hostile" },
+                new { Value = 2, Name = "Unfriendly" },
+                new { Value = 3, Name = "Neutral" },
+                new { Value = 4, Name = "Friendly" },
+                new { Value = 5, Name = "Honored" },
+                new { Value = 6, Name = "Revered" },
+                new { Value = 7, Name = "Exalted" }
+            };
+            cmbMinReputation.DisplayMemberPath = "Name";
+            cmbMinReputation.SelectedValuePath = "Value";
+            cmbMinReputation.SelectedIndex = 3; // Default to Neutral
+
             // Initialize Effect dropdowns for each effect tab
             InitializeEffectControls(0);
             InitializeEffectControls(1);
@@ -541,7 +580,7 @@ namespace SpellWorker
                 {
                     new SpellDuration { Id = 0, Base = 0, PerLevel = 0, Max = 0 }
                 };
-        
+
                 cmbDurationIndex.ItemsSource = spellDurations;
                 cmbDurationIndex.DisplayMemberPath = "ToString()";
                 cmbDurationIndex.SelectedValuePath = "Id";
@@ -708,16 +747,38 @@ namespace SpellWorker
 
             // Load attributes (with bit flags)
             LoadAttributeCheckboxes(currentSpell.Attributes, "chkAttribute");
+            LoadAttributeCheckboxes(currentSpell.AttributesEx, "chkAttributeEx");
+            LoadAttributeCheckboxes(currentSpell.AttributesEx2, "chkAttributeEx2");
+            LoadAttributeCheckboxes(currentSpell.AttributesEx3, "chkAttributeEx3");
+            LoadAttributeCheckboxes(currentSpell.AttributesEx4, "chkAttributeEx4");
 
             // Load other properties
             cmbTargets.SelectedValue = (int)currentSpell.Targets;
             cmbTargetCreatureType.SelectedValue = (int)currentSpell.TargetCreatureType;
 
-            //txtCastingTimeIndex.Text = currentSpell.CastingTimeIndex.ToString();
+            // Load advanced properties
+            txtStances.Text = currentSpell.Stances.ToString();
+            txtStancesNot.Text = currentSpell.StancesNot.ToString();
+            txtRequiresSpellFocus.Text = currentSpell.RequiresSpellFocus.ToString();
+            txtCasterAuraState.Text = currentSpell.CasterAuraState.ToString();
+            txtTargetAuraState.Text = currentSpell.TargetAuraState.ToString();
+            cmbDmgClass.SelectedValue = (int)currentSpell.DmgClass;
+            cmbPreventionType.SelectedValue = (int)currentSpell.PreventionType;
+            txtStanceBarOrder.Text = currentSpell.stanceBarOrder.ToString();
+            txtMinFactionId.Text = currentSpell.MinFactionId.ToString();
+            cmbMinReputation.SelectedValue = (int)currentSpell.MinReputation;
+            txtRequiredAuraVision.Text = currentSpell.RequiredAuraVision.ToString();
+
+            // Load text properties
+            txtNameSubtext.Text = currentSpell.nameSubtext;
+            txtNameSubtextFlags.Text = currentSpell.nameSubtextFlags.ToString();
+            txtNameFlags.Text = currentSpell.nameFlags.ToString();
+            txtDescriptionFlags.Text = currentSpell.descriptionFlags.ToString();
+            txtAuraDescriptionFlags.Text = currentSpell.auraDescriptionFlags.ToString();
 
             // Update the cast time index combo box
             int castTimesIndex = (int)currentSpell.CastingTimeIndex;
-            var castTimes = spellDurations.FirstOrDefault(d => d.Id == castTimesIndex);
+            var castTimes = spellCastTimes?.FirstOrDefault(d => d.Id == castTimesIndex);
             if (castTimes != null)
             {
                 cmbCastTimesIndex.SelectedValue = castTimes.Id;
@@ -742,7 +803,7 @@ namespace SpellWorker
 
             // Update the duration index combo box
             int durationIndex = (int)currentSpell.DurationIndex;
-            var duration = spellDurations.FirstOrDefault(d => d.Id == durationIndex);
+            var duration = spellDurations?.FirstOrDefault(d => d.Id == durationIndex);
             if (duration != null)
             {
                 cmbDurationIndex.SelectedValue = duration.Id;
@@ -757,17 +818,23 @@ namespace SpellWorker
             txtManaCost.Text = currentSpell.manaCost.ToString();
             txtManaCostPerLevel.Text = currentSpell.manaCostPerlevel.ToString();
             txtManaPerSecond.Text = currentSpell.manaPerSecond.ToString();
+            txtManaPerSecondPerLevel.Text = currentSpell.manaPerSecondPerLevel.ToString();
+            txtManaCostPercentage.Text = currentSpell.ManaCostPercentage.ToString();
+            txtStartRecoveryCategory.Text = currentSpell.StartRecoveryCategory.ToString();
+            txtStartRecoveryTime.Text = currentSpell.StartRecoveryTime.ToString();
+            txtMinTargetLevel.Text = currentSpell.MinTargetLevel.ToString();
+            txtMaxTargetLevel.Text = currentSpell.MaxTargetLevel.ToString();
 
             // Update the range index combo box
             int rangeIndex = (int)currentSpell.rangeIndex;
-            var ranges = spellDurations.FirstOrDefault(d => d.Id == rangeIndex);
+            var ranges = spellRanges?.FirstOrDefault(d => d.Id == rangeIndex);
             if (ranges != null)
             {
                 cmbRangeIndex.SelectedValue = ranges.Id;
             }
             else
             {
-                // If the duration index is not found, select the first item (None)
+                // If the range index is not found, select the first item (None)
                 cmbRangeIndex.SelectedIndex = 0;
             }
 
@@ -954,10 +1021,35 @@ namespace SpellWorker
 
             // Save attributes (from checkboxes)
             currentSpell.Attributes = SaveAttributeCheckboxes("chkAttribute");
+            currentSpell.AttributesEx = SaveAttributeCheckboxes("chkAttributeEx");
+            currentSpell.AttributesEx2 = SaveAttributeCheckboxes("chkAttributeEx2");
+            currentSpell.AttributesEx3 = SaveAttributeCheckboxes("chkAttributeEx3");
+            currentSpell.AttributesEx4 = SaveAttributeCheckboxes("chkAttributeEx4");
 
             // Save other properties
             currentSpell.Targets = (uint)GetSelectedValue(cmbTargets);
             currentSpell.TargetCreatureType = (uint)GetSelectedValue(cmbTargetCreatureType);
+
+            // Save advanced properties
+            currentSpell.Stances = ParseUInt(txtStances.Text);
+            currentSpell.StancesNot = ParseUInt(txtStancesNot.Text);
+            currentSpell.RequiresSpellFocus = ParseUInt(txtRequiresSpellFocus.Text);
+            currentSpell.CasterAuraState = ParseUInt(txtCasterAuraState.Text);
+            currentSpell.TargetAuraState = ParseUInt(txtTargetAuraState.Text);
+            currentSpell.DmgClass = (uint)GetSelectedValue(cmbDmgClass);
+            currentSpell.PreventionType = (uint)GetSelectedValue(cmbPreventionType);
+            currentSpell.stanceBarOrder = ParseInt(txtStanceBarOrder.Text);
+            currentSpell.MinFactionId = ParseUInt(txtMinFactionId.Text);
+            currentSpell.MinReputation = (uint)GetSelectedValue(cmbMinReputation);
+            currentSpell.RequiredAuraVision = ParseUInt(txtRequiredAuraVision.Text);
+
+            // Save text properties
+            currentSpell.nameSubtext = txtNameSubtext.Text;
+            currentSpell.nameSubtextFlags = ParseUInt(txtNameSubtextFlags.Text);
+            currentSpell.nameFlags = ParseUInt(txtNameFlags.Text);
+            currentSpell.descriptionFlags = ParseUInt(txtDescriptionFlags.Text);
+            currentSpell.auraDescriptionFlags = ParseUInt(txtAuraDescriptionFlags.Text);
+
             currentSpell.CastingTimeIndex = (uint)((SpellCastTime)cmbCastTimesIndex.SelectedItem).Id;
             currentSpell.RecoveryTime = ParseUInt(txtRecoveryTime.Text);
             currentSpell.CategoryRecoveryTime = ParseUInt(txtCategoryRecoveryTime.Text);
@@ -975,7 +1067,12 @@ namespace SpellWorker
             currentSpell.manaCost = ParseUInt(txtManaCost.Text);
             currentSpell.manaCostPerlevel = ParseUInt(txtManaCostPerLevel.Text);
             currentSpell.manaPerSecond = ParseUInt(txtManaPerSecond.Text);
-            currentSpell.manaPerSecondPerLevel = 0; // Not included in the UI
+            currentSpell.manaPerSecondPerLevel = ParseUInt(txtManaPerSecondPerLevel.Text);
+            currentSpell.ManaCostPercentage = ParseUInt(txtManaCostPercentage.Text);
+            currentSpell.StartRecoveryCategory = ParseUInt(txtStartRecoveryCategory.Text);
+            currentSpell.StartRecoveryTime = ParseUInt(txtStartRecoveryTime.Text);
+            currentSpell.MinTargetLevel = ParseUInt(txtMinTargetLevel.Text);
+            currentSpell.MaxTargetLevel = ParseUInt(txtMaxTargetLevel.Text);
             currentSpell.rangeIndex = (uint)((SpellRange)cmbRangeIndex.SelectedItem).Id;
             currentSpell.speed = ParseFloat(txtSpeed.Text);
             currentSpell.StackAmount = ParseUInt(txtStackAmount.Text);
@@ -1016,6 +1113,7 @@ namespace SpellWorker
             currentSpell.Custom = ParseUInt(txtCustom.Text);
             currentSpell.ScriptName = txtScriptName.Text;
         }
+
         private void SaveEffectData(int index)
         {
             ComboBox cmbEffect = FindName($"cmbEffect{index}") as ComboBox;
@@ -1186,6 +1284,7 @@ namespace SpellWorker
             }
             return attributes;
         }
+
         private string EscapeSql(string input)
         {
             if (string.IsNullOrEmpty(input))
@@ -1237,6 +1336,28 @@ namespace SpellWorker
             if (ulong.TryParse(text, out ulong result))
                 return result;
             return defaultValue;
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl tabControl)
+            {
+                if (tabControl.SelectedItem is TabItem selectedTab &&
+                    selectedTab.Header.ToString() == "SQL Preview")
+                {
+                    UpdateSqlPreview();
+                }
+            }
+        }
+
+        private void UpdateSqlPreview()
+        {
+            if (currentSpell != null)
+            {
+                SaveUIDataToSpell();
+                string sql = GenerateSqlStatement();
+                txtSqlPreview.Text = sql;
+            }
         }
     }
 }

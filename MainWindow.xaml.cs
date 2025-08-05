@@ -346,7 +346,7 @@ namespace SpellWorker
             cmbTargetCreatureType.SelectedValuePath = "Value";
             cmbTargetCreatureType.SelectedIndex = 0;
 
-            // Initialize InterruptFlags dropdown (simplified for example)
+            // Initialize InterruptFlags dropdown
             cmbInterruptFlags.ItemsSource = new List<dynamic>
             {
                 new { Value = 0, Name = "NONE" },
@@ -354,46 +354,89 @@ namespace SpellWorker
                 new { Value = 2, Name = "SPELL_INTERRUPT_FLAG_DAMAGE" },
                 new { Value = 4, Name = "SPELL_INTERRUPT_FLAG_INTERRUPT" },
                 new { Value = 8, Name = "SPELL_INTERRUPT_FLAG_AUTOATTACK" },
-                new { Value = 16, Name = "SPELL_INTERRUPT_FLAG_ABORT_ON_DMG" }
             };
             cmbInterruptFlags.DisplayMemberPath = "Name";
             cmbInterruptFlags.SelectedValuePath = "Value";
             cmbInterruptFlags.SelectedIndex = 0;
 
-            // Initialize AuraInterruptFlags dropdown (simplified)
+            // Initialize AuraInterruptFlags dropdown
             cmbAuraInterruptFlags.ItemsSource = new List<dynamic>
             {
                 new { Value = 0, Name = "NONE" },
                 new { Value = 1, Name = "AURA_INTERRUPT_FLAG_HITBYSPELL" },
                 new { Value = 2, Name = "AURA_INTERRUPT_FLAG_DAMAGE" },
                 new { Value = 4, Name = "AURA_INTERRUPT_FLAG_CAST" },
-                new { Value = 8, Name = "AURA_INTERRUPT_FLAG_MOVE" }
+                new { Value = 8, Name = "AURA_INTERRUPT_FLAG_MOVE" },
+                new { Value = 16, Name = "AURA_INTERRUPT_FLAG_TURNING" },
+                new { Value = 32, Name = "AURA_INTERRUPT_FLAG_ENTER_COMBAT" },
+                new { Value = 64, Name = "AURA_INTERRUPT_FLAG_NOT_MOUNTED" },
+                new { Value = 128, Name = "AURA_INTERRUPT_FLAG_NOT_ABOVEWATER" },
+                new { Value = 256, Name = "AURA_INTERRUPT_FLAG_NOT_UNDERWATER" },
+                new { Value = 512, Name = "AURA_INTERRUPT_FLAG_NOT_SHEATHED" },
+                new { Value = 1024, Name = "AURA_INTERRUPT_FLAG_TALK" },
+                new { Value = 2048, Name = "AURA_INTERRUPT_FLAG_USE" },
+                new { Value = 4096, Name = "AURA_INTERRUPT_FLAG_MELEE_ATTACK" },
+                new { Value = 8192, Name = "AURA_INTERRUPT_FLAG_SPELL_ATTACK" },
+                new { Value = 16384, Name = "AURA_INTERRUPT_FLAG_UNK14" },
+                new { Value = 32768, Name = "AURA_INTERRUPT_FLAG_TRANSFORM" },
+                new { Value = 65536, Name = "AURA_INTERRUPT_FLAG_ON_CAST_SPELL" },
+                new { Value = 131072, Name = "AURA_INTERRUPT_FLAG_MOUNTING" },
+                new { Value = 262144, Name = "AURA_INTERRUPT_FLAG_NOT_SEATED" },
+                new { Value = 524288, Name = "AURA_INTERRUPT_FLAG_CHANGE_MAP" },
+                new { Value = 1048576, Name = "AURA_INTERRUPT_FLAG_IMMUNE_OR_LOST_SELECTION" },
+                new { Value = 2097152, Name = "AURA_INTERRUPT_FLAG_INVULNERABILITY_CANCELS" },
+                new { Value = 4194304, Name = "AURA_INTERRUPT_FLAG_TELEPORTED" },
+                new { Value = 8388608, Name = "AURA_INTERRUPT_FLAG_ENTER_PVP_COMBAT" },
+                new { Value = 16777216, Name = "AURA_INTERRUPT_FLAG_DIRECT_DAMAGE" }
             };
             cmbAuraInterruptFlags.DisplayMemberPath = "Name";
             cmbAuraInterruptFlags.SelectedValuePath = "Value";
             cmbAuraInterruptFlags.SelectedIndex = 0;
 
-            // Initialize ChannelInterruptFlags dropdown (simplified)
+            // Initialize ChannelInterruptFlags dropdown
             cmbChannelInterruptFlags.ItemsSource = new List<dynamic>
             {
                 new { Value = 0, Name = "NONE" },
                 new { Value = 1, Name = "CHANNEL_FLAG_ENTER_COMBAT" },
                 new { Value = 2, Name = "CHANNEL_FLAG_DAMAGE" },
                 new { Value = 4, Name = "CHANNEL_FLAG_INTERRUPT" },
-                new { Value = 8, Name = "CHANNEL_FLAG_MOVEMENT" }
+                new { Value = 8, Name = "CHANNEL_FLAG_MOVEMENT" },
+                new { Value = 16, Name = "CHANNEL_FLAG_TURNING" },
+                new { Value = 128, Name = "CHANNEL_FLAG_DAMAGE2" },
+                new { Value = 16384, Name = "CHANNEL_FLAG_DELAY" }
             };
             cmbChannelInterruptFlags.DisplayMemberPath = "Name";
             cmbChannelInterruptFlags.SelectedValuePath = "Value";
             cmbChannelInterruptFlags.SelectedIndex = 0;
 
-            // Initialize ProcFlags dropdown (simplified)
+            // Initialize ProcFlags dropdown
             cmbProcFlags.ItemsSource = new List<dynamic>
             {
-                new { Value = 0, Name = "NONE" },
+                new { Value = 0, Name = "PROC_FLAG_NONE" },
                 new { Value = 1, Name = "PROC_FLAG_HEARTBEAT" },
                 new { Value = 2, Name = "PROC_FLAG_KILL" },
                 new { Value = 4, Name = "PROC_FLAG_DEAL_MELEE_SWING" },
-                new { Value = 8, Name = "PROC_FLAG_TAKE_MELEE_SWING" }
+                new { Value = 8, Name = "PROC_FLAG_TAKE_MELEE_SWING" },
+                new { Value = 16, Name = "PROC_FLAG_DEAL_MELEE_ABILITY" },
+                new { Value = 32, Name = "PROC_FLAG_TAKE_MELEE_ABILITY" },
+                new { Value = 64, Name = "PROC_FLAG_DEAL_RANGED_ATTACK" },
+                new { Value = 128, Name = "PROC_FLAG_TAKE_RANGED_ATTACK" },
+                new { Value = 256, Name = "PROC_FLAG_DEAL_RANGED_ABILITY" },
+                new { Value = 512, Name = "PROC_FLAG_TAKE_RANGED_ABILITY" },
+                new { Value = 1024, Name = "PROC_FLAG_DEAL_HELPFUL_ABILITY" },
+                new { Value = 2048, Name = "PROC_FLAG_TAKE_HELPFUL_ABILITY" },
+                new { Value = 4096, Name = "PROC_FLAG_DEAL_HARMFUL_ABILITY" },
+                new { Value = 8192, Name = "PROC_FLAG_TAKE_HARMFUL_ABILITY" },
+                new { Value = 16384, Name = "PROC_FLAG_DEAL_HELPFUL_SPELL" },
+                new { Value = 32768, Name = "PROC_FLAG_TAKE_HELPFUL_SPELL" },
+                new { Value = 65536, Name = "PROC_FLAG_DEAL_HARMFUL_SPELL" },
+                new { Value = 131072, Name = "PROC_FLAG_TAKE_HARMFUL_SPELL" },
+                new { Value = 262144, Name = "PROC_FLAG_DEAL_PERIODIC" },
+                new { Value = 524288, Name = "PROC_FLAG_TAKE_PERIODIC" },
+                new { Value = 1048576, Name = "PROC_FLAG_TAKEN_ANY_DAMAGE" },
+                new { Value = 2097152, Name = "PROC_FLAG_ON_TRAP_ACTIVATION" },
+                new { Value = 4194304, Name = "PROC_FLAG_MAIN_HAND_WEAPON_SWING" },
+                new { Value = 8388608, Name = "PROC_FLAG_OFF_HAND_WEAPON_SWING" }
             };
             cmbProcFlags.DisplayMemberPath = "Name";
             cmbProcFlags.SelectedValuePath = "Value";
@@ -748,9 +791,10 @@ namespace SpellWorker
             // Load attributes (with bit flags)
             LoadAttributeCheckboxes(currentSpell.Attributes, "chkAttribute");
             LoadAttributeCheckboxes(currentSpell.AttributesEx, "chkAttributeEx");
-            LoadAttributeCheckboxes(currentSpell.AttributesEx2, "chkAttributeEx2");
-            LoadAttributeCheckboxes(currentSpell.AttributesEx3, "chkAttributeEx3");
-            LoadAttributeCheckboxes(currentSpell.AttributesEx4, "chkAttributeEx4");
+            LoadAttributeCheckboxes(currentSpell.AttributesEx2, "chkAttributeEx2_");
+            LoadAttributeCheckboxes(currentSpell.AttributesEx3, "chkAttributeEx3_");
+            LoadAttributeCheckboxes(currentSpell.AttributesEx4, "chkAttributeEx4_");
+            LoadAttributeCheckboxes(currentSpell.Custom, "chkCustom");
 
             // Load other properties
             cmbTargets.SelectedValue = (int)currentSpell.Targets;
@@ -940,6 +984,11 @@ namespace SpellWorker
                 {
                     chk.IsChecked = (attributes & (1u << i)) != 0;
                 }
+                else
+                {
+                    // Log missing checkboxes for debugging
+                    System.Diagnostics.Debug.WriteLine($"Missing checkbox: {checkboxPrefix}{i + 1} for bit {i}");
+                }
             }
         }
 
@@ -1022,9 +1071,10 @@ namespace SpellWorker
             // Save attributes (from checkboxes)
             currentSpell.Attributes = SaveAttributeCheckboxes("chkAttribute");
             currentSpell.AttributesEx = SaveAttributeCheckboxes("chkAttributeEx");
-            currentSpell.AttributesEx2 = SaveAttributeCheckboxes("chkAttributeEx2");
-            currentSpell.AttributesEx3 = SaveAttributeCheckboxes("chkAttributeEx3");
-            currentSpell.AttributesEx4 = SaveAttributeCheckboxes("chkAttributeEx4");
+            currentSpell.AttributesEx2 = SaveAttributeCheckboxes("chkAttributeEx2_");
+            currentSpell.AttributesEx3 = SaveAttributeCheckboxes("chkAttributeEx3_");
+            currentSpell.AttributesEx4 = SaveAttributeCheckboxes("chkAttributeEx4_");
+            currentSpell.Custom = SaveAttributeCheckboxes("chkCustom");
 
             // Save other properties
             currentSpell.Targets = (uint)GetSelectedValue(cmbTargets);
@@ -1271,18 +1321,56 @@ namespace SpellWorker
             return cmb.SelectedValue != null ? (int)cmb.SelectedValue : 0;
         }
 
-        private uint SaveAttributeCheckboxes(string checkboxPrefix)
+        private uint SaveAttributeCheckboxes(string checkboxPrefix, uint originalValue = 0)
         {
             uint attributes = 0;
+            uint preservedBits = originalValue; // Start with original value to preserve unknown flags
+
+            // If we're loading from current spell, use that as the base
+            if (originalValue == 0 && currentSpell != null)
+            {
+                // Get the original value based on the checkbox prefix
+                switch (checkboxPrefix)
+                {
+                    case "chkAttribute":
+                        preservedBits = currentSpell.Attributes;
+                        break;
+                    case "chkAttributeEx":
+                        preservedBits = currentSpell.AttributesEx;
+                        break;
+                    case "chkAttributeEx2_":
+                        preservedBits = currentSpell.AttributesEx2;
+                        break;
+                    case "chkAttributeEx3_":
+                        preservedBits = currentSpell.AttributesEx3;
+                        break;
+                    case "chkAttributeEx4_":
+                        preservedBits = currentSpell.AttributesEx4;
+                        break;
+                    case "chkCustom":
+                        preservedBits = currentSpell.Custom;
+                        break;
+                }
+            }
+
             for (int i = 0; i < 32; i++)
             {
                 CheckBox chk = FindName($"{checkboxPrefix}{i + 1}") as CheckBox;
-                if (chk != null && chk.IsChecked == true)
+                if (chk != null)
                 {
-                    attributes |= (1u << i);
+                    // Clear this bit from preserved value since we're handling it explicitly
+                    preservedBits &= ~(1u << i);
+
+                    if (chk.IsChecked == true)
+                    {
+                        attributes |= (1u << i);
+                    }
                 }
+                // If checkbox doesn't exist, the bit will remain in preservedBits
             }
-            return attributes;
+
+            // Combine handled bits with preserved bits
+            return attributes | preservedBits;
         }
 
         private string EscapeSql(string input)

@@ -191,224 +191,294 @@
                         <GroupBox Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="4" Header="Attributes" Margin="0,10,0,0">
                             <TabControl>
                                 <TabItem Header="Attributes">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <CheckBox Name="chkAttribute1" Content="SPELL_ATTR_DONT_DISPLAY_SPELL_RESULT" Margin="3"/>
-                                            <CheckBox Name="chkAttribute2" Content="SPELL_ATTR_RANGED" Margin="3"/>
-                                            <CheckBox Name="chkAttribute3" Content="SPELL_ATTR_ON_NEXT_SWING_1" Margin="3"/>
-                                            <CheckBox Name="chkAttribute4" Content="SPELL_ATTR_IS_REPLENISHMENT" Margin="3"/>
-                                            <CheckBox Name="chkAttribute5" Content="SPELL_ATTR_IS_ABILITY" Margin="3"/>
-                                            <CheckBox Name="chkAttribute6" Content="SPELL_ATTR_TRADESPELL" Margin="3"/>
-                                            <CheckBox Name="chkAttribute7" Content="SPELL_ATTR_PASSIVE" Margin="3"/>
-                                            <CheckBox Name="chkAttribute8" Content="SPELL_ATTR_HIDDEN_CLIENTSIDE" Margin="3"/>
-                                            <CheckBox Name="chkAttribute9" Content="SPELL_ATTR_HIDE_IN_COMBAT_LOG" Margin="3"/>
-                                            <CheckBox Name="chkAttribute10" Content="SPELL_ATTR_TARGET_MAINHAND_ITEM" Margin="3"/>
-                                            <CheckBox Name="chkAttribute11" Content="SPELL_ATTR_ON_NEXT_SWING_2" Margin="3"/>
-                                            <CheckBox Name="chkAttribute12" Content="SPELL_ATTR_WEARER_CASTS_PROC_TRIGGER" Margin="3"/>
-                                            <CheckBox Name="chkAttribute13" Content="SPELL_ATTR_DAYTIME_ONLY" Margin="3"/>
-                                            <CheckBox Name="chkAttribute14" Content="SPELL_ATTR_NIGHT_ONLY" Margin="3"/>
-                                            <CheckBox Name="chkAttribute15" Content="SPELL_ATTR_INDOORS_ONLY" Margin="3"/>
-                                            <CheckBox Name="chkAttribute16" Content="SPELL_ATTR_OUTDOORS_ONLY" Margin="3"/>
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="1">
-                                            <CheckBox Name="chkAttribute17" Content="SPELL_ATTR_NOT_SHAPESHIFT" Margin="3"/>
-                                            <CheckBox Name="chkAttribute18" Content="SPELL_ATTR_ONLY_STEALTHED" Margin="3"/>
-                                            <CheckBox Name="chkAttribute19" Content="SPELL_ATTR_DONT_AFFECT_SHEATH_STATE" Margin="3"/>
-                                            <CheckBox Name="chkAttribute20" Content="SPELL_ATTR_LEVEL_DAMAGE_CALCULATION" Margin="3"/>
-                                            <CheckBox Name="chkAttribute21" Content="SPELL_ATTR_STOP_ATTACK_TARGET" Margin="3"/>
-                                            <CheckBox Name="chkAttribute22" Content="SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK" Margin="3"/>
-                                            <CheckBox Name="chkAttribute23" Content="SPELL_ATTR_SET_TRACKING_TARGET" Margin="3"/>
-                                            <CheckBox Name="chkAttribute24" Content="SPELL_ATTR_CASTABLE_WHILE_DEAD" Margin="3"/>
-                                            <CheckBox Name="chkAttribute25" Content="SPELL_ATTR_CASTABLE_WHILE_MOUNTED" Margin="3"/>
-                                            <CheckBox Name="chkAttribute26" Content="SPELL_ATTR_DISABLED_WHILE_ACTIVE" Margin="3"/>
-                                            <CheckBox Name="chkAttribute27" Content="SPELL_ATTR_NEGATIVE" Margin="3"/>
-                                            <CheckBox Name="chkAttribute28" Content="SPELL_ATTR_CASTABLE_WHILE_SITTING" Margin="3"/>
-                                            <CheckBox Name="chkAttribute29" Content="SPELL_ATTR_CANT_USED_IN_COMBAT" Margin="3"/>
-                                            <CheckBox Name="chkAttribute30" Content="SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY" Margin="3"/>
-                                            <CheckBox Name="chkAttribute31" Content="SPELL_ATTR_DIMINISHING_RETURNS" Margin="3"/>
-                                            <CheckBox Name="chkAttribute32" Content="SPELL_ATTR_CANT_CANCEL" Margin="3"/>
-                                        </StackPanel>
-                                    </Grid>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <!-- Bits 0-15 -->
+                                                <CheckBox Name="chkAttribute1" Content="SPELL_ATTR_DONT_DISPLAY_SPELL_RESULT" Margin="3"/>
+                                                <CheckBox Name="chkAttribute2" Content="SPELL_ATTR_RANGED" Margin="3"/>
+                                                <CheckBox Name="chkAttribute3" Content="SPELL_ATTR_ON_NEXT_SWING_1" Margin="3"/>
+                                                <CheckBox Name="chkAttribute4" Content="SPELL_ATTR_IS_REPLENISHMENT" Margin="3"/>
+                                                <CheckBox Name="chkAttribute5" Content="SPELL_ATTR_IS_ABILITY" Margin="3"/>
+                                                <CheckBox Name="chkAttribute6" Content="SPELL_ATTR_TRADESPELL" Margin="3"/>
+                                                <CheckBox Name="chkAttribute7" Content="SPELL_ATTR_PASSIVE" Margin="3"/>
+                                                <CheckBox Name="chkAttribute8" Content="SPELL_ATTR_HIDDEN_CLIENTSIDE" Margin="3"/>
+                                                <CheckBox Name="chkAttribute9" Content="SPELL_ATTR_HIDE_IN_COMBAT_LOG" Margin="3"/>
+                                                <CheckBox Name="chkAttribute10" Content="SPELL_ATTR_TARGET_MAINHAND_ITEM" Margin="3"/>
+                                                <CheckBox Name="chkAttribute11" Content="SPELL_ATTR_ON_NEXT_SWING_2" Margin="3"/>
+                                                <CheckBox Name="chkAttribute12" Content="SPELL_ATTR_WEARER_CASTS_PROC_TRIGGER" Margin="3"/>
+                                                <CheckBox Name="chkAttribute13" Content="SPELL_ATTR_DAYTIME_ONLY" Margin="3"/>
+                                                <CheckBox Name="chkAttribute14" Content="SPELL_ATTR_NIGHT_ONLY" Margin="3"/>
+                                                <CheckBox Name="chkAttribute15" Content="SPELL_ATTR_INDOORS_ONLY" Margin="3"/>
+                                                <CheckBox Name="chkAttribute16" Content="SPELL_ATTR_OUTDOORS_ONLY" Margin="3"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <!-- Bits 16-31 -->
+                                                <CheckBox Name="chkAttribute17" Content="SPELL_ATTR_NOT_SHAPESHIFT" Margin="3"/>
+                                                <CheckBox Name="chkAttribute18" Content="SPELL_ATTR_ONLY_STEALTHED" Margin="3"/>
+                                                <CheckBox Name="chkAttribute19" Content="SPELL_ATTR_DONT_AFFECT_SHEATH_STATE" Margin="3"/>
+                                                <CheckBox Name="chkAttribute20" Content="SPELL_ATTR_LEVEL_DAMAGE_CALCULATION" Margin="3"/>
+                                                <CheckBox Name="chkAttribute21" Content="SPELL_ATTR_STOP_ATTACK_TARGET" Margin="3"/>
+                                                <CheckBox Name="chkAttribute22" Content="SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK" Margin="3"/>
+                                                <CheckBox Name="chkAttribute23" Content="SPELL_ATTR_SET_TRACKING_TARGET" Margin="3"/>
+                                                <CheckBox Name="chkAttribute24" Content="SPELL_ATTR_CASTABLE_WHILE_DEAD" Margin="3"/>
+                                                <CheckBox Name="chkAttribute25" Content="SPELL_ATTR_CASTABLE_WHILE_MOUNTED" Margin="3"/>
+                                                <CheckBox Name="chkAttribute26" Content="SPELL_ATTR_DISABLED_WHILE_ACTIVE" Margin="3"/>
+                                                <CheckBox Name="chkAttribute27" Content="SPELL_ATTR_NEGATIVE" Margin="3"/>
+                                                <CheckBox Name="chkAttribute28" Content="SPELL_ATTR_CASTABLE_WHILE_SITTING" Margin="3"/>
+                                                <CheckBox Name="chkAttribute29" Content="SPELL_ATTR_CANT_USED_IN_COMBAT" Margin="3"/>
+                                                <CheckBox Name="chkAttribute30" Content="SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY" Margin="3"/>
+                                                <CheckBox Name="chkAttribute31" Content="SPELL_ATTR_DIMINISHING_RETURNS" Margin="3"/>
+                                                <CheckBox Name="chkAttribute32" Content="SPELL_ATTR_CANT_CANCEL" Margin="3"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ScrollViewer>
                                 </TabItem>
                                 <TabItem Header="AttributesEx">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <CheckBox Name="chkAttributeEx1" Content="SPELL_ATTR_EX_DISMISSIBLE_PET" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2" Content="SPELL_ATTR_EX_NO_THREAT" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3" Content="SPELL_ATTR_EX_NO_REAGENT_WHILE_PREP" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4" Content="SPELL_ATTR_EX_NO_INITIAL_AGGRO" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx5" Content="SPELL_ATTR_EX_CANT_DODGE_DUCK_PARRY" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx6" Content="SPELL_ATTR_EX_NO_AUTOCAST_AI" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx7" Content="SPELL_ATTR_EX_REQ_COMBO_POINTS1" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx8" Content="SPELL_ATTR_EX_CHANNELED_1" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx9" Content="SPELL_ATTR_EX_NO_REDIRECTION" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx10" Content="SPELL_ATTR_EX_NO_SKILL_INCREASE" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx11" Content="SPELL_ATTR_EX_ALLOW_WHILE_STEALTHED" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx12" Content="SPELL_ATTR_EX_CHANNELED_2" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx13" Content="SPELL_ATTR_EX_NO_CASTER_DAMAGE_BONUS" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx14" Content="SPELL_ATTR_EX_NO_PARTIAL_IMMUNITY" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx15" Content="SPELL_ATTR_EX_NO_DURABILITY_LOSS" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx16" Content="SPELL_ATTR_EX_NO_AVOIDANCE" Margin="3"/>
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="1">
-                                            <CheckBox Name="chkAttributeEx17" Content="SPELL_ATTR_EX_DOT_STACKING_RULE" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx18" Content="SPELL_ATTR_EX_ONLY_TARGET_PLAYERS" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx19" Content="SPELL_ATTR_EX_NOT_BREAK_STEALTH" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx20" Content="SPELL_ATTR_EX_NO_AURA_TIMER" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx21" Content="SPELL_ATTR_EX_NO_TARGET_SELF" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx22" Content="SPELL_ATTR_EX_REQ_COMBO_POINTS2" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx23" Content="SPELL_ATTR_EX_REQ_LOCATION_ARENA" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx24" Content="SPELL_ATTR_EX_DISPEL_AURAS_ON_IMMUNITY" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx25" Content="SPELL_ATTR_EX_UNAFFECTED_BY_SCHOOL_IMMUNE" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx26" Content="SPELL_ATTR_EX_NOT_BREAK_INVISIBILITY" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx27" Content="SPELL_ATTR_EX_NOT_TURN_DURING_CAST" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx28" Content="SPELL_ATTR_EX_CANNOT_CRIT" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx29" Content="SPELL_ATTR_EX_ACTIVE_THREAT" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx30" Content="SPELL_ATTR_EX_RETAIN_ITEM_CAST" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx31" Content="SPELL_ATTR_EX_NO_DONE_BONUS" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx32" Content="SPELL_ATTR_EX_NO_SCALING" Margin="3"/>
-                                        </StackPanel>
-                                    </Grid>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <!-- Bits 0-15 -->
+                                                <CheckBox Name="chkAttributeEx1" Content="SPELL_ATTR_EX_DISMISS_PET" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2" Content="SPELL_ATTR_EX_DRAIN_ALL_POWER" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3" Content="SPELL_ATTR_EX_CHANNELED_1" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4" Content="SPELL_ATTR_EX_CANT_BE_REDIRECTED" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx5" Content="SPELL_ATTR_EX_UNK4" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx6" Content="SPELL_ATTR_EX_NOT_BREAK_STEALTH" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx7" Content="SPELL_ATTR_EX_CHANNELED_2" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx8" Content="SPELL_ATTR_EX_CANT_BE_REFLECTED" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx9" Content="SPELL_ATTR_EX_NOT_IN_COMBAT_TARGET" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx10" Content="SPELL_ATTR_EX_MELEE_COMBAT_START" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx11" Content="SPELL_ATTR_EX_NO_THREAT" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx12" Content="SPELL_ATTR_EX_AURA_UNIQUE" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx13" Content="SPELL_ATTR_EX_IS_PICKPOCKET" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx14" Content="SPELL_ATTR_EX_FARSIGHT" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx15" Content="SPELL_ATTR_EX_CHANNEL_TRACK_TARGET" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx16" Content="SPELL_ATTR_EX_DISPEL_AURAS_ON_IMMUNITY" Margin="3"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <!-- Bits 16-31 -->
+                                                <CheckBox Name="chkAttributeEx17" Content="SPELL_ATTR_EX_IMMUNITY_TO_HOSTILE_AND_FRIENDLY_EFFECTS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx18" Content="SPELL_ATTR_EX_NO_AUTOCAST" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx19" Content="SPELL_ATTR_EX_UNK18" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx20" Content="SPELL_ATTR_EX_CANT_TARGET_SELF" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx21" Content="SPELL_ATTR_EX_REQ_TARGET_COMBO_POINTS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx22" Content="SPELL_ATTR_EX_THREAT_ONLY_ON_MISS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx23" Content="SPELL_ATTR_EX_REQ_COMBO_POINTS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx24" Content="SPELL_ATTR_EX_IGNORE_CASTER_AND_TARGET_RESTRICTIONS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx25" Content="SPELL_ATTR_EX_IS_FISHING" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx26" Content="SPELL_ATTR_EX_UNK25" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx27" Content="SPELL_ATTR_EX_REQUIRE_ALL_TARGETS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx28" Content="SPELL_ATTR_EX_REFUND_POWER" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx29" Content="SPELL_ATTR_EX_DONT_DISPLAY_IN_AURA_BAR" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx30" Content="SPELL_ATTR_EX_CHANNEL_DISPLAY_SPELL_NAME" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx31" Content="SPELL_ATTR_EX_ENABLE_AT_DODGE" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx32" Content="SPELL_ATTR_EX_UNK31" Margin="3"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ScrollViewer>
                                 </TabItem>
                                 <TabItem Header="AttributesEx2">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <CheckBox Name="chkAttributeEx2_1" Content="SPELL_ATTR_EX2_CAN_TARGET_DEAD" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_2" Content="SPELL_ATTR_EX2_NO_SHAPESHIFT_UI" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_3" Content="SPELL_ATTR_EX2_UNK3" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_4" Content="SPELL_ATTR_EX2_AUTOREPEAT_FLAG" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_5" Content="SPELL_ATTR_EX2_CANT_TARGET_TAPPED" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_6" Content="SPELL_ATTR_EX2_UNK6" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_7" Content="SPELL_ATTR_EX2_UNK7" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_8" Content="SPELL_ATTR_EX2_UNK8" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_9" Content="SPELL_ATTR_EX2_UNK9" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_10" Content="SPELL_ATTR_EX2_UNK10" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_11" Content="SPELL_ATTR_EX2_HEALTH_FUNNEL" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_12" Content="SPELL_ATTR_EX2_UNK12" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_13" Content="SPELL_ATTR_EX2_UNK13" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_14" Content="SPELL_ATTR_EX2_UNK14" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_15" Content="SPELL_ATTR_EX2_UNK15" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_16" Content="SPELL_ATTR_EX2_TAME_BEAST" Margin="3"/>
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="1">
-                                            <CheckBox Name="chkAttributeEx2_17" Content="SPELL_ATTR_EX2_NOT_RESET_AUTO_ACTIONS" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_18" Content="SPELL_ATTR_EX2_REQ_DEAD_PET" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_19" Content="SPELL_ATTR_EX2_NOT_NEED_SHAPESHIFT" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_20" Content="SPELL_ATTR_EX2_UNK20" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_21" Content="SPELL_ATTR_EX2_DAMAGE_REDUCED_SHIELD" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_22" Content="SPELL_ATTR_EX2_UNK22" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_23" Content="SPELL_ATTR_EX2_IS_ARCANE_CONCENTRATION" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_24" Content="SPELL_ATTR_EX2_UNK24" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_25" Content="SPELL_ATTR_EX2_UNK25" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_26" Content="SPELL_ATTR_EX2_UNK26" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_27" Content="SPELL_ATTR_EX2_UNK27" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_28" Content="SPELL_ATTR_EX2_UNK28" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_29" Content="SPELL_ATTR_EX2_UNK29" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_30" Content="SPELL_ATTR_EX2_UNK30" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_31" Content="SPELL_ATTR_EX2_UNK31" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx2_32" Content="SPELL_ATTR_EX2_UNK32" Margin="3"/>
-                                        </StackPanel>
-                                    </Grid>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <!-- Bits 0-15 -->
+                                                <CheckBox Name="chkAttributeEx2_1" Content="SPELL_ATTR_EX2_CAN_TARGET_DEAD" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_2" Content="SPELL_ATTR_EX2_UNK1" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_3" Content="SPELL_ATTR_EX2_IGNORE_LOS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_4" Content="SPELL_ATTR_EX2_UNK3" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_5" Content="SPELL_ATTR_EX2_DISPLAY_IN_STANCE_BAR" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_6" Content="SPELL_ATTR_EX2_AUTOREPEAT_FLAG" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_7" Content="SPELL_ATTR_EX2_CANT_TARGET_TAPPED" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_8" Content="SPELL_ATTR_EX2_UNK7" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_9" Content="SPELL_ATTR_EX2_UNK8" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_10" Content="SPELL_ATTR_EX2_UNK9" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_11" Content="SPELL_ATTR_EX2_UNK10" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_12" Content="SPELL_ATTR_EX2_NO_TARGET_PER_SECOND_COSTS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_13" Content="SPELL_ATTR_EX2_CHAIN_FROM_CASTER" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_14" Content="SPELL_ATTR_EX2_PRESERVE_ENCHANT_IN_ARENA" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_15" Content="SPELL_ATTR_EX2_ALLOW_WHILE_INVISIBLE" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_16" Content="SPELL_ATTR_EX2_UNK15" Margin="3"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <!-- Bits 16-31 -->
+                                                <CheckBox Name="chkAttributeEx2_17" Content="SPELL_ATTR_EX2_TAME_BEAST" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_18" Content="SPELL_ATTR_EX2_NOT_RESET_AUTO_ACTIONS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_19" Content="SPELL_ATTR_EX2_REQ_DEAD_PET" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_20" Content="SPELL_ATTR_EX2_NOT_NEED_SHAPESHIFT" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_21" Content="SPELL_ATTR_EX2_UNK20" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_22" Content="SPELL_ATTR_EX2_DAMAGE_REDUCED_SHIELD" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_23" Content="SPELL_ATTR_EX2_NO_INITIAL_THREAT" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_24" Content="SPELL_ATTR_EX2_PROC_COOLDOWN_ON_FAILURE" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_25" Content="SPELL_ATTR_EX2_UNK24" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_26" Content="SPELL_ATTR_EX2_DONT_BLOCK_MANA_REGEN" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_27" Content="SPELL_ATTR_EX2_NO_SCHOOL_IMMUNITIES" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_28" Content="SPELL_ATTR_EX2_UNK27" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_29" Content="SPELL_ATTR_EX2_NOT_AN_ACTION" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_30" Content="SPELL_ATTR_EX2_CANT_CRIT" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_31" Content="SPELL_ATTR_EX2_ACTIVE_THREAT" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx2_32" Content="SPELL_ATTR_EX2_FOOD_BUFF" Margin="3"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ScrollViewer>
                                 </TabItem>
                                 <TabItem Header="AttributesEx3">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <CheckBox Name="chkAttributeEx3_1" Content="SPELL_ATTR_EX3_UNK1" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_2" Content="SPELL_ATTR_EX3_UNK2" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_3" Content="SPELL_ATTR_EX3_UNK3" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_4" Content="SPELL_ATTR_EX3_BLOCKABLE_SPELL" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_5" Content="SPELL_ATTR_EX3_IGNORE_RESURRECTION_TIMER" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_6" Content="SPELL_ATTR_EX3_UNK6" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_7" Content="SPELL_ATTR_EX3_STACK_FOR_DIFF_CASTERS" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_8" Content="SPELL_ATTR_EX3_TARGET_ONLY_PLAYER" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_9" Content="SPELL_ATTR_EX3_UNK9" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_10" Content="SPELL_ATTR_EX3_UNK10" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_11" Content="SPELL_ATTR_EX3_UNK11" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_12" Content="SPELL_ATTR_EX3_UNK12" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_13" Content="SPELL_ATTR_EX3_UNK13" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_14" Content="SPELL_ATTR_EX3_UNK14" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_15" Content="SPELL_ATTR_EX3_UNK15" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_16" Content="SPELL_ATTR_EX3_UNK16" Margin="3"/>
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="1">
-                                            <CheckBox Name="chkAttributeEx3_17" Content="SPELL_ATTR_EX3_UNK17" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_18" Content="SPELL_ATTR_EX3_UNK18" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_19" Content="SPELL_ATTR_EX3_UNK19" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_20" Content="SPELL_ATTR_EX3_REQ_WAND" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_21" Content="SPELL_ATTR_EX3_UNK21" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_22" Content="SPELL_ATTR_EX3_UNK22" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_23" Content="SPELL_ATTR_EX3_UNK23" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_24" Content="SPELL_ATTR_EX3_UNK24" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_25" Content="SPELL_ATTR_EX3_UNK25" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_26" Content="SPELL_ATTR_EX3_UNK26" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_27" Content="SPELL_ATTR_EX3_UNK27" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_28" Content="SPELL_ATTR_EX3_UNK28" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_29" Content="SPELL_ATTR_EX3_UNK29" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_30" Content="SPELL_ATTR_EX3_UNK30" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_31" Content="SPELL_ATTR_EX3_UNK31" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx3_32" Content="SPELL_ATTR_EX3_UNK32" Margin="3"/>
-                                        </StackPanel>
-                                    </Grid>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <!-- Bits 0-15 -->
+                                                <CheckBox Name="chkAttributeEx3_1" Content="SPELL_ATTR_EX3_PVP_ENABLING" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_2" Content="SPELL_ATTR_EX3_NO_PROC_EQUIP_REQUIREMENT" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_3" Content="SPELL_ATTR_EX3_NO_CASTING_BAR_TEXT" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_4" Content="SPELL_ATTR_EX3_COMPLETELY_BLOCKED" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_5" Content="SPELL_ATTR_EX3_NO_RES_TIMER" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_6" Content="SPELL_ATTR_EX3_NO_DURABILITY_LOSS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_7" Content="SPELL_ATTR_EX3_NO_AVOIDANCE" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_8" Content="SPELL_ATTR_EX3_DOT_STACKING_RULE" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_9" Content="SPELL_ATTR_EX3_ONLY_ON_PLAYER" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_10" Content="SPELL_ATTR_EX3_NOT_A_PROC" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_11" Content="SPELL_ATTR_EX3_REQUIRES_MAIN_HAND_WEAPON" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_12" Content="SPELL_ATTR_EX3_ONLY_BATTLEGROUNDS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_13" Content="SPELL_ATTR_EX3_ONLY_ON_GHOSTS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_14" Content="SPELL_ATTR_EX3_HIDE_CHANNEL_BAR" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_15" Content="SPELL_ATTR_EX3_HIDE_IN_RAID_FILTER" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_16" Content="SPELL_ATTR_EX3_NORMAL_RANGED_ATTACK" Margin="3"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <!-- Bits 16-31 -->
+                                                <CheckBox Name="chkAttributeEx3_17" Content="SPELL_ATTR_EX3_SUPPRESS_CASTER_PROCS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_18" Content="SPELL_ATTR_EX3_SUPPRESS_TARGET_PROCS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_19" Content="SPELL_ATTR_EX3_ALWAYS_HIT" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_20" Content="SPELL_ATTR_EX3_INSTANT_TARGET_PROCS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_21" Content="SPELL_ATTR_EX3_ALLOW_AURA_WHILE_DEAD" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_22" Content="SPELL_ATTR_EX3_ONLY_PROC_OUTDOORS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_23" Content="SPELL_ATTR_EX3_CASTING_CANCELS_AUTOREPEAT" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_24" Content="SPELL_ATTR_EX3_NO_DAMAGE_HISTORY" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_25" Content="SPELL_ATTR_EX3_REQUIRES_OFFHAND_WEAPON" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_26" Content="SPELL_ATTR_EX3_TREAT_AS_PERIODIC" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_27" Content="SPELL_ATTR_EX3_CAN_PROC_FROM_PROCS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_28" Content="SPELL_ATTR_EX3_ONLY_PROC_ON_CASTER" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_29" Content="SPELL_ATTR_EX3_IGNORE_CASTER_AND_TARGET_RESTRICTIONS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_30" Content="SPELL_ATTR_EX3_IGNORE_CASTER_MODIFIERS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_31" Content="SPELL_ATTR_EX3_DO_NOT_DISPLAY_RANGE" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx3_32" Content="SPELL_ATTR_EX3_NOT_ON_AOE_IMMUNE" Margin="3"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ScrollViewer>
                                 </TabItem>
                                 <TabItem Header="AttributesEx4">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <CheckBox Name="chkAttributeEx4_1" Content="SPELL_ATTR_EX4_UNK1" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_2" Content="SPELL_ATTR_EX4_UNK2" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_3" Content="SPELL_ATTR_EX4_UNK3" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_4" Content="SPELL_ATTR_EX4_UNK4" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_5" Content="SPELL_ATTR_EX4_UNK5" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_6" Content="SPELL_ATTR_EX4_NOT_STEALABLE" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_7" Content="SPELL_ATTR_EX4_CAN_CAST_WHILE_CASTING" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_8" Content="SPELL_ATTR_EX4_TRIGGERED_CAN_CAST_WHILE_CASTING" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_9" Content="SPELL_ATTR_EX4_SPELL_VS_EXTEND_COST" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_10" Content="SPELL_ATTR_EX4_UNK10" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_11" Content="SPELL_ATTR_EX4_UNK11" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_12" Content="SPELL_ATTR_EX4_UNK12" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_13" Content="SPELL_ATTR_EX4_UNK13" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_14" Content="SPELL_ATTR_EX4_UNK14" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_15" Content="SPELL_ATTR_EX4_UNK15" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_16" Content="SPELL_ATTR_EX4_UNK16" Margin="3"/>
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="1">
-                                            <CheckBox Name="chkAttributeEx4_17" Content="SPELL_ATTR_EX4_UNK17" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_18" Content="SPELL_ATTR_EX4_UNK18" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_19" Content="SPELL_ATTR_EX4_UNK19" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_20" Content="SPELL_ATTR_EX4_UNK20" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_21" Content="SPELL_ATTR_EX4_UNK21" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_22" Content="SPELL_ATTR_EX4_UNK22" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_23" Content="SPELL_ATTR_EX4_UNK23" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_24" Content="SPELL_ATTR_EX4_UNK24" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_25" Content="SPELL_ATTR_EX4_UNK25" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_26" Content="SPELL_ATTR_EX4_UNK26" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_27" Content="SPELL_ATTR_EX4_UNK27" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_28" Content="SPELL_ATTR_EX4_UNK28" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_29" Content="SPELL_ATTR_EX4_UNK29" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_30" Content="SPELL_ATTR_EX4_UNK30" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_31" Content="SPELL_ATTR_EX4_UNK31" Margin="3"/>
-                                            <CheckBox Name="chkAttributeEx4_32" Content="SPELL_ATTR_EX4_UNK32" Margin="3"/>
-                                        </StackPanel>
-                                    </Grid>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <!-- Bits 0-4 -->
+                                                <CheckBox Name="chkAttributeEx4_1" Content="SPELL_ATTR_EX4_IGNORE_RESISTANCES" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_2" Content="SPELL_ATTR_EX4_CLASS_TRIGGER_ONLY_ON_TARGET" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_3" Content="SPELL_ATTR_EX4_AURA_EXPIRES_OFFLINE" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_4" Content="SPELL_ATTR_EX4_NO_HELPFUL_THREAT" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_5" Content="SPELL_ATTR_EX4_NO_HARMFUL_THREAT" Margin="3"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <!-- Bits 5-9 -->
+                                                <CheckBox Name="chkAttributeEx4_6" Content="SPELL_ATTR_EX4_ALLOW_CLIENT_TARGETING" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_7" Content="SPELL_ATTR_EX4_CANNOT_BE_STOLEN" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_8" Content="SPELL_ATTR_EX4_CAN_CAST_WHILE_CASTING" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_9" Content="SPELL_ATTR_EX4_IGNORE_DAMAGE_TAKEN_MODIFIERS" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_10" Content="SPELL_ATTR_EX4_COMBAT_FEEDBACK_WHEN_USABLE" Margin="3"/>
+                                                <!-- Bits 10-31 are unused, you can add them if needed for future expansion -->
+                                                <CheckBox Name="chkAttributeEx4_11" Content="SPELL_ATTR_EX4_UNK10" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_12" Content="SPELL_ATTR_EX4_UNK11" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_13" Content="SPELL_ATTR_EX4_UNK12" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_14" Content="SPELL_ATTR_EX4_UNK13" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_15" Content="SPELL_ATTR_EX4_UNK14" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_16" Content="SPELL_ATTR_EX4_UNK15" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_17" Content="SPELL_ATTR_EX4_UNK16" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_18" Content="SPELL_ATTR_EX4_UNK17" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_19" Content="SPELL_ATTR_EX4_UNK18" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_20" Content="SPELL_ATTR_EX4_UNK19" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_21" Content="SPELL_ATTR_EX4_UNK20" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_22" Content="SPELL_ATTR_EX4_UNK21" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_23" Content="SPELL_ATTR_EX4_UNK22" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_24" Content="SPELL_ATTR_EX4_UNK23" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_25" Content="SPELL_ATTR_EX4_UNK24" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_26" Content="SPELL_ATTR_EX4_UNK25" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_27" Content="SPELL_ATTR_EX4_UNK26" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_28" Content="SPELL_ATTR_EX4_UNK27" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_29" Content="SPELL_ATTR_EX4_UNK28" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_30" Content="SPELL_ATTR_EX4_UNK29" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_31" Content="SPELL_ATTR_EX4_UNK30" Margin="3"/>
+                                                <CheckBox Name="chkAttributeEx4_32" Content="SPELL_ATTR_EX4_UNK31" Margin="3"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ScrollViewer>
+                                </TabItem>
+                                <TabItem Header="Custom Flags">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <!-- Custom flags bits 0-15 -->
+                                                <CheckBox Name="chkCustom1" Content="SPELL_CUSTOM_ALLOW_STACK_BETWEEN_CASTER" Margin="3"/>
+                                                <CheckBox Name="chkCustom2" Content="SPELL_CUSTOM_NEGATIVE" Margin="3"/>
+                                                <CheckBox Name="chkCustom3" Content="SPELL_CUSTOM_POSITIVE" Margin="3"/>
+                                                <CheckBox Name="chkCustom4" Content="SPELL_CUSTOM_CHAN_NO_DIST_LIMIT" Margin="3"/>
+                                                <CheckBox Name="chkCustom5" Content="SPELL_CUSTOM_FIXED_DAMAGE" Margin="3"/>
+                                                <CheckBox Name="chkCustom6" Content="SPELL_CUSTOM_IGNORE_ARMOR" Margin="3"/>
+                                                <CheckBox Name="chkCustom7" Content="SPELL_CUSTOM_BEHIND_TARGET" Margin="3"/>
+                                                <CheckBox Name="chkCustom8" Content="SPELL_CUSTOM_FACE_TARGET" Margin="3"/>
+                                                <CheckBox Name="chkCustom9" Content="SPELL_CUSTOM_SINGLE_TARGET_AURA" Margin="3"/>
+                                                <CheckBox Name="chkCustom10" Content="SPELL_CUSTOM_AURA_APPLY_BREAKS_STEALTH" Margin="3"/>
+                                                <CheckBox Name="chkCustom11" Content="SPELL_CUSTOM_NOT_REMOVED_ON_EVADE" Margin="3"/>
+                                                <CheckBox Name="chkCustom12" Content="SPELL_CUSTOM_SEND_CHANNEL_VISUAL" Margin="3"/>
+                                                <CheckBox Name="chkCustom13" Content="SPELL_CUSTOM_PERSISTENT_NO_STACK" Margin="3"/>
+                                                <CheckBox Name="chkCustom14" Content="SPELL_CUSTOM_DEATH_DUNGEON_PERSISTENT" Margin="3"/>
+                                                <CheckBox Name="chkCustom15" Content="SPELL_CUSTOM_STACK_WITH_SPELL_SPECIFIC" Margin="3"/>
+                                                <CheckBox Name="chkCustom16" Content="SPELL_CUSTOM_ROLL_PROC_ONCE_PER_CAST" Margin="3"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <!-- Custom flags bits 16-31 -->
+                                                <CheckBox Name="chkCustom17" Content="SPELL_CUSTOM_FREEZE_ATTACK_TIMERS" Margin="3"/>
+                                                <CheckBox Name="chkCustom18" Content="SPELL_CUSTOM_ALWAYS_CRIT" Margin="3"/>
+                                                <CheckBox Name="chkCustom19" Content="SPELL_CUSTOM_RESET_RANGED_ATTACK" Margin="3"/>
+                                                <CheckBox Name="chkCustom20" Content="SPELL_CUSTOM_SPELL_DAMAGE_MULTIPLIER" Margin="3"/>
+                                                <CheckBox Name="chkCustom21" Content="SPELL_CUSTOM_NO_SPELL_MOD_CHARGES" Margin="3"/>
+                                                <CheckBox Name="chkCustom22" Content="SPELL_CUSTOM_PERSIST_THROUGH_RESPAWN" Margin="3"/>
+                                                <CheckBox Name="chkCustom23" Content="SPELL_CUSTOM_DISSALOW_ON_BATTLEGROUND" Margin="3"/>
+                                                <CheckBox Name="chkCustom24" Content="SPELL_CUSTOM_REQUIRES_DISTANCE_CHECK" Margin="3"/>
+                                                <CheckBox Name="chkCustom25" Content="SPELL_CUSTOM_AREA_AURA_NOT_SELF" Margin="3"/>
+                                                <CheckBox Name="chkCustom26" Content="SPELL_CUSTOM_IMMUNITY_TO_HOSTILE_ONLY" Margin="3"/>
+                                                <CheckBox Name="chkCustom27" Content="SPELL_CUSTOM_IGNORE_PROC_DAMAGE_REQ" Margin="3"/>
+                                                <CheckBox Name="chkCustom28" Content="SPELL_CUSTOM_NO_PUSHBACK" Margin="3"/>
+                                                <CheckBox Name="chkCustom29" Content="SPELL_CUSTOM_DEPRECATED_FOR_PLAYERS" Margin="3"/>
+                                                <CheckBox Name="chkCustom30" Content="SPELL_CUSTOM_RENTED_MOUNT" Margin="3"/>
+                                                <CheckBox Name="chkCustom31" Content="SPELL_CUSTOM_MOUNT_ALWAYS_FAST" Margin="3"/>
+                                                <!-- Bit 31 reserved for future use -->
+                                                <CheckBox Name="chkCustom32" Content="SPELL_CUSTOM_RESERVED" Margin="3"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ScrollViewer>
                                 </TabItem>
                             </TabControl>
                         </GroupBox>

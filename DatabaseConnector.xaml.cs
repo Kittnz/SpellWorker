@@ -300,7 +300,7 @@ namespace SpellWorker
                                 spell.MinFactionId = reader.GetUInt32("minFactionId");
                                 spell.MinReputation = reader.GetUInt32("minReputation");
                                 spell.RequiredAuraVision = reader.GetUInt32("requiredAuraVision");
-                                spell.Custom = reader.GetUInt32("customFlags");
+                                spell.CustomFlags = reader.GetUInt32("customFlags");
                                 spell.ScriptName = reader.GetString("script_name");
 
                                 return spell;
@@ -430,7 +430,7 @@ namespace SpellWorker
                                 "dmgClass = @DmgClass, preventionType = @PreventionType, stanceBarOrder = @stanceBarOrder, " +
                                 "dmgMultiplier1 = @DmgMultiplier1, dmgMultiplier2 = @DmgMultiplier2, dmgMultiplier3 = @DmgMultiplier3, " +
                                 "minFactionId = @MinFactionId, minReputation = @MinReputation, " +
-                                "requiredAuraVision = @RequiredAuraVision, customFlags = @Custom, script_name = @ScriptName " +
+                                "requiredAuraVision = @RequiredAuraVision, customFlags = @CustomFlags, script_name = @ScriptName " +
                                 "WHERE entry = @entry";
                     }
                     else
@@ -494,7 +494,7 @@ namespace SpellWorker
                                 "@StartRecoveryCategory, @StartRecoveryTime, @MinTargetLevel, @MaxTargetLevel, @SpellFamilyName, " +
                                 "@SpellFamilyFlags, @MaxAffectedTargets, @DmgClass, @PreventionType, @stanceBarOrder, " +
                                 "@DmgMultiplier1, @DmgMultiplier2, @DmgMultiplier3, @MinFactionId, @MinReputation, " +
-                                "@RequiredAuraVision, @Custom, @ScriptName)";
+                                "@RequiredAuraVision, @CustomFlags, @ScriptName)";
                     }
 
                     // Create the command with parameters
@@ -681,8 +681,8 @@ namespace SpellWorker
                         command.Parameters.AddWithValue("@MinFactionId", spell.MinFactionId);
                         command.Parameters.AddWithValue("@MinReputation", spell.MinReputation);
                         command.Parameters.AddWithValue("@RequiredAuraVision", spell.RequiredAuraVision);
-                        command.Parameters.AddWithValue("@Custom", spell.Custom);
-                        command.Parameters.AddWithValue("@ScriptName", spell.Custom);
+                        command.Parameters.AddWithValue("@CustomFlags", spell.CustomFlags);
+                        command.Parameters.AddWithValue("@ScriptName", spell.CustomFlags);
 
                         // Execute the query
                         int rowsAffected = await command.ExecuteNonQueryAsync();

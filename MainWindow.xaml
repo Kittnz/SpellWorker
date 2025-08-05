@@ -440,42 +440,42 @@
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Grid.Column="0">
                                                 <!-- Custom flags bits 0-15 -->
-                                                <CheckBox Name="chkCustom1" Content="SPELL_CUSTOM_ALLOW_STACK_BETWEEN_CASTER" Margin="3"/>
-                                                <CheckBox Name="chkCustom2" Content="SPELL_CUSTOM_NEGATIVE" Margin="3"/>
-                                                <CheckBox Name="chkCustom3" Content="SPELL_CUSTOM_POSITIVE" Margin="3"/>
-                                                <CheckBox Name="chkCustom4" Content="SPELL_CUSTOM_CHAN_NO_DIST_LIMIT" Margin="3"/>
-                                                <CheckBox Name="chkCustom5" Content="SPELL_CUSTOM_FIXED_DAMAGE" Margin="3"/>
-                                                <CheckBox Name="chkCustom6" Content="SPELL_CUSTOM_IGNORE_ARMOR" Margin="3"/>
-                                                <CheckBox Name="chkCustom7" Content="SPELL_CUSTOM_BEHIND_TARGET" Margin="3"/>
-                                                <CheckBox Name="chkCustom8" Content="SPELL_CUSTOM_FACE_TARGET" Margin="3"/>
-                                                <CheckBox Name="chkCustom9" Content="SPELL_CUSTOM_SINGLE_TARGET_AURA" Margin="3"/>
-                                                <CheckBox Name="chkCustom10" Content="SPELL_CUSTOM_AURA_APPLY_BREAKS_STEALTH" Margin="3"/>
-                                                <CheckBox Name="chkCustom11" Content="SPELL_CUSTOM_NOT_REMOVED_ON_EVADE" Margin="3"/>
-                                                <CheckBox Name="chkCustom12" Content="SPELL_CUSTOM_SEND_CHANNEL_VISUAL" Margin="3"/>
-                                                <CheckBox Name="chkCustom13" Content="SPELL_CUSTOM_PERSISTENT_NO_STACK" Margin="3"/>
-                                                <CheckBox Name="chkCustom14" Content="SPELL_CUSTOM_DEATH_DUNGEON_PERSISTENT" Margin="3"/>
-                                                <CheckBox Name="chkCustom15" Content="SPELL_CUSTOM_STACK_WITH_SPELL_SPECIFIC" Margin="3"/>
-                                                <CheckBox Name="chkCustom16" Content="SPELL_CUSTOM_ROLL_PROC_ONCE_PER_CAST" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags1" Content="SPELL_CUSTOM_ALLOW_STACK_BETWEEN_CASTER" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags2" Content="SPELL_CUSTOM_NEGATIVE" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags3" Content="SPELL_CUSTOM_POSITIVE" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags4" Content="SPELL_CUSTOM_CHAN_NO_DIST_LIMIT" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags5" Content="SPELL_CUSTOM_FIXED_DAMAGE" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags6" Content="SPELL_CUSTOM_IGNORE_ARMOR" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags7" Content="SPELL_CUSTOM_BEHIND_TARGET" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags8" Content="SPELL_CUSTOM_FACE_TARGET" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags9" Content="SPELL_CUSTOM_SINGLE_TARGET_AURA" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags10" Content="SPELL_CUSTOM_AURA_APPLY_BREAKS_STEALTH" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags11" Content="SPELL_CUSTOM_NOT_REMOVED_ON_EVADE" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags12" Content="SPELL_CUSTOM_SEND_CHANNEL_VISUAL" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags13" Content="SPELL_CUSTOM_PERSISTENT_NO_STACK" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags14" Content="SPELL_CUSTOM_DEATH_DUNGEON_PERSISTENT" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags15" Content="SPELL_CUSTOM_STACK_WITH_SPELL_SPECIFIC" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags16" Content="SPELL_CUSTOM_ROLL_PROC_ONCE_PER_CAST" Margin="3"/>
                                             </StackPanel>
                                             <StackPanel Grid.Column="1">
                                                 <!-- Custom flags bits 16-31 -->
-                                                <CheckBox Name="chkCustom17" Content="SPELL_CUSTOM_FREEZE_ATTACK_TIMERS" Margin="3"/>
-                                                <CheckBox Name="chkCustom18" Content="SPELL_CUSTOM_ALWAYS_CRIT" Margin="3"/>
-                                                <CheckBox Name="chkCustom19" Content="SPELL_CUSTOM_RESET_RANGED_ATTACK" Margin="3"/>
-                                                <CheckBox Name="chkCustom20" Content="SPELL_CUSTOM_SPELL_DAMAGE_MULTIPLIER" Margin="3"/>
-                                                <CheckBox Name="chkCustom21" Content="SPELL_CUSTOM_NO_SPELL_MOD_CHARGES" Margin="3"/>
-                                                <CheckBox Name="chkCustom22" Content="SPELL_CUSTOM_PERSIST_THROUGH_RESPAWN" Margin="3"/>
-                                                <CheckBox Name="chkCustom23" Content="SPELL_CUSTOM_DISSALOW_ON_BATTLEGROUND" Margin="3"/>
-                                                <CheckBox Name="chkCustom24" Content="SPELL_CUSTOM_REQUIRES_DISTANCE_CHECK" Margin="3"/>
-                                                <CheckBox Name="chkCustom25" Content="SPELL_CUSTOM_AREA_AURA_NOT_SELF" Margin="3"/>
-                                                <CheckBox Name="chkCustom26" Content="SPELL_CUSTOM_IMMUNITY_TO_HOSTILE_ONLY" Margin="3"/>
-                                                <CheckBox Name="chkCustom27" Content="SPELL_CUSTOM_IGNORE_PROC_DAMAGE_REQ" Margin="3"/>
-                                                <CheckBox Name="chkCustom28" Content="SPELL_CUSTOM_NO_PUSHBACK" Margin="3"/>
-                                                <CheckBox Name="chkCustom29" Content="SPELL_CUSTOM_DEPRECATED_FOR_PLAYERS" Margin="3"/>
-                                                <CheckBox Name="chkCustom30" Content="SPELL_CUSTOM_RENTED_MOUNT" Margin="3"/>
-                                                <CheckBox Name="chkCustom31" Content="SPELL_CUSTOM_MOUNT_ALWAYS_FAST" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags17" Content="SPELL_CUSTOM_FREEZE_ATTACK_TIMERS" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags18" Content="SPELL_CUSTOM_ALWAYS_CRIT" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags19" Content="SPELL_CUSTOM_RESET_RANGED_ATTACK" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags20" Content="SPELL_CUSTOM_SPELL_DAMAGE_MULTIPLIER" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags21" Content="SPELL_CUSTOM_NO_SPELL_MOD_CHARGES" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags22" Content="SPELL_CUSTOM_PERSIST_THROUGH_RESPAWN" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags23" Content="SPELL_CUSTOM_DISSALOW_ON_BATTLEGROUND" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags24" Content="SPELL_CUSTOM_REQUIRES_DISTANCE_CHECK" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags25" Content="SPELL_CUSTOM_AREA_AURA_NOT_SELF" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags26" Content="SPELL_CUSTOM_IMMUNITY_TO_HOSTILE_ONLY" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags27" Content="SPELL_CUSTOM_IGNORE_PROC_DAMAGE_REQ" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags28" Content="SPELL_CUSTOM_NO_PUSHBACK" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags29" Content="SPELL_CUSTOM_DEPRECATED_FOR_PLAYERS" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags30" Content="SPELL_CUSTOM_RENTED_MOUNT" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags31" Content="SPELL_CUSTOM_MOUNT_ALWAYS_FAST" Margin="3"/>
                                                 <!-- Bit 31 reserved for future use -->
-                                                <CheckBox Name="chkCustom32" Content="SPELL_CUSTOM_RESERVED" Margin="3"/>
+                                                <CheckBox Name="chkCustomFlags32" Content="SPELL_CUSTOM_RESERVED" Margin="3"/>
                                             </StackPanel>
                                         </Grid>
                                     </ScrollViewer>
@@ -849,7 +849,7 @@
                         <TextBox Grid.Row="7" Grid.Column="1" Name="txtMaxAffectedTargets" Margin="5"/>
 
                         <Label Grid.Row="7" Grid.Column="2" Content="Custom Flags:" ToolTip="Custom server-side flags"/>
-                        <TextBox Grid.Row="7" Grid.Column="3" Name="txtCustom" Margin="5"/>
+                        <TextBox Grid.Row="7" Grid.Column="3" Name="txtCustomFlags" Margin="5"/>
 
                         <!-- Row 8 -->
                         <Label Grid.Row="8" Grid.Column="0" Content="Name Subtext:" ToolTip="Subtext shown under spell name"/>

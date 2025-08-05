@@ -794,7 +794,7 @@ namespace SpellWorker
             LoadAttributeCheckboxes(currentSpell.AttributesEx2, "chkAttributeEx2_");
             LoadAttributeCheckboxes(currentSpell.AttributesEx3, "chkAttributeEx3_");
             LoadAttributeCheckboxes(currentSpell.AttributesEx4, "chkAttributeEx4_");
-            LoadAttributeCheckboxes(currentSpell.Custom, "chkCustom");
+            LoadAttributeCheckboxes(currentSpell.CustomFlags, "chkCustomFlags");
 
             // Load other properties
             cmbTargets.SelectedValue = (int)currentSpell.Targets;
@@ -949,7 +949,7 @@ namespace SpellWorker
             cmbSpellFamilyName.SelectedValue = (int)currentSpell.SpellFamilyName;
             txtSpellFamilyFlags.Text = currentSpell.SpellFamilyFlags.ToString();
             txtMaxAffectedTargets.Text = currentSpell.MaxAffectedTargets.ToString();
-            txtCustom.Text = currentSpell.Custom.ToString();
+            txtCustomFlags.Text = currentSpell.CustomFlags.ToString();
             txtScriptName.Text = currentSpell.ScriptName.ToString();
 
             // Update the SQL preview
@@ -1074,7 +1074,7 @@ namespace SpellWorker
             currentSpell.AttributesEx2 = SaveAttributeCheckboxes("chkAttributeEx2_");
             currentSpell.AttributesEx3 = SaveAttributeCheckboxes("chkAttributeEx3_");
             currentSpell.AttributesEx4 = SaveAttributeCheckboxes("chkAttributeEx4_");
-            currentSpell.Custom = SaveAttributeCheckboxes("chkCustom");
+            currentSpell.CustomFlags = SaveAttributeCheckboxes("chkCustomFlags");
 
             // Save other properties
             currentSpell.Targets = (uint)GetSelectedValue(cmbTargets);
@@ -1160,7 +1160,7 @@ namespace SpellWorker
             currentSpell.SpellFamilyName = (uint)GetSelectedValue(cmbSpellFamilyName);
             currentSpell.SpellFamilyFlags = ParseULong(txtSpellFamilyFlags.Text);
             currentSpell.MaxAffectedTargets = ParseUInt(txtMaxAffectedTargets.Text);
-            currentSpell.Custom = ParseUInt(txtCustom.Text);
+            currentSpell.CustomFlags = ParseUInt(txtCustomFlags.Text);
             currentSpell.ScriptName = txtScriptName.Text;
         }
 
@@ -1311,7 +1311,7 @@ namespace SpellWorker
                           $"{currentSpell.PreventionType}, {currentSpell.stanceBarOrder}, " +
                           $"{FormatFloat(currentSpell.DmgMultiplier[0])}, {FormatFloat(currentSpell.DmgMultiplier[1])}, " +
                           $"{FormatFloat(currentSpell.DmgMultiplier[2])}, {currentSpell.MinFactionId}, " +
-                          $"{currentSpell.MinReputation}, {currentSpell.RequiredAuraVision}, {currentSpell.Custom}, '{currentSpell.ScriptName}');");
+                          $"{currentSpell.MinReputation}, {currentSpell.RequiredAuraVision}, {currentSpell.CustomFlags}, '{currentSpell.ScriptName}');");
 
             return sql.ToString();
         }
@@ -1347,8 +1347,8 @@ namespace SpellWorker
                     case "chkAttributeEx4_":
                         preservedBits = currentSpell.AttributesEx4;
                         break;
-                    case "chkCustom":
-                        preservedBits = currentSpell.Custom;
+                    case "chkCustomFlags":
+                        preservedBits = currentSpell.CustomFlags;
                         break;
                 }
             }

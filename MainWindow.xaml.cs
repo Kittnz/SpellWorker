@@ -461,10 +461,12 @@ namespace SpellWorker
             cmbSpellFamilyName.SelectedIndex = 0;
 
             // Initialize EquippedItemClass dropdown
-            cmbEquippedItemClass.ItemsSource = Enum.GetValues(typeof(ItemClass))
-                .Cast<ItemClass>()
-                .Select(e => new { Value = (int)e, Name = e.ToString() })
-                .ToList();
+            var itemClassList = new List<dynamic> { new { Value = -1, Name = "ITEM_CLASS_NONE" } };
+            itemClassList.AddRange(
+                Enum.GetValues(typeof(ItemClass))
+                    .Cast<ItemClass>()
+                    .Select(e => new { Value = (int)e, Name = e.ToString() })
+            );
             cmbEquippedItemClass.DisplayMemberPath = "Name";
             cmbEquippedItemClass.SelectedValuePath = "Value";
             cmbEquippedItemClass.SelectedIndex = 0;
@@ -1212,10 +1214,9 @@ namespace SpellWorker
         private string GenerateSqlStatement()
         {
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("REPLACE INTO `spell_template` (");
 
             // Column names
-            sql.AppendLine("  `entry`, `school`, `category`, `castUI`, `dispel`, `mechanic`, `attributes`, " +
+            sql.AppendLine("REPLACE INTO `spell_template` (`entry`, `school`, `category`, `castUI`, `dispel`, `mechanic`, `attributes`, " +
                            "`attributesEx`, `attributesEx2`, `attributesEx3`, `attributesEx4`, `stances`, " +
                            "`stancesNot`, `targets`, `targetCreatureType`, `requiresSpellFocus`, `casterAuraState`, " +
                            "`targetAuraState`, `castingTimeIndex`, `recoveryTime`, `categoryRecoveryTime`, " +
@@ -1250,10 +1251,10 @@ namespace SpellWorker
                            "`minTargetLevel`, `maxTargetLevel`, `spellFamilyName`, `spellFamilyFlags`, " +
                            "`maxAffectedTargets`, `dmgClass`, `preventionType`, `stanceBarOrder`, " +
                            "`dmgMultiplier1`, `dmgMultiplier2`, `dmgMultiplier3`, `minFactionId`, " +
-                           "`minReputation`, `requiredAuraVision`, `customFlags`, `script_name`) VALUES (");
+                           "`minReputation`, `requiredAuraVision`, `customFlags`, `script_name`) VALUES ");
 
             // Values
-            sql.AppendLine($"  {currentSpell.Id}, {currentSpell.School}, {currentSpell.Category}, 0, {currentSpell.Dispel}, " +
+            sql.AppendLine($"({currentSpell.Id}, {currentSpell.School}, {currentSpell.Category}, 0, {currentSpell.Dispel}, " +
                           $"{currentSpell.Mechanic}, {currentSpell.Attributes}, {currentSpell.AttributesEx}, " +
                           $"{currentSpell.AttributesEx2}, {currentSpell.AttributesEx3}, {currentSpell.AttributesEx4}, " +
                           $"{currentSpell.Stances}, {currentSpell.StancesNot}, {currentSpell.Targets}, " +

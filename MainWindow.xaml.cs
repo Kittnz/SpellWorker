@@ -1381,7 +1381,11 @@ namespace SpellWorker
             if (string.IsNullOrEmpty(input))
                 return string.Empty;
 
-            return input.Replace("'", "''");
+            return input
+                .Replace("'", "''")           // Escape single quotes
+                .Replace("\r\n", "\\r\\n")   // Convert Windows newlines to escaped format
+                .Replace("\n", "\\n")        // Convert Unix newlines to escaped format
+                .Replace("\r", "\\r");       // Convert Mac newlines to escaped format
         }
 
         private string FormatFloat(float value)

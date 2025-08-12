@@ -829,14 +829,15 @@ namespace SpellWorker
             }
             else
             {
-                // If the duration index is not found, select the first item (None)
                 cmbCastTimesIndex.SelectedIndex = 0;
             }
 
             txtRecoveryTime.Text = currentSpell.RecoveryTime.ToString();
             txtCategoryRecoveryTime.Text = currentSpell.CategoryRecoveryTime.ToString();
             cmbInterruptFlags.SelectedValue = (int)currentSpell.InterruptFlags;
-            cmbAuraInterruptFlags.SelectedValue = (int)currentSpell.AuraInterruptFlags;
+
+            LoadAttributeCheckboxes(currentSpell.AuraInterruptFlags, "chkAuraInterrupt");
+
             cmbChannelInterruptFlags.SelectedValue = (int)currentSpell.ChannelInterruptFlags;
             cmbProcFlags.SelectedValue = (int)currentSpell.procFlags;
             txtProcChance.Text = currentSpell.procChance.ToString();
@@ -854,7 +855,6 @@ namespace SpellWorker
             }
             else
             {
-                // If the duration index is not found, select the first item (None)
                 cmbDurationIndex.SelectedIndex = 0;
             }
 
@@ -878,7 +878,6 @@ namespace SpellWorker
             }
             else
             {
-                // If the range index is not found, select the first item (None)
                 cmbRangeIndex.SelectedIndex = 0;
             }
 
@@ -924,7 +923,6 @@ namespace SpellWorker
             {
                 reagentItems[i].ItemId = currentSpell.Reagent[i];
                 reagentItems[i].Count = (int)currentSpell.ReagentCount[i];
-                // Update item name based on ID
                 reagentItems[i].Name = LookupItemName(currentSpell.Reagent[i]);
             }
 
@@ -949,6 +947,7 @@ namespace SpellWorker
             cmbSpellFamilyName.SelectedValue = (int)currentSpell.SpellFamilyName;
             txtSpellFamilyFlags.Text = currentSpell.SpellFamilyFlags.ToString();
             txtMaxAffectedTargets.Text = currentSpell.MaxAffectedTargets.ToString();
+
             txtCustomFlags.Text = currentSpell.CustomFlags.ToString();
             txtScriptName.Text = currentSpell.ScriptName.ToString();
 
@@ -1104,7 +1103,7 @@ namespace SpellWorker
             currentSpell.RecoveryTime = ParseUInt(txtRecoveryTime.Text);
             currentSpell.CategoryRecoveryTime = ParseUInt(txtCategoryRecoveryTime.Text);
             currentSpell.InterruptFlags = (uint)GetSelectedValue(cmbInterruptFlags);
-            currentSpell.AuraInterruptFlags = (uint)GetSelectedValue(cmbAuraInterruptFlags);
+            currentSpell.AuraInterruptFlags = SaveAttributeCheckboxes("chkAuraInterrupt");
             currentSpell.ChannelInterruptFlags = (uint)GetSelectedValue(cmbChannelInterruptFlags);
             currentSpell.procFlags = (uint)GetSelectedValue(cmbProcFlags);
             currentSpell.procChance = ParseUInt(txtProcChance.Text);
@@ -1160,6 +1159,7 @@ namespace SpellWorker
             currentSpell.SpellFamilyName = (uint)GetSelectedValue(cmbSpellFamilyName);
             currentSpell.SpellFamilyFlags = ParseULong(txtSpellFamilyFlags.Text);
             currentSpell.MaxAffectedTargets = ParseUInt(txtMaxAffectedTargets.Text);
+
             currentSpell.CustomFlags = ParseUInt(txtCustomFlags.Text);
             currentSpell.ScriptName = txtScriptName.Text;
         }
@@ -1321,15 +1321,14 @@ namespace SpellWorker
             return cmb.SelectedValue != null ? (int)cmb.SelectedValue : 0;
         }
 
-        private uint SaveAttributeCheckboxes(string checkboxPrefix, uint originalValue = 0)
+        private uint SaveAttributeCheckboxes(string checkboxPrefix)
         {
             uint attributes = 0;
-            uint preservedBits = originalValue; // Start with original value to preserve unknown flags
+            uint preservedBits = 0;
 
-            // If we're loading from current spell, use that as the base
-            if (originalValue == 0 && currentSpell != null)
+            // Get the original value to preserve unknown flags
+            if (currentSpell != null)
             {
-                // Get the original value based on the checkbox prefix
                 switch (checkboxPrefix)
                 {
                     case "chkAttribute":
@@ -1347,8 +1346,11 @@ namespace SpellWorker
                     case "chkAttributeEx4_":
                         preservedBits = currentSpell.AttributesEx4;
                         break;
-                    case "chkCustomFlags":
+                    case "chkCustom":
                         preservedBits = currentSpell.CustomFlags;
+                        break;
+                    case "chkAuraInterrupt":
+                        preservedBits = currentSpell.AuraInterruptFlags;
                         break;
                 }
             }

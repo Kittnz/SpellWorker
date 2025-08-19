@@ -128,6 +128,14 @@ namespace SpellWorker
                                 spell.AttributesEx2 = reader.GetUInt32("attributesEx2");
                                 spell.AttributesEx3 = reader.GetUInt32("attributesEx3");
                                 spell.AttributesEx4 = reader.GetUInt32("attributesEx4");
+
+                                System.Diagnostics.Debug.WriteLine($"=== DATABASE VALUES FOR SPELL {spell.Id} ===");
+                                System.Diagnostics.Debug.WriteLine($"attributes: {spell.Attributes}");
+                                System.Diagnostics.Debug.WriteLine($"attributesEx: {spell.AttributesEx}");
+                                System.Diagnostics.Debug.WriteLine($"attributesEx2: {spell.AttributesEx2}");
+                                System.Diagnostics.Debug.WriteLine($"attributesEx3: {spell.AttributesEx3}");
+                                System.Diagnostics.Debug.WriteLine($"attributesEx4: {spell.AttributesEx4}");
+
                                 spell.Stances = reader.GetUInt32("stances");
                                 spell.StancesNot = reader.GetUInt32("stancesNot");
                                 spell.Targets = reader.GetUInt32("targets");

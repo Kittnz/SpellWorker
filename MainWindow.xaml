@@ -480,6 +480,54 @@
                                         </Grid>
                                     </ScrollViewer>
                                 </TabItem>
+                                <TabItem Header="AuraInterrupt Flags">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <!-- Bits 0-15 -->
+                                                <CheckBox Name="chkAuraInterrupt1" Content="AURA_INTERRUPT_FLAG_HITBYSPELL" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt2" Content="AURA_INTERRUPT_FLAG_DAMAGE" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt3" Content="AURA_INTERRUPT_FLAG_CAST" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt4" Content="AURA_INTERRUPT_FLAG_MOVE" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt5" Content="AURA_INTERRUPT_FLAG_TURNING" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt6" Content="AURA_INTERRUPT_FLAG_ENTER_COMBAT" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt7" Content="AURA_INTERRUPT_FLAG_NOT_MOUNTED" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt8" Content="AURA_INTERRUPT_FLAG_NOT_ABOVEWATER" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt9" Content="AURA_INTERRUPT_FLAG_NOT_UNDERWATER" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt10" Content="AURA_INTERRUPT_FLAG_NOT_SHEATHED" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt11" Content="AURA_INTERRUPT_FLAG_TALK" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt12" Content="AURA_INTERRUPT_FLAG_USE" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt13" Content="AURA_INTERRUPT_FLAG_MELEE_ATTACK" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt14" Content="AURA_INTERRUPT_FLAG_SPELL_ATTACK" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt15" Content="AURA_INTERRUPT_FLAG_UNK14" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt16" Content="AURA_INTERRUPT_FLAG_TRANSFORM" Margin="3"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <!-- Bits 16-31 -->
+                                                <CheckBox Name="chkAuraInterrupt17" Content="AURA_INTERRUPT_FLAG_ON_CAST_SPELL" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt18" Content="AURA_INTERRUPT_FLAG_MOUNTING" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt19" Content="AURA_INTERRUPT_FLAG_NOT_SEATED" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt20" Content="AURA_INTERRUPT_FLAG_CHANGE_MAP" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt21" Content="AURA_INTERRUPT_FLAG_IMMUNE_OR_LOST_SELECTION" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt22" Content="AURA_INTERRUPT_FLAG_INVULNERABILITY_CANCELS" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt23" Content="AURA_INTERRUPT_FLAG_TELEPORTED" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt24" Content="AURA_INTERRUPT_FLAG_ENTER_PVP_COMBAT" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt25" Content="AURA_INTERRUPT_FLAG_DIRECT_DAMAGE" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt26" Content="AURA_INTERRUPT_FLAG_UNK25" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt27" Content="AURA_INTERRUPT_FLAG_UNK26" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt28" Content="AURA_INTERRUPT_FLAG_UNK27" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt29" Content="AURA_INTERRUPT_FLAG_UNK28" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt30" Content="AURA_INTERRUPT_FLAG_UNK29" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt31" Content="AURA_INTERRUPT_FLAG_UNK30" Margin="3"/>
+                                                <CheckBox Name="chkAuraInterrupt32" Content="AURA_INTERRUPT_FLAG_UNK31" Margin="3"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ScrollViewer>
+                                </TabItem>
                             </TabControl>
                         </GroupBox>
                     </Grid>

@@ -838,6 +838,7 @@ namespace SpellWorker
             txtCategoryRecoveryTime.Text = currentSpell.CategoryRecoveryTime.ToString();
             cmbInterruptFlags.SelectedValue = (int)currentSpell.InterruptFlags;
 
+            // Load aura interrupt flags with correct pattern
             LoadAttributeCheckboxes(currentSpell.AuraInterruptFlags, "chkAuraInterrupt");
 
             cmbChannelInterruptFlags.SelectedValue = (int)currentSpell.ChannelInterruptFlags;
@@ -951,7 +952,7 @@ namespace SpellWorker
             txtMaxAffectedTargets.Text = currentSpell.MaxAffectedTargets.ToString();
 
             txtCustomFlags.Text = currentSpell.CustomFlags.ToString();
-            txtScriptName.Text = currentSpell.ScriptName.ToString();
+            txtScriptName.Text = currentSpell.ScriptName;
 
             // Update the SQL preview
             GenerateSQL_Click(null, null);
@@ -978,17 +979,30 @@ namespace SpellWorker
 
         private void LoadAttributeCheckboxes(uint attributes, string checkboxPrefix)
         {
+            // Debug: Log what we're trying to load
+            System.Diagnostics.Debug.WriteLine($"Loading {checkboxPrefix} with value: {attributes}");
+
             for (int i = 0; i < 32; i++)
             {
                 CheckBox chk = FindName($"{checkboxPrefix}{i + 1}") as CheckBox;
                 if (chk != null)
                 {
-                    chk.IsChecked = (attributes & (1u << i)) != 0;
+                    bool isChecked = (attributes & (1u << i)) != 0;
+                    chk.IsChecked = isChecked;
+
+                    // Debug: Log each checkbox found and its state
+                    if (isChecked)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Set {checkboxPrefix}{i + 1} to checked (bit {i})");
+                    }
                 }
                 else
                 {
-                    // Log missing checkboxes for debugging
-                    System.Diagnostics.Debug.WriteLine($"Missing checkbox: {checkboxPrefix}{i + 1} for bit {i}");
+                    // Check if this bit is set but we don't have a checkbox for it
+                    if ((attributes & (1u << i)) != 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"WARNING: Missing checkbox {checkboxPrefix}{i + 1} for set bit {i}");
+                    }
                 }
             }
         }
@@ -1165,6 +1179,7 @@ namespace SpellWorker
             currentSpell.CustomFlags = ParseUInt(txtCustomFlags.Text);
             currentSpell.ScriptName = txtScriptName.Text;
         }
+
 
         private void SaveEffectData(int index)
         {
@@ -1347,7 +1362,7 @@ namespace SpellWorker
                     case "chkAttributeEx4_":
                         preservedBits = currentSpell.AttributesEx4;
                         break;
-                    case "chkCustom":
+                    case "chkCustomFlags":
                         preservedBits = currentSpell.CustomFlags;
                         break;
                     case "chkAuraInterrupt":
